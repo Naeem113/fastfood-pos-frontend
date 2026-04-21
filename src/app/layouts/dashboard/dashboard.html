@@ -1,0 +1,262 @@
+ <div class="bg-[#1d1d1f] text-[#fff] max-w-full px-4 sm:px-6 py-3 flex items-center justify-between">
+        <div class="flex items-center gap-2">
+            <div class="h-10 w-10 bg-dark rounded-lg flex items-center justify-center"><svg class="h-6 w-6"
+                    viewBox="0 0 50.8 50.8" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="dashboard-loop-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#DC2626"></stop>
+                            <stop offset="100%" stop-color="#F97316"></stop>
+                        </linearGradient>
+                    </defs>
+                    <path
+                        d="M4 25.4 C4 12, 14 12, 25.4 25.4 C36.8 38.8, 46.8 38.8, 46.8 25.4 C46.8 12, 36.8 12, 25.4 25.4 C14 38.8, 4 38.8, 4 25.4"
+                        stroke="url(#dashboard-loop-grad)" stroke-width="5" fill="none" stroke-linecap="round"></path>
+                </svg></div>
+            <h1 class="text-lg sm:text-xl font-light leading-tight">Nex<span
+                    class="font-semibold bg-gradient-to-r from-[#DC2626] to-[#F97316] text-transparent bg-clip-text">POS</span>
+            </h1>
+        </div>
+        <div class="flex items-center gap-2 sm:gap-4">
+            <div class="relative">
+            <button id="searchToggle" class="p-2 text-subtle hover:text-background hover:bg-primary-hover rounded-lg transition-all" title="Search (⌘K)">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                </svg>
+            </button>
+            <div id="searchPopup" class="hidden absolute right-0 mt-2 w-80 rounded-2xl border border-white/10 bg-[#0f172a] p-4 shadow-xl shadow-black/20 backdrop-blur-xl">
+                <div class="flex items-center justify-between gap-2 mb-3">
+                    <h2 class="text-sm font-semibold">Search POS</h2>
+                    <button id="searchClose" class="text-subtle hover:text-white">✕</button>
+                </div>
+                <label class="block text-xs text-white/60 mb-2" for="popupSearchInput">Type to search</label>
+                <div class="flex gap-2">
+                    <input id="popupSearchInput" type="search" placeholder="Search menu, orders..." class="w-full rounded-xl border border-white/10 bg-[#111827] px-3 py-2 text-sm text-white outline-none focus:border-sky-400 focus:ring-2 focus:ring-sky-500/20" />
+                    <button class="rounded-xl bg-[#2563eb] px-3 py-2 text-sm font-semibold text-white hover:bg-[#1d4ed8]">Go</button>
+                </div>
+            </div>
+        </div>
+        <div class="relative">
+            <button id="cloudToggle" class="flex items-center p-1" title="Synced"><svg
+                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="lucide lucide-cloud w-4 h-4 text-green-400 animate-pulse" aria-hidden="true">
+                        <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"></path>
+                    </svg></button>
+            <div id="cloudPopup" class="hidden absolute right-0 mt-2 w-72 rounded-2xl border border-white/10 bg-[#0f172a] p-4 shadow-xl shadow-black/20 backdrop-blur-xl">
+                <div class="flex items-center justify-between gap-2 mb-3">
+                    <h2 class="text-sm font-semibold">Sync Status</h2>
+                    <button id="cloudClose" class="text-subtle hover:text-white">✕</button>
+                </div>
+                <div class="space-y-2 text-sm text-white/80">
+                    <div class="flex items-center gap-2 text-green-400">
+                        <span class="h-2 w-2 rounded-full bg-green-400"></span>
+                        <span>Online</span>
+                    </div>
+                    <p class="text-xs text-white/60">Last synced: Never</p>
+                </div>
+                <button class="mt-4 w-full rounded-xl bg-[#2563eb] px-3 py-2 text-sm font-semibold text-white hover:bg-[#1d4ed8]">↺ Sync Now</button>
+            </div>
+        </div>
+            <div class="relative notification-bell-dropdown">
+                <button id="notificationToggle"
+                        class="relative p-2 text-subtle hover:text-background transition-colors min-w-[40px] min-h-[40px] flex items-center justify-center"
+                        title="Notifications"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
+                    </svg></button>
+                <div id="notificationPopup" class="hidden absolute right-0 mt-2 w-72 rounded-2xl border border-white/10 bg-[#0f172a] p-4 shadow-xl shadow-black/20 backdrop-blur-xl">
+                    <div class="flex items-center justify-between gap-2 mb-3">
+                        <h2 class="text-sm font-semibold">Notifications</h2>
+                        <button id="notificationClose" class="text-subtle hover:text-white">✕</button>
+                    </div>
+                    <div class="py-4 text-center text-sm text-white/70">
+                        <div class="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-white/5 text-white/60">
+                            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
+                            </svg>
+                        </div>
+                        <p class="font-medium text-white">No notifications yet</p>
+                        <p class="mt-1 text-xs text-white/50">You’ll see new orders, alerts, and updates here.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="relative notification-dropdown"><button
+                    class="relative p-2 text-subtle hover:text-background transition-colors min-w-[40px] min-h-[40px] flex items-center justify-center"
+                    title="Getting Started"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                    </svg><span
+                        class="absolute -top-0.5 -right-0.5 w-4 h-4 bg-teal text-[#aeaeb2] text-[10px] font-bold flex items-center justify-center rounded-full bg-[#14b8a6]">!</span></button>
+            </div>
+            <div class="section-label text-subtle hidden sm:block">ADMIN</div>
+            <div class="w-8 h-8 sm:w-10 sm:h-10 bg-accent rounded-full flex items-center justify-center bg-[#007aff]"><span
+                    class="text-xs sm:text-sm font-semibold">MB</span></div><button
+                class="p-2 text-subtle hover:text-background transition-colors min-w-[40px] min-h-[40px] flex items-center justify-center"
+                title="Logout"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1">
+                    </path>
+                </svg></button>
+        </div>
+    </div>
+    <script>
+        const searchToggle = document.getElementById('searchToggle');
+        const searchPopup = document.getElementById('searchPopup');
+        const searchClose = document.getElementById('searchClose');
+        const cloudToggle = document.getElementById('cloudToggle');
+        const cloudPopup = document.getElementById('cloudPopup');
+        const cloudClose = document.getElementById('cloudClose');
+        const notificationToggle = document.getElementById('notificationToggle');
+        const notificationPopup = document.getElementById('notificationPopup');
+        const notificationClose = document.getElementById('notificationClose');
+
+        const hideSearch = () => searchPopup.classList.add('hidden');
+        const hideCloud = () => cloudPopup.classList.add('hidden');
+        const hideNotification = () => notificationPopup.classList.add('hidden');
+        const toggleSearch = () => {
+            hideCloud();
+            hideNotification();
+            searchPopup.classList.toggle('hidden');
+        };
+        const toggleCloud = () => {
+            hideSearch();
+            hideNotification();
+            cloudPopup.classList.toggle('hidden');
+        };
+        const toggleNotification = () => {
+            hideSearch();
+            hideCloud();
+            notificationPopup.classList.toggle('hidden');
+        };
+
+        searchToggle.addEventListener('click', (event) => {
+            event.stopPropagation();
+            toggleSearch();
+        });
+
+        searchClose.addEventListener('click', (event) => {
+            event.stopPropagation();
+            hideSearch();
+        });
+
+        cloudToggle.addEventListener('click', (event) => {
+            event.stopPropagation();
+            toggleCloud();
+        });
+
+        cloudClose.addEventListener('click', (event) => {
+            event.stopPropagation();
+            hideCloud();
+        });
+
+        notificationToggle.addEventListener('click', (event) => {
+            event.stopPropagation();
+            toggleNotification();
+        });
+
+        notificationClose.addEventListener('click', (event) => {
+            event.stopPropagation();
+            hideNotification();
+        });
+
+        document.addEventListener('click', (event) => {
+            if (!searchPopup.contains(event.target) && !searchToggle.contains(event.target)) {
+                hideSearch();
+            }
+            if (!cloudPopup.contains(event.target) && !cloudToggle.contains(event.target)) {
+                hideCloud();
+            }
+            if (!notificationPopup.contains(event.target) && !notificationToggle.contains(event.target)) {
+                hideNotification();
+            }
+        });
+
+        searchPopup.addEventListener('click', (event) => {
+            event.stopPropagation();
+        });
+
+        cloudPopup.addEventListener('click', (event) => {
+            event.stopPropagation();
+        });
+
+        notificationPopup.addEventListener('click', (event) => {
+            event.stopPropagation();
+        });
+    </script>
+
+    <nav class="max-w-[10rem] bg-[#1d1d1f] text-[#fff] p-3 h-screen flex flex-col overflow-y-auto scrollbar-hide">
+        <div class="mb-4 hidden xl:flex justify-start items-center gap-3 ml-24"><button class="p-2 hover:bg-primary-hover transition-all"><svg
+                    class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M11 19l-7-7 7-7m8 14l-7-7 7-7"></path>
+                </svg></button></div>
+        <div class="section-label text-[#aeaeb2] mb-3 xl:hidden">NAVIGATION</div>
+     <div class="section-label text-[#aeaeb2] mb-3 hidden xl:block">NAVIGATION</div>
+        <ul class="space-y-1">
+            <li><a class="flex items-center gap-3 px-4 py-3 xl:py-2 font-medium uppercase tracking-wider text-xs hover:text-white  transition-all min-h-[44px] bg-primary-white text-[#aeaeb2] "
+                    title="Dashboard" href="/en-global/dashboard"><svg class="w-5 h-5" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6">
+                        </path>
+                    </svg><span class="">Dashboard</span></a></li>
+            <li><a class="flex items-center gap-3 px-4 py-3 xl:py-2 font-medium uppercase tracking-wider text-xs transition-all min-h-[44px] text-[#aeaeb2]  hover:text-white "
+                    title="POS" href="/en-global/pos"><svg class="w-5 h-5" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
+                        </path>
+                    </svg><span class="">POS</span></a></li>
+            <li><a class="flex items-center gap-3 px-4 py-3 xl:py-2 font-medium uppercase tracking-wider text-xs transition-all min-h-[44px] text-[#aeaeb2] hover:bg-primary-hover hover:text-white "
+                    title="Sales" href="/en-global/sales"><svg class="w-5 h-5" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+                        </path>
+                    </svg><span class="">Sales</span></a></li>
+            <li><a class="flex items-center gap-3 px-4 py-3 xl:py-2 font-medium uppercase tracking-wider text-xs transition-all min-h-[44px] text-[#aeaeb2] hover:bg-primary-hover hover:text-white "
+                    title="Shifts" href="/en-global/shifts"><svg class="w-5 h-5" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg><span class="">Shifts</span></a></li>
+            <li><a class="flex items-center gap-3 px-4 py-3 xl:py-2 font-medium uppercase tracking-wider text-xs transition-all min-h-[44px] text-[#aeaeb2] hover:bg-primary-hover hover:text-white "
+                    title="Products" href="/en-global/products/admin"><svg class="w-5 h-5" fill="none"
+                        stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
+                    </svg><span class="">Products</span></a></li>
+        </ul>
+        <div class="mt-6 pt-6 border-t border-primary">
+            <div class="section-label text-[#aeaeb2] mb-3 xl:hidden">SETTINGS</div>
+            <div class="section-label text-[#aeaeb2] mb-3 hidden xl:block">SETTINGS</div>
+            <ul class="space-y-1">
+                <li><a class="flex items-center gap-3 px-4 py-3 xl:py-2 font-medium uppercase tracking-wider text-xs transition-all min-h-[44px] text-[#aeaeb2] hover:bg-primary-hover hover:text-white "
+                        title="Settings" href="/en-global/settings"><svg class="w-5 h-5" fill="none"
+                            stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z">
+                            </path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        </svg><span class="">Settings</span></a></li>
+                <li><button
+                        class="w-full flex items-center gap-3 px-4 py-3 xl:py-2 font-medium uppercase tracking-wider text-xs transition-all text-[#aeaeb2] hover:bg-primary-hover hover:text-white min-h-[44px] "
+                        title="Logout"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1">
+                            </path>
+                        </svg><span class="">Logout</span></button></li>
+            </ul>
+        </div>
+    </nav>
+<div class="flex justify-end mb-4">
+  <p-button label="Logout" (click)="logout()" class="p-button-outlined p-button-sm"></p-button>
+  <p-button
+    label="Toggle Theme"
+    (click)="toggleTheme()"
+    class="p-button-outlined p-button-sm"
+  ></p-button>
+</div>
