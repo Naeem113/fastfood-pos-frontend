@@ -1,0 +1,234 @@
+<div class="min-h-screen bg-white dark:bg-gray-900">
+  <div class="flex min-h-screen p-3">
+    <div
+      class="hidden lg:flex lg:w-[45%] relative overflow-hidden rounded-[10px]"
+
+    >
+        <!-- 🎥 Background Video -->
+  <video
+    #bgVideo
+    autoplay
+    muted
+    loop
+    class="absolute inset-0 w-full h-full object-cover"
+  >
+    <source src="/videos/login.mp4" type="video/mp4" />
+  </video>
+
+  <!-- 🌫️ Blur + Dark Overlay -->
+  <div
+    class="absolute inset-0 bg-black/40 backdrop-blur-sm"
+  ></div>
+
+  <!-- Optional gradient overlay (premium feel) -->
+  <div
+    class="absolute inset-0 bg-gradient-to-br from-black/60 via-black/30 to-transparent"
+  ></div>
+
+      <div class="flex flex-col justify-center px-12 xl:px-16 relative z-10">
+        <div class="mb-12">
+          <div class="flex items-center gap-3">
+            <div
+              class="w-14 h-14 bg-[#ffffff1a] backdrop-blur-sm rounded-2xl p-2 flex items-center justify-center"
+            >
+              <h2 class="font-bold text-[#f59e0b] text-[30px]">D</h2>
+            </div>
+
+            <div class="text-white">
+              <h1 class="text-2xl font-semibold leading-tight text-background">
+                Stack
+                <span class="font-bold">Nex</span>
+                <span class="font-bold text-[#f59e0b]">.io</span>
+              </h1>
+              <p
+                class="text-[10px] text-[#ffffff]/60 uppercase tracking-[0.3em] font-medium"
+              >
+                connect.integrate.transform
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="max-w-md">
+          <h2
+            class="text-4xl font-light mb-6 leading-tight text-white tracking-tight"
+          >
+            Manage your business with
+            <span class="font-semibold">confidence</span>
+          </h2>
+          <p class="text-lg mb-10 leading-relaxed text-[#ffffffb3] font-light">
+            Access your complete dashboard with real-time insights, inventory
+            management, and powerful analytics.
+          </p>
+
+          <div class="grid grid-cols-2 gap-4">
+            <div
+              class="bg-[#ffffff1a] backdrop-blur-sm p-5 rounded-2xl border border-[#ffffff1a]"
+            >
+              <div
+                class="w-10 h-10 bg-gradient-to-br from-blue-500 to-cyan-600 rounded-full flex items-center justify-center mb-3"
+              >
+                <svg
+                  class="w-5 h-5 text-white"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  stroke-width="2"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                  ></path>
+                </svg>
+              </div>
+              <div class="text-2xl font-semibold mb-1 text-white">99.9%</div>
+              <div class="text-sm text-[#ffffff]/60 font-medium">
+                Uptime guarantee
+              </div>
+            </div>
+            <div
+              class="bg-[#ffffff1a] backdrop-blur-sm p-5 rounded-2xl border border-[#ffffff]/10"
+            >
+              <div
+                class="w-10 h-10 bg-gradient-to-br from-green-500 to-emerald-600 rounded-full flex items-center justify-center mb-3"
+              >
+                <svg
+                  class="w-5 h-5 text-white"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  stroke-width="2"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"
+                  ></path>
+                </svg>
+              </div>
+              <div class="text-2xl font-semibold mb-1 text-[#ffffff]">24/7</div>
+              <div class="text-sm text-[#ffffff]/60 font-medium">
+                Support available
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="w-full lg:w-[55%] flex flex-col">
+      <div
+        class="px-8 sm:px-12 xl:px-20 max-w-lg mx-auto w-full py-8 flex-1 flex flex-col justify-center"
+      >
+        <div class="lg:hidden text-center mb-8">
+          <div class="flex justify-center items-center gap-2 mb-2">
+            <div
+              class="w-12 h-12 rounded-xl bg-[#f5f5f7] p-2 flex items-center justify-center shadow-sm"
+            >
+              <span class="text-[#f59e0b] font-bold text-[20px]">D</span>
+            </div>
+            <h1 class="text-xl font-semibold">
+              Stack<span class="font-bold">Nex</span
+              ><span class="font-bold text-[#f59e0b]">.io</span>
+            </h1>
+          </div>
+        </div>
+
+        <div class="text-center mb-10">
+          <h2 class="text-3xl font-light text-foreground tracking-tight">
+            Welcome <span class="font-semibold">back</span>
+          </h2>
+          <p class="mt-2 text-base text-muted">
+            Sign in to access your account
+          </p>
+        </div>
+
+        <form class="space-y-5" [formGroup]="loginForm"
+                (ngSubmit)="login()" >
+          <div>
+            <label class="block text-sm font-medium mb-1"
+              >Username</label
+            ><input
+              class="w-full px-4 py-3.5 bg-[#f5f5f7] border border-[#d2d2d7] text-base rounded-[10px] transition-all outline-none focus:ring-1 focus:ring-[#007aff] focus:border-[#007aff]"
+              [ngClass]="{
+                'border-red-500 focus:ring-red-500 focus:border-red-500': loginForm.get('username')?.invalid && (loginForm.get('username')?.touched || formSubmitted())
+              }"
+              placeholder="jon113"
+              type="text"
+              [formField]="loginForm.username"
+            />
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-1"
+              >Password</label
+            >
+            <div class="relative">
+              <input
+                class="w-full px-4 py-3.5 pr-12 bg-[#f5f5f7] border border-[#d2d2d7] text-base rounded-[10px] transition-all outline-none focus:ring-1 focus:ring-[#007aff] focus:border-[#007aff]"
+                [ngClass]="{
+                  'border-red-500 focus:ring-red-500 focus:border-red-500': loginForm.get('password')?.invalid && (loginForm.get('password')?.touched || formSubmitted())
+                }"
+                placeholder="Enter your password"
+                type="password"
+                [formField]="loginForm.password"
+              /><button
+                type="button"
+                class="absolute right-4 top-1/2 transform -translate-y-1/2 text-muted hover:text-foreground transition-colors"
+              >
+                <svg
+                  class="w-5 h-5"
+                  fill="none"
+                  stroke="#000"
+                  viewBox="0 0 24 24"
+                  width="20px"
+                  height="20px"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                  ></path>
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                  ></path>
+                </svg>
+              </button>
+            </div>
+          </div>
+          <div class="flex justify-end items-center">
+            <!-- <label
+              class="flex items-center text-sm text-[#86868b] cursor-pointer"
+              ><input
+                class="mr-2 rounded border-[#d2d2d7]"
+                type="checkbox"
+              />Remember me</label
+            > -->
+            <a
+              href="/en-global/auth/forgot-password"
+              class="text-sm font-medium text-[#007aff] hover:text-accent-dark transition-colors"
+              >Forgot password?</a
+            >
+          </div>
+          @if(false){
+            <p-message class="my-2" severity="error" size="small" icon="pi pi-info-circle" closable="true">Message Content</p-message>
+          }
+          <button
+            type="submit"
+            class="w-full py-4 bg-[#007aff] text-white text-base font-medium rounded-full hover:bg-accent-dark transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+          @if(loading()){
+            <i class="pi pi-spin pi-spinner" style="font-size: 16px"></i>
+          }@else {
+              Sign In
+            }
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

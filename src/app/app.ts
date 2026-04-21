@@ -1,0 +1,36 @@
+import { Component, signal, effect, ChangeDetectionStrategy } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
+import { CommonModule } from '@angular/common';
+@Component({
+  selector: 'app-root',
+  imports: [RouterOutlet, CommonModule],
+  templateUrl: './app.html',
+  styleUrls: ['./app.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class App {
+  protected readonly title = signal('fastfood-pos-frontend');
+  protected readonly isDark = signal(false);
+
+  constructor() {
+    effect(() => {
+      const dark = this.isDark();
+      if (dark) {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+      localStorage.setItem('theme', dark ? 'dark' : 'light');
+    });
+
+    // Initialize theme from localStorage
+    const theme = localStorage.getItem('theme');
+    if (theme === 'dark') {
+      this.isDark.set(true);
+    }
+  }
+
+  toggleDarkMode(): void {
+    this.isDark.update(value => !value);
+  }
+}
