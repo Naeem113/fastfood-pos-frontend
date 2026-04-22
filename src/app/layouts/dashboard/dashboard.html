@@ -7,13 +7,13 @@
   <div class="flex-1 flex h-[calc(100vh-64px)]">
     <!-- Header -->
     <app-sidebar
-      class="bg-[#1d1d1f] text-white transition-all duration-500 ease-in-out overflow-hidden"
+      class="bg-[#1d1d1f] text-white transition-base overflow-hidden"
       [ngClass]="isSidebarOpen() ? 'w-[14rem]' : 'w-0'"
     ></app-sidebar>
 
     <div class="flex flex-col flex-1">
        <!-- Main Content -->
-       <div class="flex-1 p-4 bg-white overflow-auto" [@fadeAnimation]="router.url">
+       <div class="flex-1 bg-white overflow-auto" [@fadeAnimation]="router.url">
          <router-outlet></router-outlet>
        </div>
 

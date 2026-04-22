@@ -1,0 +1,29 @@
+<div class="flex gap-4 border p-3 px-7 rounded-xl">
+
+  <!-- Avatar -->
+  <div
+    class="w-[180px] h-[80px] flex items-center justify-center text-white text-2xl rounded-xl transition-all duration-200"
+    [style.backgroundColor]="selectedColor()"
+  >
+    {{ initialTitle }}
+  </div>
+
+  <!-- Color Picker -->
+  <div class="flex flex-wrap gap-2 items-start">
+
+    @for (color of colors; track color) {
+      <div
+        class="w-8 h-8 rounded-full cursor-pointer border-2 flex items-center justify-center transition-all duration-200"
+        [style.backgroundColor]="color"
+        [ngClass]="selectedColor() === color ? 'border-black scale-110' : 'border-transparent'"
+        (click)="selectColor(color)"
+      >
+        @if (selectedColor() === color) {
+          <i class="pi pi-check text-white text-xs"></i>
+        }
+      </div>
+    }
+
+  </div>
+
+</div>

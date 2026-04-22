@@ -4,8 +4,8 @@ export const routesStrings = {
   launcher: 'launcher',
   dashboard: 'dashboard',
   category: {
-    index: '',
-    list: 'categories',
+    index: 'categories',
+    list: 'categories/list',
     create: 'categories/create',
   }
 }

@@ -3,15 +3,37 @@
     <div class="text-[12px] text-[#aeaeb2] mb-4 mt-3 uppercase">Main Navigation</div>
     <ul class="">
     @for (item of sidebarService.menu(); track $index) {
-      <li>
+      <li class="">
         <a
-          class="flex items-center gap-3 px-4  font-medium uppercase tracking-wider text-xs  transition-all min-h-[35px] bg-primary-white text-[#aeaeb2]"
+          class="flex justify-between items-center px-2  font-medium uppercase tracking-wider text-xs  transition-all min-h-[35px] bg-primary-white text-[#aeaeb2]"
           [ngClass]="item.active?'text-[#f59e0b]':'hover:text-white'"
-          title="Dashboard"
+          [title]="item.title"
           [routerLink]="item.link">
-          <i class="pi pi-{{item.icon}}"></i>
-          <span class="">{{item.title}}</span></a
+          <div class="flex justify-center gap-3">
+            <i class="pi pi-{{item.icon}}"></i>
+            <span class="">{{item.title}}</span>
+          </div>
+          @if (sidebarService.menuHasChildren(item)) {
+            <i class="pi pi-chevron-down transition-base" [ngClass]="{'rotate-180':item.active}"></i>
+          }
+          </a
         >
+        @if (sidebarService.menuHasChildren(item) && item.active) {
+          <ul [@collapse] class="border-l-2 border-gray-700 ml-4">
+             @for (cItem of item.children; track $index) {
+               <li>
+                 <a
+                   class="flex items-center gap-3 -ml-1.5 font-medium uppercase tracking-wider text-xs  transition-all min-h-[30px] bg-primary-white text-[#aeaeb2]"
+                   [ngClass]="cItem.active?'text-[#f59e0b]':'hover:text-white'"
+                   [title]="cItem.title"
+                   [routerLink]="cItem.link">
+                   <i class="pi pi-{{cItem.icon}}" style="font-size: 0.7rem;"></i>
+                   <span class="">{{cItem.title}}</span></a
+                 >
+               </li>
+             }
+           </ul>
+        }
       </li>
     }
     </ul>

@@ -3,23 +3,42 @@ import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs';
 import { AuthStore } from '../stores/auth.store';
 import MenuItem from '../../shared/interfaces/menuItem';
+import { routesStrings } from '../../shared/routes';
 
 const MENU_ITEMS: MenuItem[] = [
   {
     title: 'Dashboard',
     icon: 'home',
-    link: '/dashboard',
+    link: 'dashboard',
     active: false,
     access: ['company-admin'],
     badge: { value: 1, color: 'accent' }
   },
   {
     title: 'Categories',
-    icon: 'receipt',
-    link: '/categories',
+    icon: 'sitemap',
+    link: routesStrings.category.index,
     active: false,
     access: ['company-admin'],
-    badge: { value: 1, color: 'accent' }
+    badge: { value: 1, color: 'accent' },
+    children: [
+      {
+        title: 'list',
+        icon: 'circle-on',
+        link: routesStrings.category.list,
+        active: false,
+        access: ['company-admin'],
+        badge: { value: 1, color: 'accent' }
+      },
+      {
+        title: 'create',
+        icon: 'circle-on',
+        link: routesStrings.category.create,
+        active: false,
+        access: ['company-admin'],
+        badge: { value: 1, color: 'accent' }
+      }
+    ]
   },
   // {
   //   title: 'Payments',
@@ -77,16 +96,35 @@ export class SidebarService {
   readonly currentUrl = this._currentUrl.asReadonly();
 
   // Filter menu based on role (REACTIVE)
-  readonly menu = computed(() => {
-    const role = this.authStore.currentUser()?.role as string;
+readonly menu = computed(() => {
+  const role = this.authStore.currentUser()?.role as string;
+  const currentUrl = this._currentUrl();
 
-    return this._menu()
+  const filterAndMap = (items: MenuItem[]): MenuItem[] => {
+    return items
       .filter(item => !item.access || item.access.includes(role))
-      .map(item => ({
-        ...item,
-        active: this._currentUrl().includes(item.link)
-      }));
-  });
+      .map(item => {
+        const children = item.children ? filterAndMap(item.children) : [];
+
+        // ✅ Check if current item is active
+        // console.log(currentUrl.slice(1));
+        console.log(item.link);
+
+        const isSelfActive = currentUrl[0]==='/' ? currentUrl.slice(1).startsWith(item.link):currentUrl.startsWith(item.link);
+
+        // ✅ Check if any child is active
+        const isChildActive = children.some(child => child.active);
+
+        return {
+          ...item,
+          children,
+          active: isSelfActive || isChildActive, // 🔥 KEY FIX
+        };
+      });
+  };
+
+  return filterAndMap(this._menu());
+});
 
   constructor() {
     this.router.events

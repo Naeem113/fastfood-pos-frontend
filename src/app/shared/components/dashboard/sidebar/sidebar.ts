@@ -3,12 +3,14 @@ import { COMMON_IMPORTS } from '../../../common';
 import { AuthStore } from '../../../../core/stores/auth.store';
 import { getNameInitials } from '../../../utils/string.util';
 import { SidebarService } from '../../../../core/services/sidebar.service';
+import { collapse, fade } from '../../../../core/services/animation.service';
 
 @Component({
   selector: 'app-sidebar',
   imports: [...COMMON_IMPORTS],
   templateUrl: './sidebar.html',
   styleUrls: ['./sidebar.scss'],
+  animations: [fade,collapse]
 })
 export class Sidebar {
 
