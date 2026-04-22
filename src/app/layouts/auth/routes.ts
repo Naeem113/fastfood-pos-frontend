@@ -17,7 +17,8 @@ export const authRoutes: Routes = [
         loadComponent: () =>
           import('./login/login').then(
             (m) => m.Login,
-          )
+          ),
+        data: { animation: 'LoginPage' }
       }
     ],
   },
