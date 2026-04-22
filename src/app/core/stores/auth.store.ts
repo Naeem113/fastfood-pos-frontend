@@ -11,8 +11,8 @@ import { IUser } from '../../shared/interfaces/user';
 
 @Injectable({ providedIn: 'root' })
 export class AuthStore {
-  private tokenKey = 'hims_token';
-  private userKey = 'hims_user';
+  private tokenKey = 'pos_token';
+  private userKey = 'pos_user';
   private secretKey = 'my_super_secret_key_123';
 
   private apiService = inject(ApiService);

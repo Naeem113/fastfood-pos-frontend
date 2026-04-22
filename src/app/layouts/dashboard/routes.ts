@@ -16,8 +16,8 @@ export const dashboardRoutes: Routes = [
         path: 'dashboard',
         canActivate: [AuthGuard],
         loadComponent: () =>
-          import('./dashboard').then(
-            (m) => m.Dashboard,
+          import('./../../pages/dashboard/main/main').then(
+            (m) => m.Main,
           )
       }
     ],

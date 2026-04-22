@@ -1,0 +1,150 @@
+<div
+  class="bg-[#1d1d1f] text-[#fff] max-w-full px-4 sm:px-6 py-3 flex items-center justify-between"
+>
+  <div class="flex items-center gap-2">
+    <div  (click)="showSidebar = !showSidebar; toggleSidebar.emit(!showSidebar)">
+      @if(showSidebar){
+        <i class="pi pi-bars ml-[-6px] mr-2 cursor-pointer"></i>
+      }@else{
+        <i class="pi pi-angle-double-left ml-[-6px] mr-2 cursor-pointer"></i>
+      }
+    </div>
+    <div
+      class="w-10 h-10 bg-[#ffffff1a] backdrop-blur-sm rounded-[6px] flex items-center justify-center"
+    >
+      <span class="font-bold text-[#f59e0b] text-[30px] pb-1">D</span>
+    </div>
+    <h1 class="text-lg sm:text-xl font-medium">
+      Devaxix<span
+        class="font-semibold bg-gradient-to-r from-[#F97316] to-[#f59e0b] text-transparent bg-clip-text"
+        >POS</span
+      >
+    </h1>
+  </div>
+  <div class="flex items-center gap-2 sm:gap-4">
+    <div class="relative">
+      <button
+        id="searchToggle"
+        class="p-2 text-subtle hover:text-background hover:bg-primary-hover rounded-lg transition-all"
+        title="Search (⌘K)"
+      >
+        <i class="pi pi-search"></i>
+
+      </button>
+      <div
+        id="searchPopup"
+        class="hidden absolute right-0 mt-2 w-80 rounded-2xl border border-white/10 bg-[#0f172a] p-4 shadow-xl shadow-black/20 backdrop-blur-xl"
+      >
+        <div class="flex items-center justify-between gap-2 mb-3">
+          <h2 class="text-sm font-semibold">Search POS</h2>
+          <button id="searchClose" class="text-subtle hover:text-white">✕</button>
+        </div>
+        <label class="block text-xs text-white/60 mb-2" for="popupSearchInput"
+          >Type to search</label
+        >
+        <div class="flex gap-2">
+          <input
+            id="popupSearchInput"
+            type="search"
+            placeholder="Search menu, orders..."
+            class="w-full rounded-xl border border-white/10 bg-[#111827] px-3 py-2 text-sm text-white outline-none focus:border-sky-400 focus:ring-2 focus:ring-sky-500/20"
+          />
+          <button
+            class="rounded-xl bg-[#2563eb] px-3 py-2 text-sm font-semibold text-white hover:bg-[#1d4ed8]"
+          >
+            Go
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="relative hidden">
+      <button id="cloudToggle" class="flex items-center p-1" title="Synced">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="lucide lucide-cloud w-4 h-4 text-green-400 animate-pulse"
+          aria-hidden="true"
+        >
+          <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"></path>
+        </svg>
+      </button>
+      <div
+        id="cloudPopup"
+        class="hidden absolute right-0 mt-2 w-72 rounded-2xl border border-white/10 bg-[#0f172a] p-4 shadow-xl shadow-black/20 backdrop-blur-xl"
+      >
+        <div class="flex items-center justify-between gap-2 mb-3">
+          <h2 class="text-sm font-semibold">Sync Status</h2>
+          <button id="cloudClose" class="text-subtle hover:text-white">✕</button>
+        </div>
+        <div class="space-y-2 text-sm text-white/80">
+          <div class="flex items-center gap-2 text-green-400">
+            <span class="h-2 w-2 rounded-full bg-green-400"></span>
+            <span>Online</span>
+          </div>
+          <p class="text-xs text-white/60">Last synced: Never</p>
+        </div>
+        <button
+          class="mt-4 w-full rounded-xl bg-[#2563eb] px-3 py-2 text-sm font-semibold text-white hover:bg-[#1d4ed8]"
+        >
+          ↺ Sync Now
+        </button>
+      </div>
+    </div>
+    <div class="relative notification-bell-dropdown">
+      <button
+        id="notificationToggle"
+        class="relative p-2 text-subtle hover:text-background transition-colors min-w-[40px] min-h-[40px] flex items-center justify-center"
+        title="Notifications"
+      >
+                <i class="pi pi-bell"></i>
+        <span
+          class="absolute -top-0.5 -right-0.5 w-4 h-4 bg-teal text-white text-[12px] font-bold flex items-center justify-center rounded-full bg-[#f91616]"
+          ><span class="pb-0.5">3</span></span
+        >
+      </button>
+      <div
+        id="notificationPopup"
+        class="hidden absolute right-0 mt-2 w-72 rounded-2xl border border-white/10 bg-[#0f172a] p-4 shadow-xl shadow-black/20 backdrop-blur-xl"
+      >
+        <div class="flex items-center justify-between gap-2 mb-3">
+          <h2 class="text-sm font-semibold">Notifications</h2>
+          <button id="notificationClose" class="text-subtle hover:text-white">✕</button>
+        </div>
+        <div class="py-4 text-center text-sm text-white/70">
+          <div
+            class="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-white/5 text-white/60"
+          >
+            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
+              ></path>
+            </svg>
+          </div>
+          <p class="font-medium text-white">No notifications yet</p>
+          <p class="mt-1 text-xs text-white/50">You’ll see new orders, alerts, and updates here.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- <div class="w-8 h-8 sm:w-10 sm:h-10 bg-accent rounded-full flex items-center justify-center bg-[#007aff] cursor-pointer">
+      <span class="text-xs sm:text-sm font-semibold">{{ profileName }}</span>
+    </div> -->
+    <button
+      class="p-2 text-subtle hover:text-background transition-colors min-w-[40px] min-h-[40px] flex items-center justify-center"
+      title="Logout"
+      (click)="logout()"
+    >
+      <i class="pi pi-sign-out"></i>
+    </button>
+  </div>
+</div>

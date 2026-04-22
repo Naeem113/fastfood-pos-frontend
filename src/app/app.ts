@@ -1,19 +1,29 @@
-import { Component, signal, effect, ChangeDetectionStrategy } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, signal, effect, ChangeDetectionStrategy, inject } from '@angular/core';
+import { Router, RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ToastModule } from 'primeng/toast';
+
+import { trigger, transition, style, animate } from '@angular/animations';
+
+export const fadeAnimation = trigger('fadeAnimation', [
+  transition('* <=> *', [
+    style({ opacity: 0 }),
+    animate('300ms ease-in', style({ opacity: 1 }))
+  ])
+]);
 
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet, CommonModule, ToastModule],
   templateUrl: './app.html',
   styleUrls: ['./app.scss'],
+  animations: [fadeAnimation],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class App {
   protected readonly title = signal('fastfood-pos-frontend');
   protected readonly isDark = signal(false);
-
+  router = inject(Router);
   constructor() {
     effect(() => {
       const dark = this.isDark();
