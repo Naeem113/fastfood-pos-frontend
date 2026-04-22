@@ -1,0 +1,95 @@
+<main
+  class="relative w-full min-h-screen bg-cover bg-center"
+  style="background-image: url('/images/pizza.jpg');"
+>
+  <!-- Overlay -->
+  <div class="absolute inset-0 bg-black/50 dark:bg-black/70 transition-all duration-500 ease-in-out backdrop-blur-sm"></div>
+
+  <!-- Header -->
+  <header class="relative z-10 pt-10 text-center">
+    <div class="flex flex-col items-center gap-2">
+      <div class="flex items-center gap-3">
+        <div
+          class="w-14 h-14 bg-[#ffffff1a] backdrop-blur-sm rounded-2xl p-2 flex items-center justify-center"
+        >
+          <h2 class="font-bold text-[#f59e0b] text-[30px]">D</h2>
+        </div>
+        <span class="text-2xl font-semibold leading-tight text-background">
+          <span class="font-bold text-white">Devaxix</span>
+          <span class="font-bold text-[#f59e0b]">POS</span>
+        </span>
+      </div>
+
+      <div class="text-white flex flex-col gap-2">
+        <h1 class="text-white text-2xl md:text-3xl mt-2 font-normal">
+          Welcome back, {{ user?.firstName + ' ' + user?.lastName }}!
+        </h1>
+
+        <p class="text-[12px] text-[#ffffff]/70 uppercase tracking-[0.2em] font-medium">
+          What would you like to do next?
+        </p>
+      </div>
+    </div>
+  </header>
+
+  <!-- Cards -->
+  <div class="relative z-10 flex items-center justify-center mt-10 p-5">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-16 w-full max-w-3xl">
+      <!-- Dashboard Card -->
+      <div
+        class="flex flex-col h-[290px] bg-white/70 backdrop-blur-md rounded-2xl p-6 text-gray-800 shadow-xl"
+      >
+        <i class="pi pi-home" style="font-size: 2rem;"></i>
+
+        <h2 class="text-2xl font-normal mt-4">Dashboard</h2>
+
+        <p class="text-gray-600 text-sm flex-grow mt-3">
+          Management of users, products, stock and POS configuration
+        </p>
+
+        <a
+          (click)="goToDashboard()"
+          class="inline-flex items-center gap-2 text-[#000] font-medium cursor-pointer hover:gap-3 transition-all duration-200"
+        >
+          Enter
+          <i class="pi pi-arrow-right"></i>
+        </a>
+      </div>
+
+      <!-- POS Card -->
+      <div class="flex flex-col h-[290px] bg-[#7c3aed] rounded-2xl p-6 text-white shadow-xl">
+        <i class="pi pi-shopping-cart" style="font-size: 2rem;"></i>
+
+        <h2 class="text-2xl font-normal mt-4">Start POS</h2>
+
+        <p class="text-purple-100 text-sm flex-grow mt-3">
+          Start selling and manage payments with latest orders and inventory insights
+        </p>
+
+        <a
+          (click)="goToPOS()"
+          class="inline-flex items-center gap-2 text-white font-medium cursor-pointer hover:gap-3 transition-all duration-200"
+        >
+          Begin
+          <i class="pi pi-arrow-right"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+
+    <!-- Bottom Logout Section -->
+  <div class="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 text-center text-white">
+
+    <p class="text-xs text-white/60 mb-3 tracking-wide">
+      You are securely logged in. You can logout anytime.
+    </p>
+
+    <button
+      (click)="logout()"
+      class="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-lg text-sm font-medium transition shadow-lg"
+    >
+      Logout
+    </button>
+
+  </div>
+</main>

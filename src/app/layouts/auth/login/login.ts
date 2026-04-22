@@ -95,7 +95,6 @@ export class Login {
       const { username, password } = this.loginForm().value();
       console.log('Login attempt:', { username, password });
       await this.authStore.login(username, password)
-      this.router.navigate([routesStrings.dashboard]);
     } catch (error: any) {
       console.log(error);
 

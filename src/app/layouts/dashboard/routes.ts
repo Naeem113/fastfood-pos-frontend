@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
-import { LoginGuard } from '../../shared/guards/login.guard';
 import { AuthGuard } from '../../shared/guards/auth.guard';
+import { categoryRoutes } from '../../pages/dashboard/category/routes';
 export const dashboardRoutes: Routes = [
   {
     path: '',
@@ -19,7 +19,9 @@ export const dashboardRoutes: Routes = [
           import('./../../pages/dashboard/main/main').then(
             (m) => m.Main,
           )
-      }
+      },
+      ...categoryRoutes,
+
     ],
   },
 ];

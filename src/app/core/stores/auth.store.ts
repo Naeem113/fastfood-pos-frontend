@@ -8,6 +8,8 @@ import { ToastService } from '../services/toast.service';
 import { URLConfig } from '../../shared/utils/url-config';
 import { ILoginResponse } from '../../shared/interfaces/loginResponse';
 import { IUser } from '../../shared/interfaces/user';
+import { routesStrings } from '../../shared/routes';
+import { Router } from '@angular/router';
 
 @Injectable({ providedIn: 'root' })
 export class AuthStore {
@@ -18,7 +20,7 @@ export class AuthStore {
   private apiService = inject(ApiService);
   private toastService = inject(ToastService);
   private cookieService = inject(CookieService);
-
+  private router = inject(Router);
   // -----------------------------
   // Signals
   // -----------------------------
@@ -104,7 +106,18 @@ export class AuthStore {
       this.setToken(response.data.token);
       this.setUser(user);
 
+      const launcherValue = localStorage.getItem('launcherValue');
+      if(!launcherValue){
+        this.router.navigate([routesStrings.launcher]);
+        return;
+      }
+      if (launcherValue === 'dashboard') {
+        this.router.navigate([routesStrings.dashboard]);
+      } else if (launcherValue === 'pos') {
+        // this.router.navigate([routesStrings.pos]);
+      }
       this.toastService.success(`Welcome back, ${user.firstName +' '+ user.lastName}!`);
+
     } catch (error: any) {
       // this.toastService.error(error?.message || 'Login failed');
       throw error.error;
@@ -117,6 +130,7 @@ export class AuthStore {
   logout(): void {
     this.cookieService.delete(this.tokenKey);
     this.cookieService.delete(this.userKey);
+    localStorage.clear();
     this._token.set(null);
     this._user.set(null);
   }

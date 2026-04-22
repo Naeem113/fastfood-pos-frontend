@@ -3,21 +3,11 @@ import { Router, RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ToastModule } from 'primeng/toast';
 
-import { trigger, transition, style, animate } from '@angular/animations';
-
-export const fadeAnimation = trigger('fadeAnimation', [
-  transition('* <=> *', [
-    style({ opacity: 0 }),
-    animate('300ms ease-in', style({ opacity: 1 }))
-  ])
-]);
-
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet, CommonModule, ToastModule],
   templateUrl: './app.html',
   styleUrls: ['./app.scss'],
-  animations: [fadeAnimation],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class App {

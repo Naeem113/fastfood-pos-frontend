@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { LoginGuard } from '../../shared/guards/login.guard';
+import { AuthGuard } from '../../shared/guards/auth.guard';
 export const authRoutes: Routes = [
   {
     path: '',
@@ -19,6 +20,15 @@ export const authRoutes: Routes = [
             (m) => m.Login,
           ),
         data: { animation: 'LoginPage' }
+      },
+      {
+        path: 'launcher',
+        canActivate: [AuthGuard],
+        loadComponent: () =>
+          import('./launcher/launcher').then(
+            (m) => m.Launcher,
+          )
+
       }
     ],
   },

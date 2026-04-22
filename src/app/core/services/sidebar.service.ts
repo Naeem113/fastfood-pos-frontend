@@ -13,14 +13,14 @@ const MENU_ITEMS: MenuItem[] = [
     access: ['company-admin'],
     badge: { value: 1, color: 'accent' }
   },
-  // {
-  //   title: 'Orders',
-  //   icon: 'receipt-text',
-  //   link: '/orders',
-  //   active: false,
-  //   access: ['company-admin'],
-  //   badge: { value: 1, color: 'accent' }
-  // },
+  {
+    title: 'Categories',
+    icon: 'receipt',
+    link: '/categories',
+    active: false,
+    access: ['company-admin'],
+    badge: { value: 1, color: 'accent' }
+  },
   // {
   //   title: 'Payments',
   //   icon: 'money-bills',
