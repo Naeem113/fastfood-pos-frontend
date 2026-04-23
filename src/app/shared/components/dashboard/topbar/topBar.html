@@ -1,25 +1,28 @@
+<!--  -->
 <div
-  class="bg-[#1d1d1f] text-[#fff] max-w-full px-4 sm:px-6 py-3 flex items-center justify-between"
+  class="bg-white dark:bg-primary border-b text-[#fff] max-w-full px-4 sm:px-6 py-3 flex items-center justify-between"
 >
   <div class="flex items-center gap-2">
     <div  (click)="showSidebar = !showSidebar; toggleSidebar.emit(!showSidebar)">
       @if(showSidebar){
-        <i class="pi pi-bars ml-[-6px] mr-2 cursor-pointer"></i>
+        <i class="pi pi-bars ml-[-6px] mr-2 cursor-pointer text-black dark:text-white"></i>
       }@else{
-        <i class="pi pi-angle-double-left ml-[-6px] mr-2 cursor-pointer"></i>
+        <i class="pi pi-angle-double-left ml-[-6px] mr-2 cursor-pointer text-black dark:text-white"></i>
       }
     </div>
-    <div
-      class="w-10 h-10 bg-[#ffffff1a] backdrop-blur-sm rounded-[6px] flex items-center justify-center"
-    >
-      <span class="font-bold text-[#f59e0b] text-[30px] pb-1">D</span>
-    </div>
-    <h1 class="text-lg sm:text-xl font-medium">
-      Devaxix<span
-        class="font-semibold bg-gradient-to-r from-[#F97316] to-[#f59e0b] text-transparent bg-clip-text"
-        >POS</span
+    @if(showSidebar){
+      <div
+        class="w-10 h-10 bg-[#2722221a] dark:bg-[#ffffff1a] backdrop-blur-sm rounded-[6px] flex items-center justify-center"
       >
-    </h1>
+        <span class="font-bold text-[#f59e0b] text-[30px] pb-1">D</span>
+      </div>
+      <h1 class="text-lg sm:text-xl font-medium text-black dark:text-white">
+        Devaxix<span
+          class="font-semibold bg-gradient-to-r from-[#F97316] to-[#f59e0b] text-transparent bg-clip-text"
+          >POS</span
+        >
+      </h1>
+    }
   </div>
   <div class="flex items-center gap-2 sm:gap-4">
     <div class="relative">
@@ -28,7 +31,7 @@
         class="p-2 text-subtle hover:text-background hover:bg-primary-hover rounded-lg transition-all"
         title="Search (⌘K)"
       >
-        <i class="pi pi-search"></i>
+        <i class="pi pi-search text-black dark:text-white"></i>
 
       </button>
       <div
@@ -103,7 +106,7 @@
         class="relative p-2 text-subtle hover:text-background transition-colors min-w-[40px] min-h-[40px] flex items-center justify-center"
         title="Notifications"
       >
-                <i class="pi pi-bell"></i>
+                <i class="pi pi-bell text-black dark:text-white"></i>
         <span
           class="absolute -top-0.5 -right-0.5 w-4 h-4 bg-teal text-white text-[12px] font-bold flex items-center justify-center rounded-full bg-[#f91616]"
           ><span class="pb-0.5">3</span></span
@@ -144,7 +147,7 @@
       title="Logout"
       (click)="logout()"
     >
-      <i class="pi pi-sign-out"></i>
+      <i class="pi pi-sign-out text-black dark:text-white"></i>
     </button>
   </div>
 </div>

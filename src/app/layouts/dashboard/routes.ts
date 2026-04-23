@@ -1,6 +1,8 @@
 import { Routes } from '@angular/router';
 import { AuthGuard } from '../../shared/guards/auth.guard';
 import { categoryRoutes } from '../../pages/dashboard/category/routes';
+import { waiterRoutes } from '../../pages/dashboard/waiter/routes';
+import { tableRoutes } from '../../pages/dashboard/table/routes';
 export const dashboardRoutes: Routes = [
   {
     path: '',
@@ -21,6 +23,8 @@ export const dashboardRoutes: Routes = [
           )
       },
       ...categoryRoutes,
+      ...waiterRoutes,
+      ...tableRoutes
 
     ],
   },

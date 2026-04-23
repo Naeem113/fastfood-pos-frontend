@@ -7,10 +7,13 @@ import { form, FormField } from '@angular/forms/signals';
 import { ApiService } from '../../../../core/services/api.service';
 import { CoverColorPicker } from '../../../../shared/components/dashboard/cover-color-picker/cover-color-picker';
 import { MediaPicker } from '../../../../shared/components/dashboard/media-picker/media-picker';
+import { ParentCategoryModal } from '../../../../shared/components/dashboard/modals/parent-category-modal/parent-category-modal';
+import { Category } from '../category';
+import { ModalService } from '../../../../core/services/modal.service';
 
 @Component({
   selector: 'app-category-create',
-  imports: [...COMMON_IMPORTS, FormField, CoverColorPicker, MediaPicker],
+  imports: [...COMMON_IMPORTS, FormField, CoverColorPicker, MediaPicker, ParentCategoryModal],
   templateUrl: './category-create.html',
   styleUrls: ['./category-create.scss'],
 })
@@ -57,5 +60,23 @@ export class CategoryCreate {
 
   goToCategories() {
     this.router.navigate([this.routesStrings.category.list]);
+  }
+
+  private modalService = inject(ModalService);
+
+  selectedCategory: Category | null = null;
+
+  async openCategoryModal() {
+    const result = await this.modalService.open<Category>({
+      title: 'Parent category',
+      subtitle: 'Select a parent category to nest this category underneath it.',
+    });
+
+    if (result.confirmed && result.value) {
+      this.selectedCategory = result.value;
+      console.log('User selected:', result.value);
+    } else {
+      console.log('Modal dismissed — no selection made');
+    }
   }
 }

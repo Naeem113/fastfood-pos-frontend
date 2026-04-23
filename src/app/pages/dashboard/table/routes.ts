@@ -1,9 +1,9 @@
 import { Routes } from '@angular/router';
-export const categoryRoutes: Routes = [
+export const tableRoutes: Routes = [
   {
-    path: 'categories',
+    path: 'tables',
     loadComponent: () =>
-      import('./category').then((m) => m.Category),
+      import('./table').then((m) => m.Table),
     children: [
       {
         path: '',
@@ -13,15 +13,15 @@ export const categoryRoutes: Routes = [
       {
         path: 'list',
         loadComponent: () =>
-          import('./category-list/category-list').then(
-            (m) => m.CategoryList,
+          import('./table-list/table-list').then(
+            (m) => m.TableList,
           )
       },
       {
         path: 'create',
         loadComponent: () =>
-          import('./category-create/category-create').then(
-            (m) => m.CategoryCreate,
+          import('./table-create/table-create').then(
+            (m) => m.TableCreate,
           )
       },
 

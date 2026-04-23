@@ -4,17 +4,17 @@
   >
     <!-- Close Button -->
     <button
-      (click)="goToCategories()"
+      (click)="goToTables()"
       class="w-11 h-11 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-200 transition-colors"
     >
       <i class="pi pi-times text-gray-700"></i>
     </button>
 
-    <h1 class="text-2xl sm:text-3xl font-bold text-primary">Create category</h1>
+    <h1 class="text-2xl sm:text-3xl font-bold text-primary">Add Table</h1>
 
     <!-- Save Button -->
     <button
-      (click)="saveCategory()"
+      (click)="saveTable()"
       class="bg-primary text-white text-sm font-semibold px-6 py-3 rounded-full hover:bg-primary-hover transition-colors"
     >
       Save
@@ -23,88 +23,63 @@
 
   <!-- Main Content -->
   <div class="pt-10 pb-5 px-4 max-w-2xl mx-auto w-full">
-    <!-- Category Name Input -->
-    <div class="mb-4 flex flex-col gap-2">
-      <p class="text-base font-semibold text-primary">
-        Category Name <span class="text-red-500">*</span>
-      </p>
+    <!-- Table Name Input -->
+     <div class="flex flex-col gap-3">
+       <app-floating-input
+         label="Name"
+         placeholder="e.g, Table"
+         [required]="true"
+         [field]="tableForm.name"
+         [submitted]="formSubmitted">
+       </app-floating-input>
 
-      <input
-        type="text"
-        placeholder="Category name"
-        class="w-full border border-gray-200 rounded-xl px-4 py-4 text-black placeholder-gray-400 text-base outline-none focus:ring-1 focus:ring-black bg-white"
-        [formField]="categoryForm.name"
-        [ngClass]="{
-          'border-red-500 focus:ring-red-500 focus:border-red-500':
-            categoryForm.name().invalid() && (categoryForm.name().touched() || formSubmitted()),
-        }"
-      />
-    </div>
+       <app-floating-input
+         label="Table Number"
+         [required]="true"
+         [field]="tableForm.tableNumber"
+         [submitted]="formSubmitted">
+       </app-floating-input>
 
-    <!-- Image Upload Area -->
-    <div class="mb-4">
-      <app-media-picker (fileChange)="selectedFile = $event" />
-    </div>
+        <app-floating-input
+         label="Section / Floor"
+         placeholder="e.g, Hall, Ground, VIP"
+         [field]="tableForm.section"
+         [submitted]="formSubmitted">
+       </app-floating-input>
 
-    <!-- Parent Category Row -->
+     </div>
+
+    <!-- Seats Row -->
     <div class="flex items-center gap-4 py-4">
       <!-- Hierarchy Icon -->
       <div class="flex-shrink-0">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="w-6 h-6 text-gray-700"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          stroke-width="1.8"
+        <i class="pi pi-table w-6 h-6 text-gray-700"></i>
+      </div>
+
+      <!-- Text -->
+      <div class="flex-1 min-w-0">
+        <p class="text-sm font-semibold text-primary">Seats / Capacity</p>
+        <p class="text-sm text-gray-500 mt-0.5">
+          Select the number of seats for this table.
+        </p>
+      </div>
+
+    </div>
+    <!-- <div class="h-px bg-gray-200 w-full my-4"></div> -->
+    <div class="grid grid-cols-3 sm:grid-cols-5 gap-4 border border-gray-200 p-4 rounded-2xl">
+      @for (item of seatCapacityList; track $index) {
+        <div
+          (click)="tableForm.capacity().value.set(item)"
+          [ngClass]="{
+            'bg-black text-white border-black': tableForm.capacity().value() === item,
+            'bg-white text-gray-800 hover:bg-gray-100': tableForm.capacity().value() !== item
+          }"
+          class="h-20 flex items-center justify-center rounded-xl border cursor-pointer transition-base font-medium text-lg shadow-sm active:scale-95"
         >
-          <circle cx="12" cy="5" r="2" fill="currentColor" />
-          <circle cx="5" cy="19" r="2" fill="currentColor" />
-          <circle cx="19" cy="19" r="2" fill="currentColor" />
-          <path stroke-linecap="round" d="M12 7v4M12 11l-7 6M12 11l7 6" />
-        </svg>
-      </div>
-
-      <!-- Text -->
-      <div class="flex-1 min-w-0">
-        <p class="text-sm font-semibold text-primary">Parent category</p>
-        <p class="text-sm text-gray-500 mt-0.5">
-          Select a parent category to make this a subcategory.
-        </p>
-      </div>
-
-      <!-- Select Link -->
-      <button
-        class="text-sm font-semibold text-primary underline underline-offset-2 hover:text-gray-600 transition-colors flex-shrink-0"
-        (click)="openCategoryModal()"
-      >
-        Select
-      </button>
+          {{ item }}
+        </div>
+      }
     </div>
-    <div class="h-px bg-gray-200 w-full my-4"></div>
-
-    <!-- Category color -->
-    <div class="flex items-center gap-4 py-4">
-      <!-- Hierarchy Icon -->
-      <div class="flex-shrink-0">
-        <i class="pi pi-desktop ml-1"></i>
-      </div>
-
-      <!-- Text -->
-      <div class="flex-1 min-w-0">
-        <p class="text-sm font-semibold text-primary">Category color</p>
-        <p class="text-sm text-gray-500 mt-0.5">
-          Color will be used for the item tile when there are no image added.
-        </p>
-      </div>
-    </div>
-
-    <app-cover-color-picker
-      [firstName]="categoryForm().value().name"
-      [selectedColor]="selectedColor"
-      (colorChange)="selectedColor.set($event)"
-    />
-
     <div class="h-0.5 bg-gray-200 w-full my-4 mt-8"></div>
     <!-- Section Heading -->
     <h2 class="text-[19px] sm:text-xl font-bold text-gray-950 mb-5 mt-6 tracking-tight">
@@ -196,4 +171,3 @@
     </div>
   </div>
 </div>
-<app-parent-category-modal />

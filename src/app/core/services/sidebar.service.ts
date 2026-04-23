@@ -40,6 +40,32 @@ const MENU_ITEMS: MenuItem[] = [
       }
     ]
   },
+  {
+    title: 'Restaurant Setup',
+    icon: 'shop',
+    link: routesStrings.table.index,
+    active: false,
+    access: ['company-admin'],
+    badge: { value: 1, color: 'accent' },
+    children: [
+      {
+        title: 'tables',
+        icon: 'circle-on',
+        link: routesStrings.table.list,
+        active: false,
+        access: ['company-admin'],
+        badge: { value: 1, color: 'accent' }
+      },
+      {
+        title: 'Waiters',
+        icon: 'circle-on',
+        link: routesStrings.waiter.list,
+        active: false,
+        access: ['company-admin'],
+        badge: { value: 1, color: 'accent' }
+      }
+    ]
+  },
   // {
   //   title: 'Payments',
   //   icon: 'money-bills',
@@ -107,8 +133,6 @@ readonly menu = computed(() => {
         const children = item.children ? filterAndMap(item.children) : [];
 
         // ✅ Check if current item is active
-        // console.log(currentUrl.slice(1));
-        console.log(item.link);
 
         const isSelfActive = currentUrl[0]==='/' ? currentUrl.slice(1).startsWith(item.link):currentUrl.startsWith(item.link);
 

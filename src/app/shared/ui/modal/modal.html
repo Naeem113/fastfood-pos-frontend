@@ -1,0 +1,22 @@
+<div
+  class="inset-0 bg-black/60 backdrop-blur-sm z-50 transition-all duration-500"
+  [ngClass]="isOpen()?'opacity-100 fixed':'opacity-0'"
+  (click)="close()"
+></div>
+
+<!-- Modal Panel -->
+<div
+  role="dialog"
+  aria-modal="true"
+  class="z-50 fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
+         w-[clamp(320px,92vw,620px)] bg-white rounded-3xl shadow-2xl
+         flex flex-col overflow-hidden
+         transition-all duration-300 ease-out"
+  [ngClass]="isOpen()
+    ? 'opacity-100 scale-100'
+    : 'opacity-0 scale-95 pointer-events-none'"
+>
+
+    <!-- Content -->
+    <ng-content></ng-content>
+</div>

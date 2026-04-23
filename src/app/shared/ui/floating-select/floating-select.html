@@ -1,0 +1,72 @@
+<div class="relative w-full">
+
+  <!-- ✅ SINGLE SELECT -->
+  <ng-container *ngIf="!multiple; else multiSelect">
+    <select
+      class="peer w-full border border-gray-300 rounded-xl px-4 pt-6 pb-2 text-base bg-white outline-none focus:ring-1 focus:ring-black"
+      [formField]="field"
+      [ngClass]="{
+        'border-red-500 focus:ring-red-500': hasError()
+      }"
+    >
+      <option value="" disabled hidden></option>
+      <option *ngFor="let opt of options" [value]="opt.value">
+        {{ opt.label }}
+      </option>
+    </select>
+
+    <div class="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
+      ▼
+    </div>
+  </ng-container>
+
+  <!-- ✅ MULTI SELECT (CUSTOM) -->
+  <ng-template #multiSelect>
+    <div
+      class="w-full border border-gray-300 rounded-xl px-4 pt-6 pb-2 cursor-pointer bg-white"
+      (click)="isOpen.set(!isOpen())"
+      [ngClass]="{
+        'border-red-500': hasError()
+      }"
+    >
+      {{ displayValue() || 'Select...' }}
+    </div>
+
+    <!-- dropdown -->
+    <div
+      *ngIf="isOpen()"
+      class="absolute z-10 mt-1 w-full bg-white border rounded-xl shadow max-h-60 overflow-auto"
+    >
+      <div
+        *ngFor="let opt of options"
+        class="flex items-center gap-2 px-4 py-2 hover:bg-gray-100"
+        (click)="toggleOption(opt.value); $event.stopPropagation()"
+      >
+        <input
+          type="checkbox"
+          [checked]="isSelected(opt.value)"
+        />
+        <span>{{ opt.label }}</span>
+      </div>
+    </div>
+  </ng-template>
+
+  <!-- LABEL -->
+  <label
+    class="absolute left-4 transition-all duration-200 pointer-events-none
+           text-gray-500
+           top-4 text-base
+           peer-focus:top-1 peer-focus:text-sm peer-focus:text-black"
+    [ngClass]="{
+      'top-1 text-sm text-black': hasValue()
+    }"
+  >
+    {{ label }}
+    <span *ngIf="required" class="text-red-500">*</span>
+  </label>
+</div>
+
+<!-- ERROR -->
+<!-- <p *ngIf="hasError()" class="text-red-500 text-sm mt-1">
+  {{ label }} is required
+</p> -->

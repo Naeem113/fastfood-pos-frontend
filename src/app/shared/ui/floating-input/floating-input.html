@@ -1,0 +1,36 @@
+<div class="relative w-full">
+  <input
+    #input
+    [type]="type"
+    [placeholder]="isFocused() ? placeholder : ''"
+    (focus)="isFocused.set(true)"
+    (blur)="isFocused.set(false)"
+    class="peer w-full border border-gray-300 rounded-xl px-4 pt-6 pb-2 text-base text-black outline-none focus:ring-1 focus:ring-black transition-all"
+    [formField]="field"
+    [ngClass]="{
+      'border-red-500 focus:ring-red-500 focus:border-red-500': hasError()
+    }"
+  />
+
+  <label
+  (click)="input.focus()"
+    class="absolute cursor-text left-4 top-1 text-sm text-gray-500 transition-all duration-200
+           peer-placeholder-shown:top-4
+           peer-placeholder-shown:text-base
+           peer-placeholder-shown:text-gray-400
+           peer-focus:top-1
+           peer-focus:text-sm
+           peer-focus:text-black">
+    {{ label }}
+    @if(required) {
+       <span class="text-red-500">*</span>
+    }
+  </label>
+</div>
+
+<!-- Error -->
+<!-- <p
+  *ngIf="hasError()"
+  class="text-red-500 text-sm mt-1">
+  {{ label }} is required
+</p> -->
