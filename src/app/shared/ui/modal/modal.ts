@@ -1,6 +1,6 @@
-import { Component, input, signal, Output, EventEmitter, HostListener, inject } from '@angular/core';
+import { Component, input, signal, Output, EventEmitter, HostListener, inject, Input } from '@angular/core';
 import { COMMON_IMPORTS } from '../../common';
-import { ModalService } from '../../../core/services/modal.service';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 
 @Component({
   selector: 'app-modal',
@@ -9,13 +9,16 @@ import { ModalService } from '../../../core/services/modal.service';
   styleUrls: ['./modal.scss'],
 })
 export class Modal {
-  private modalService = inject(ModalService);
 
-  // Signals
-  readonly isOpen = this.modalService.isOpen;
-  readonly config = this.modalService.config;
+  @Input() submittedData: any;
+  ref: DynamicDialogRef = inject(DynamicDialogRef);
+  config = inject(DynamicDialogConfig);
 
-  close() {
-    this.modalService.dismiss();
+  closeDialog() {
+    this.ref.close(null);
+  }
+
+  save() {
+    this.ref.close(this.submittedData);
   }
 }

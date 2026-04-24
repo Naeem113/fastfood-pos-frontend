@@ -10,11 +10,7 @@ import { Modal } from '../../../../ui/modal/modal';
   styleUrls: ['./parent-category-modal.scss'],
 })
 export class ParentCategoryModal {
-  private modalService = inject(ModalService);
 
-  // Signals
-  readonly isOpen = this.modalService.isOpen;
-  readonly config = this.modalService.config;
 
   searchQuery = signal('');
   selectedCategory = signal<Category | null>(null);
@@ -25,6 +21,15 @@ export class ParentCategoryModal {
     { id: 'pizza', name: 'Pizza', icon: 'local_pizza' },
     { id: 'burgers', name: 'Burgers', icon: 'lunch_dining' },
     { id: 'sushi', name: 'Sushi', icon: 'set_meal' },
+    { id: 'sushi', name: 'Sushi', icon: 'set_meal' },
+    { id: 'sushi', name: 'Sushi', icon: 'set_meal' },
+    { id: 'sushi', name: 'Sushi', icon: 'set_meal' },
+    { id: 'sushi', name: 'Sushi', icon: 'set_meal' },
+    { id: 'sushi', name: 'Sushi', icon: 'set_meal' },
+    { id: 'sushi', name: 'Sushi', icon: 'set_meal' },
+    { id: 'sushi', name: 'Sushi', icon: 'set_meal' },
+    { id: 'sushi', name: 'Sushi', icon: 'set_meal' },
+
   ]);
 
   filteredCategories = computed(() => {
@@ -41,14 +46,6 @@ export class ParentCategoryModal {
 
   select(category: Category) {
     this.selectedCategory.set(category);
-  }
-
-  done() {
-    this.modalService.confirm<Category>(this.selectedCategory()!);
-  }
-
-  close() {
-    this.modalService.dismiss();
   }
 
   isSelected(category: Category): boolean {

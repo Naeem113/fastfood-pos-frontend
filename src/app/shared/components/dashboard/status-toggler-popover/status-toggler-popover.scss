@@ -1,0 +1,273 @@
+:root {
+  // ── Backgrounds ──────────────────────────────────────
+  --color-background-primary: #ffffff;
+  --color-background-secondary: #f5f5f5;
+  --color-background-tertiary: #ebebeb;
+  --color-background-info: #e6f1fb;
+  --color-background-success: #e1f5ee;
+  --color-background-warning: #faeeda;
+  --color-background-danger: #faece7;
+
+  // ── Text ─────────────────────────────────────────────
+  --color-text-primary: #111111;
+  --color-text-secondary: #6b6b6b;
+  --color-text-tertiary: #a3a3a3;
+  --color-text-info: #185fa5;
+  --color-text-success: #0f6e56;
+  --color-text-warning: #854f0b;
+  --color-text-danger: #993c1d;
+
+  // ── Borders ──────────────────────────────────────────
+  --color-border-tertiary: rgba(0, 0, 0, 0.15);
+  --color-border-secondary: rgba(0, 0, 0, 0.3);
+  --color-border-primary: rgba(0, 0, 0, 0.4);
+  --color-border-info: #378add;
+  --color-border-success: #1d9e75;
+  --color-border-warning: #ef9f27;
+  --color-border-danger: #d85a30;
+
+  // ── Border radius ─────────────────────────────────────
+  --border-radius-md: 8px;
+  --border-radius-lg: 12px;
+  --border-radius-xl: 16px;
+
+  // ── Typography ───────────────────────────────────────
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-serif: Georgia, 'Times New Roman', serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+
+  // ── Spacing scale ─────────────────────────────────────
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+
+  // ── Shadows ──────────────────────────────────────────
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.12);
+
+  // ── Transitions ──────────────────────────────────────
+  --transition-fast: 150ms ease;
+  --transition-normal: 200ms ease;
+  --transition-slow: 300ms ease;
+
+  // ── Z-index scale ────────────────────────────────────
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-overlay: 300;
+  --z-modal: 400;
+  --z-toast: 500;
+}
+
+// ── Dark mode ─────────────────────────────────────────
+[data-theme='dark'],
+.dark {
+  --color-background-primary: #1a1a1a;
+  --color-background-secondary: #242424;
+  --color-background-tertiary: #2e2e2e;
+  --color-background-info: #0c2a45;
+  --color-background-success: #052e20;
+  --color-background-warning: #2e1a03;
+  --color-background-danger: #2e1009;
+
+  --color-text-primary: #f0f0f0;
+  --color-text-secondary: #a3a3a3;
+  --color-text-tertiary: #6b6b6b;
+  --color-text-info: #85b7eb;
+  --color-text-success: #5dcaa5;
+  --color-text-warning: #ef9f27;
+  --color-text-danger: #f0997b;
+
+  --color-border-tertiary: rgba(255, 255, 255, 0.15);
+  --color-border-secondary: rgba(255, 255, 255, 0.3);
+  --color-border-primary: rgba(255, 255, 255, 0.4);
+  --color-border-info: #378add;
+  --color-border-success: #1d9e75;
+  --color-border-warning: #ef9f27;
+  --color-border-danger: #d85a30;
+
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.5);
+}
+:host {
+  display: block;
+}
+
+.filter-panel {
+  background: var(--color-background-primary);
+  border: 0.5px solid var(--color-border-secondary);
+  border-radius: var(--border-radius-lg);
+  overflow: hidden;
+  width: 280px;
+}
+
+.seg-row {
+  padding: 12px 16px;
+  border-bottom: 0.5px solid var(--color-border-tertiary);
+}
+
+.seg {
+  display: flex;
+  background: var(--color-background-secondary);
+  border-radius: 50px;
+  padding: 3px;
+  gap: 2px;
+}
+
+.seg-btn {
+  flex: 1;
+  padding: 7px 0;
+  font-size: 14px;
+  font-weight: 500;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  background: transparent;
+  color: var(--color-text-secondary);
+  transition: all 0.18s;
+
+  &.on {
+    background: var(--color-background-primary);
+    color: var(--color-text-primary);
+    box-shadow: 0 0 0 0.5px var(--color-border-secondary);
+  }
+
+  &.danger {
+    color: var(--color-text-danger);
+  }
+  &.danger.on {
+    color: var(--color-text-danger);
+  }
+}
+
+.expand-section {
+  border-bottom: 0.5px solid var(--color-border-tertiary);
+}
+
+.expand-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 13px 16px;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.1s;
+  &:hover {
+    background: var(--color-background-secondary);
+  }
+}
+
+.expand-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--color-text-primary);
+}
+
+.row-icon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+.expand-right {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--color-text-secondary);
+}
+
+.expand-val {
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.chevron {
+  display: flex;
+  align-items: center;
+  transition: transform 0.2s;
+  &.open {
+    transform: rotate(180deg);
+  }
+}
+
+.expand-content {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.2s ease;
+  &.open {
+    max-height: 300px;
+  }
+}
+
+.chip-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 10px 16px 14px;
+}
+
+.chip {
+  padding: 6px 14px;
+  font-size: 13px;
+  border: 0.5px solid var(--color-border-secondary);
+  border-radius: 50px;
+  background: transparent;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: all 0.15s;
+  &.on {
+    background: #111;
+    border-color: #111;
+    color: #fff;
+  }
+}
+
+.panel-footer {
+  display: flex;
+  gap: 10px;
+  padding: 14px 16px;
+}
+
+.btn-cancel {
+  flex: 1;
+  padding: 11px 0;
+  font-size: 14px;
+  font-weight: 500;
+  border: 0.5px solid var(--color-border-secondary);
+  border-radius: 50px;
+  background: transparent;
+  color: var(--color-text-primary);
+  cursor: pointer;
+  transition: background 0.15s;
+  &:hover {
+    background: var(--color-background-secondary);
+  }
+}
+
+.btn-apply {
+  flex: 1;
+  padding: 11px 0;
+  font-size: 14px;
+  font-weight: 500;
+  border: none;
+  border-radius: 50px;
+  background: #111;
+  color: #fff;
+  cursor: pointer;
+  transition: opacity 0.15s;
+  &:hover {
+    opacity: 0.85;
+  }
+}

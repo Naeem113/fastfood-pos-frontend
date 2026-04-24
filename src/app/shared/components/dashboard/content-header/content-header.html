@@ -1,0 +1,30 @@
+  <div class="flex flex-col gap-6 mb-6">
+    <!-- Header -->
+    <div class="flex flex-wrap items-center justify-between gap-3">
+      <div class="flex flex-col gap-1">
+        <h1 class="text-xl sm:text-2xl font-bold text-primary">{{ title }}</h1>
+        <p class="text-sm text-gray-500">
+          {{ description }}
+        </p>
+      </div>
+
+      @if(showButton){
+        <button
+          (click)="buttonClick.emit()"
+          class="flex items-center gap-1.5 bg-primary text-white text-sm font-semibold px-6 py-3 rounded-full hover:bg-primary-hover transition-colors">
+        @if(buttonIcon){
+          <i class="pi pi-{{ buttonIcon }} text-sm"></i>
+        }
+          {{ buttonText }}
+        </button>
+      }@else {
+        <ng-content select="[actions]"></ng-content>
+      }
+
+    </div>
+
+    <ng-content></ng-content>
+
+
+
+  </div>

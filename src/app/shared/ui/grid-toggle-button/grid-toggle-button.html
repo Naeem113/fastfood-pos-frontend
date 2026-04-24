@@ -1,0 +1,36 @@
+<div class="flex border border-gray-200 rounded-lg overflow-hidden bg-white">
+
+  <!-- Grid -->
+  <button
+    (click)="setView('grid')"
+    class="w-8 h-8 flex items-center justify-center transition-colors"
+    [ngClass]="value==='grid'
+      ? 'bg-gray-100 text-gray-800'
+      : 'text-gray-400 hover:text-gray-600'"
+    title="Grid view"
+  >
+    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 16 16">
+      <rect x="1" y="1" width="6" height="6" rx="1.2"/>
+      <rect x="9" y="1" width="6" height="6" rx="1.2"/>
+      <rect x="1" y="9" width="6" height="6" rx="1.2"/>
+      <rect x="9" y="9" width="6" height="6" rx="1.2"/>
+    </svg>
+  </button>
+
+  <!-- List -->
+  <button
+    (click)="setView('list')"
+    class="w-8 h-8 flex items-center justify-center transition-colors"
+    [ngClass]="value==='list'
+      ? 'bg-gray-100 text-gray-800'
+      : 'text-gray-400 hover:text-gray-600'"
+    title="List view"
+  >
+    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 16 16">
+      <rect x="1" y="2" width="14" height="2" rx="1"/>
+      <rect x="1" y="7" width="14" height="2" rx="1"/>
+      <rect x="1" y="12" width="14" height="2" rx="1"/>
+    </svg>
+  </button>
+
+</div>

@@ -1,21 +1,32 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { COMMON_IMPORTS } from '../../../../shared/common';
 import { FilterMode, RestaurantTable, ViewMode } from '../../../../shared/models/table.model';
 import { TableStatus } from '../../../../shared/enums/tableStatus';
 import { routesStrings } from '../../../../shared/routes';
+import { ContentHeader } from '../../../../shared/components/dashboard/content-header/content-header';
+import { Router } from '@angular/router';
+import { GridToggleButton } from '../../../../shared/ui/grid-toggle-button/grid-toggle-button';
+import { GridListHeader } from '../../../../shared/components/dashboard/grid-list-header/grid-list-header';
 interface StatCard {
   type: 'total' | 'available' | 'occupied' | 'reserved';
   label: string;
   value: number;
   sub: string;
+  bg: string;
+  text: string;
+  subText: string;
+  icon: string;
 }
 @Component({
   selector: 'app-table-list',
-  imports: [...COMMON_IMPORTS],
+  imports: [...COMMON_IMPORTS,ContentHeader, GridToggleButton, GridListHeader],
   templateUrl: './table-list.html',
   styleUrl: './table-list.scss',
 })
 export class TableList {
+
+  router = inject(Router);
+
   routesString =  routesStrings
   viewMode = signal<ViewMode>('grid');
   currentFilter = signal<FilterMode>('all');
@@ -48,19 +59,59 @@ export class TableList {
   get availableCount(): number { return this.filteredTables.filter(t => t.status === TableStatus.Available).length; }
   get occupiedCount():  number { return this.filteredTables.filter(t => t.status === TableStatus.Occupied).length;  }
   get reservedCount():  number { return this.filteredTables.filter(t => t.status === TableStatus.Reserved).length;  }
+get stats(): StatCard[] {
+  const f = this.filteredTables;
 
-  get stats(): StatCard[] {
-    const f = this.filteredTables;
-    return [
-      { type: 'total',     label: 'Total tables',    value: f.length,                                   sub: `${this.allTables.length} overall`  },
-      { type: 'available', label: 'Available',        value: f.filter(t=>t.status==='available').length, sub: 'Ready to seat'                     },
-      { type: 'occupied',  label: 'Occupied',         value: f.filter(t=>t.status==='occupied').length,  sub: 'Currently dining'                  },
-      { type: 'reserved',  label: 'Reserved',         value: f.filter(t=>t.status==='reserved').length,  sub: 'Upcoming bookings'                 },
-    ];
-  }
+  return [
+    {
+      type: 'total',
+      label: 'Total tables',
+      value: f.length,
+      sub: `${this.allTables.length} overall`,
+      bg: 'bg-blue-100',
+      text: 'text-blue-600',
+      subText: 'text-blue-500',
+      icon: 'total'
+    },
+    {
+      type: 'available',
+      label: 'Available',
+      value: f.filter(t => t.status === 'available').length,
+      sub: 'Ready to seat',
+      bg: 'bg-emerald-100',
+      text: 'text-emerald-600',
+      subText: 'text-emerald-500',
+      icon: 'available'
+    },
+    {
+      type: 'occupied',
+      label: 'Occupied',
+      value: f.filter(t => t.status === 'occupied').length,
+      sub: 'Currently dining',
+      bg: 'bg-orange-100',
+      text: 'text-orange-500',
+      subText: 'text-orange-400',
+      icon: 'occupied'
+    },
+    {
+      type: 'reserved',
+      label: 'Reserved',
+      value: f.filter(t => t.status === 'reserved').length,
+      sub: 'Upcoming bookings',
+      bg: 'bg-amber-100',
+      text: 'text-amber-600',
+      subText: 'text-amber-500',
+      icon: 'reserved'
+    }
+  ];
+}
 
   ngOnInit(): void {
     this.applyFilter();
+  }
+
+  addTable(){
+    this.router.navigate([this.routesString.table.create]);
   }
 
   setFilter(filter: FilterMode): void {

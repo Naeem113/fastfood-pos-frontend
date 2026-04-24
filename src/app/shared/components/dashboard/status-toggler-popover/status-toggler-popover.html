@@ -1,0 +1,141 @@
+<div class="bg-white border border-black/30 rounded-xl overflow-hidden w-[280px]">
+
+  <!-- Segmented control -->
+  <div *ngIf="config.segment?.length" class="px-4 py-3 border-b border-black/15">
+    <div class="flex bg-gray-100 rounded-full p-[3px] gap-[2px]">
+
+      <button
+        *ngFor="let opt of config.segment"
+        (click)="selectSegment(opt.value)"
+        class="flex-1 py-1.5 text-sm font-medium rounded-full transition-all duration-150"
+        [ngClass]="[
+          selectedSegment === opt.value
+            ? 'bg-white text-gray-900 shadow-[0_0_0_0.5px_rgba(0,0,0,0.3)]'
+            : 'text-gray-500',
+          opt.danger ? 'text-red-600' : ''
+        ]"
+      >
+        {{ opt.label }}
+      </button>
+
+    </div>
+  </div>
+
+  <!-- Expand rows -->
+  <div *ngFor="let row of config.expandRows" class="border-b border-black/15 last:border-none">
+
+    <!-- Row -->
+    <div
+      (click)="toggleRow(row.key)"
+      class="flex items-center justify-between px-4 py-3 cursor-pointer select-none transition-colors hover:bg-gray-100"
+    >
+
+      <!-- Left -->
+      <div class="flex items-center gap-2 text-sm text-gray-900">
+
+        <ng-container [ngSwitch]="row.icon">
+
+          <!-- clock -->
+          <svg *ngSwitchCase="'clock'" class="w-4 h-4" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4">
+            <circle cx="8" cy="8" r="6.5"/>
+            <polyline points="8,5 8,8 10,10" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+
+          <!-- grid -->
+          <svg *ngSwitchCase="'grid'" class="w-4 h-4" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4">
+            <rect x="2" y="2" width="5" height="5" rx="1.2"/>
+            <rect x="9" y="2" width="5" height="5" rx="1.2"/>
+            <rect x="2" y="9" width="5" height="5" rx="1.2"/>
+            <rect x="9" y="9" width="5" height="5" rx="1.2"/>
+          </svg>
+
+          <!-- user -->
+          <svg *ngSwitchCase="'user'" class="w-4 h-4" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4">
+            <circle cx="8" cy="5.5" r="3"/>
+            <path d="M2 14c0-3 2.7-5 6-5s6 2 6 5" stroke-linecap="round"/>
+          </svg>
+
+          <!-- tag -->
+          <svg *ngSwitchCase="'tag'" class="w-4 h-4" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4">
+            <path d="M3 3h4.5l5.5 5.5-4.5 4.5L3 7.5V3z" stroke-linejoin="round"/>
+            <circle cx="6" cy="6" r="1" fill="currentColor" stroke="none"/>
+          </svg>
+
+          <!-- default -->
+          <svg *ngSwitchDefault class="w-4 h-4" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4">
+            <line x1="2" y1="5" x2="14" y2="5" stroke-linecap="round"/>
+            <line x1="4" y1="8" x2="12" y2="8" stroke-linecap="round"/>
+            <line x1="6" y1="11" x2="10" y2="11" stroke-linecap="round"/>
+          </svg>
+
+        </ng-container>
+
+        <span>{{ row.label }}</span>
+      </div>
+
+      <!-- Right -->
+      <div class="flex items-center gap-1.5 text-xs text-gray-500">
+
+        <span class="truncate max-w-[120px]">
+          {{ rowState[row.key]?.display }}
+        </span>
+
+        <span
+          class="flex items-center transition-transform duration-200"
+          [ngClass]="rowState[row.key]?.open ? 'rotate-180' : ''"
+        >
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M3 5l4 4 4-4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+
+      </div>
+    </div>
+
+    <!-- Expand content -->
+    <div
+      class="overflow-hidden transition-all duration-200"
+      [ngClass]="rowState[row.key]?.open ? 'max-h-[300px]' : 'max-h-0'"
+    >
+
+      <div class="flex flex-wrap gap-2 px-4 pt-2 pb-3">
+
+        <button
+          *ngFor="let chip of row.chips"
+          (click)="selectChip(row, chip.value)"
+          class="px-3 py-1.5 text-xs border rounded-full transition-all duration-150"
+          [ngClass]="isChipActive(row, chip.value)
+            ? 'bg-black text-white border-black'
+            : 'text-gray-500 border-black/30 hover:bg-gray-100'"
+        >
+          {{ chip.label }}
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <div class="flex gap-2.5 px-4 py-3">
+
+    <button
+      (click)="onCancel()"
+      class="flex-1 py-2.5 text-sm font-medium border border-black/30 rounded-full
+             text-gray-900 hover:bg-gray-100 transition"
+    >
+      {{ cancelLabel }}
+    </button>
+
+    <button
+      (click)="onApply()"
+      class="flex-1 py-2.5 text-sm font-medium rounded-full
+             bg-black text-white hover:opacity-85 transition"
+    >
+      {{ applyLabel }}
+    </button>
+
+  </div>
+
+</div>

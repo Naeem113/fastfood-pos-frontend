@@ -33,8 +33,8 @@ export class ModalService {
    * @param config - Modal configuration
    * @returns Promise<ModalResult> - resolves with { confirmed, value }
    */
-  open<T>(config: ModalConfig<T>): Promise<ModalResult<T>> {
-    this._config.set(config);
+  open<T>(config?: ModalConfig<T>): Promise<ModalResult<T>> {
+    this._config.set(config||null);
     this._isOpen.set(true);
 
     return new Promise<ModalResult<T>>((resolve) => {

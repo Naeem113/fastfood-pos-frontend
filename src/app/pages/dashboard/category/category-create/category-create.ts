@@ -10,10 +10,13 @@ import { MediaPicker } from '../../../../shared/components/dashboard/media-picke
 import { ParentCategoryModal } from '../../../../shared/components/dashboard/modals/parent-category-modal/parent-category-modal';
 import { Category } from '../category';
 import { ModalService } from '../../../../core/services/modal.service';
+import { BranchesSelectionModal } from '../../../../shared/components/dashboard/modals/branches-selection-modal/branches-selection-modal';
+import { BranchDto } from '../../../../shared/models/branch.model';
+import { CustomDialogService } from '../../../../core/services/custom.dialog.service';
 
 @Component({
   selector: 'app-category-create',
-  imports: [...COMMON_IMPORTS, FormField, CoverColorPicker, MediaPicker, ParentCategoryModal],
+  imports: [...COMMON_IMPORTS, FormField, CoverColorPicker, MediaPicker],
   templateUrl: './category-create.html',
   styleUrls: ['./category-create.scss'],
 })
@@ -33,6 +36,7 @@ export class CategoryCreate {
   // ========================
   router = inject(Router);
   apiService = inject(ApiService)
+  dialogService = inject(CustomDialogService);
 
 
   saveCategory() {
@@ -63,20 +67,39 @@ export class CategoryCreate {
   }
 
   private modalService = inject(ModalService);
-
   selectedCategory: Category | null = null;
 
   async openCategoryModal() {
-    const result = await this.modalService.open<Category>({
-      title: 'Parent category',
-      subtitle: 'Select a parent category to nest this category underneath it.',
+    const ref =this.dialogService.open(ParentCategoryModal, {
+      data: {
+        title: 'Parent Category',
+        description: 'Select a parent category to nest this category underneath it.',
+      }
     });
 
-    if (result.confirmed && result.value) {
-      this.selectedCategory = result.value;
-      console.log('User selected:', result.value);
-    } else {
-      console.log('Modal dismissed — no selection made');
-    }
+    ref?.onClose.subscribe((result: Category) => {
+      if (result) {
+        this.selectedCategory = result;
+        console.log('User selected:', result);
+      } else {
+        console.log('Modal dismissed — no selection made');
+      }
+    });
+  }
+
+  async openBranchesModal() {
+    const ref = this.dialogService.open(BranchesSelectionModal, {
+      data: {
+        title: 'Branch / Outlet Association',
+        description: 'Select a branch to associate this category with.',
+      }
+    });
+    ref?.onClose.subscribe((result: BranchDto) => {
+      if (result) {
+        console.log('User selected branch:', result);
+      } else {
+        console.log('Branch selection modal dismissed — no selection made');
+      }
+    });
   }
 }
