@@ -1,0 +1,32 @@
+  <div class="flex flex-col gap-6">
+    <!-- Header -->
+  <div
+    class="bg-white flex items-center justify-between px-4 sm:px-10 py-10"
+  >
+    <!-- Close Button -->
+    <button
+      (click)="closeClick.emit()"
+      class="w-11 h-11 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-200 transition-colors"
+    >
+      <i class="pi pi-times text-gray-700"></i>
+    </button>
+
+    <h1 class="text-2xl sm:text-3xl font-bold text-primary">{{title}}</h1>
+
+    <!-- Save Button -->
+    <button
+      (click)="buttonClick.emit()"
+      class="bg-primary text-white text-sm font-semibold px-6 py-3 rounded-full hover:bg-primary-hover transition-colors"
+    >
+      @if(buttonIcon){
+        <i class="pi pi-{{buttonIcon}} text-sm" ></i>
+      }
+      {{buttonText}}
+    </button>
+  </div>
+
+    <ng-content></ng-content>
+
+
+
+  </div>

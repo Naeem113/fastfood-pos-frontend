@@ -3,6 +3,7 @@ import { Category, ModalService } from '../../../../../core/services/modal.servi
 import { COMMON_IMPORTS } from '../../../../common';
 import { Modal } from '../../../../ui/modal/modal';
 import { BranchDto } from '../../../../models/branch.model';
+import { DynamicDialogConfig } from 'primeng/dynamicdialog';
 
 @Component({
   selector: 'app-branches-selection-modal',
@@ -12,11 +13,13 @@ import { BranchDto } from '../../../../models/branch.model';
 })
 export class BranchesSelectionModal {
 
+  // ref: DynamicDialogRef = inject(DynamicDialogRef);
+  config = inject(DynamicDialogConfig);
   searchQuery = signal('');
-  selectedBranch = signal<BranchDto | null>(null);
+  selectedBranch = signal<BranchDto[] | []>([]);
 
-  // Hardcoded categories — in real app, pass via config.data or a CategoryService
-  private allCategories = signal<BranchDto[]>([
+  // Hardcoded branches — in real app, pass via config.data or a CategoryService
+  allBranches = signal<BranchDto[]>([
     {
         address: {
             street: "DHA Phase 6",
@@ -40,23 +43,45 @@ export class BranchesSelectionModal {
     }
   ]);
 
-  filteredCategories = computed(() => {
+  filteredBranches = computed(() => {
     const q = this.searchQuery().toLowerCase();
-    return this.allCategories().filter(c =>
+    return this.allBranches().filter(c =>
       c.name.toLowerCase().includes(q)
     );
   });
 
   ngOnInit() {
-    // Pre-select "None" by default
-    this.selectedBranch.set(this.allCategories()[0]);
+    const ids: string[] = this.config.data?.value || [];
+    const isMulti = this.config.data?.multiselect;
+
+    const selected = this.allBranches().filter(b => ids.includes(b.id));
+
+    this.selectedBranch.set(isMulti ? selected : selected.slice(0, 1));
   }
 
   select(branch: BranchDto) {
-    this.selectedBranch.set(branch);
+    const isMulti = this.config.data?.multiSelect;
+
+    if (isMulti) {
+      const current = this.selectedBranch();
+
+      const exists = current.find(b => b.id === branch.id);
+
+      if (exists) {
+        // ❌ remove if already selected
+        this.selectedBranch.set(current.filter(b => b.id !== branch.id));
+      } else {
+        // ✅ add
+        this.selectedBranch.set([...current, branch]);
+      }
+
+    } else {
+      // ✅ single select
+      this.selectedBranch.set([branch]);
+    }
   }
 
   isSelected(branch: BranchDto): boolean {
-    return this.selectedBranch()?.id === branch.id;
+    return this.selectedBranch().some(b => b.id === branch.id);
   }
 }

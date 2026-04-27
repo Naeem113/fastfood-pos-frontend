@@ -17,13 +17,13 @@ export const waiterRoutes: Routes = [
             (m) => m.WaiterList,
           )
       },
-      // {
-      //   path: 'create',
-      //   loadComponent: () =>
-      //     import('./waiter-create/waiter-create').then(
-      //       (m) => m.WaiterCreate,
-      //     )
-      // },
+      {
+        path: 'create',
+        loadComponent: () =>
+          import('./waiter-create/waiter-create').then(
+            (m) => m.WaiterCreate,
+          )
+      },
 
 
     ],

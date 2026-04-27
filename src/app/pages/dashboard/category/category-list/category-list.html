@@ -1,8 +1,14 @@
-<div class="p-4">
+<div class="p-6 h-full overflow-hidden flex flex-col">
+  <app-content-header
+    buttonText="Create Category"
+    title="All Categories"
+    description="Organize your products into categories to make them easier to find and manage."
+    buttonIcon="plus"
+    (buttonClick)="goToCreateCategory()"
+  ></app-content-header>
 
-  <div class="relative flex gap-4 bg-[#fafafa] rounded-2xl p-3 border border-gray-100">
+    <!-- <div class="sticky top-0 z-10 flex gap-4 bg-[#fafafa] rounded-2xl p-3 border border-gray-100">
 
-    <!-- Icon -->
     <div class="flex justify-center">
       <img
         src="https://stable.joinposter.com/i/manage/emoji/categories@2x.png"
@@ -11,13 +17,11 @@
       />
     </div>
     <div class="flex flex-col gap-1 max-w-4xl">
-      <!-- Title -->
       <h3 class=" text-lg font-semibold text-gray-800">
         <span class="!text-green-600 font-bold">✔</span>
         Create a category
       </h3>
 
-      <!-- Description -->
       <p class="text-sm text-gray-600  leading-relaxed">
         Create categories of products and dishes for waiters to quickly find them on the Point of Sale.
         For example, Soups, Pastries, and Drinks. Also use categories for printer routing and sales reporting, and for selling items on retail online sites and non-restaurant POS modes.
@@ -26,5 +30,151 @@
 
     <i class="pi pi-times absolute top-4 right-4 cursor-pointer text-gray-500 hover:text-gray-700"></i>
 
-  </div>
+  </div> -->
+
+    <app-grid-list-header>
+      <div class="flex flex-col sm:flex-row gap-3 w-full lg:w-auto flex-1">
+        <div class="relative flex-1 sm:flex-initial">
+          <svg
+            class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+            />
+          </svg>
+          <input
+            type="text"
+            placeholder="Search"
+            (input)="dt.filterGlobal($event.target.value, 'contains')"
+            class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent"
+          />
+        </div>
+        <button
+          class="px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 whitespace-nowrap"
+        >
+          Category
+        </button>
+        <div class="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-lg">
+          <span class="text-sm text-gray-600">Status</span>
+          <span class="text-sm font-medium text-gray-900">Active</span>
+        </div>
+        <button
+          class="px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 flex items-center gap-2"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"
+            />
+          </svg>
+          <span class="whitespace-nowrap">All filters</span>
+        </button>
+      </div>
+      <div class="flex gap-3 w-full sm:w-auto">
+        <button
+          class="flex-1 sm:flex-initial px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 flex items-center justify-center gap-2"
+        >
+          <span>Actions</span>
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M19 9l-7 7-7-7"
+            />
+          </svg>
+        </button>
+        <button
+          class="flex-1 sm:flex-initial px-6 py-2 bg-black text-white rounded-lg text-sm font-semibold hover:bg-gray-800 whitespace-nowrap"
+        >
+          Create item
+        </button>
+      </div>
+    </app-grid-list-header>
+<!-- <div class=" bg-white border p-4 rounded-lg flex-1 min-h-0"> -->
+
+            <p-table
+                [scrollable]="true"
+                scrollHeight="flex"
+                styleClass="h-full"
+                #dt
+                [value]="products"
+                [rows]="10"
+                [columns]="cols"
+                [paginator]="false"
+                [globalFilterFields]="['name', 'country.name', 'representative.name', 'status']"
+                [(selection)]="selectedProducts"
+                [rowHover]="false"
+                dataKey="id"
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                [showCurrentPageReport]="true"
+            >
+                <ng-template #header>
+                    <tr>
+                      <th style="width: 5%">
+                        <p-tableHeaderCheckbox />
+                      </th>
+                        <th style="width: 10%;">Image</th>
+                        <th pSortableColumn="name" style="width:50%;">
+                            <div class="flex items-center gap-2">
+                                Name
+                                <p-sortIcon field="name" />
+                            </div>
+                        </th>
+                        <th pSortableColumn="category">
+                            <div class="flex items-center gap-2">
+                                Parent Category
+                                <p-sortIcon field="category" />
+                            </div>
+                        </th>
+                        <th pSortableColumn="rating">
+                          <div class="flex items-center gap-2">
+                            Total Items
+                            <p-sortIcon field="rating" />
+                          </div>
+                        </th>
+                        <th pSortableColumn="inventoryStatus" style="width: 10%">
+                          <div class="flex items-center gap-2">
+                            Status
+                            <p-sortIcon field="inventoryStatus" />
+                          </div>
+                        </th>
+                        <th style="width: 30%;"></th>
+                    </tr>
+                </ng-template>
+                <ng-template #body let-product>
+                    <tr>
+
+                        <td style="width: 5%">
+                            <p-tableCheckbox [value]="product" />
+                        </td>
+                        <td style="width: 10%">
+                            <img [src]="'https://primefaces.org/cdn/primeng/images/demo/product/' + product.image" [alt]="product.name" style="width: 100px;height: 64px;" class="rounded" />
+                        </td>
+                        <td style="width: 50%;">{{ product.name }}</td>
+
+                        <td>{{ product.category }}</td>
+                        <td>
+                          {{product.inventoryStatus}}
+                        </td>
+                        <td>{{ product.category }}</td>
+                        <td style="width: 30%;text-align: center;">
+                            <p-button icon="pi pi-pencil" class="mr-2" [rounded]="true" [outlined]="true" (click)="editProduct()" />
+                            <p-button icon="pi pi-trash" severity="danger" [rounded]="true" [outlined]="true" (click)="deleteProduct()" />
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+
+        <!-- </div> -->
+
+
 </div>

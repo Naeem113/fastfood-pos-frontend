@@ -1,4 +1,4 @@
-<div class="p-6 h-full overflow-hidden bg-gray-50 flex flex-col">
+<div class="p-6 h-full overflow-hidden flex flex-col">
   <app-content-header
     [title]="'All tables'"
     [description]="'Manage your restaurant tables, their status, and more.'"
@@ -93,7 +93,7 @@
       }
     </div>
   </app-content-header>
-  <div class="flex-1 min-h-0 flex flex-col gap-2 overflow-y-auto">
+  <div class="overflow-y-auto no-scrollbar">
     <app-grid-list-header>
       <div class="flex border border-gray-200 rounded-lg overflow-hidden bg-white shadow-sm">
         <button
@@ -111,7 +111,7 @@
       </div>
       <app-grid-toggle-button [(value)]="viewMode"></app-grid-toggle-button>
     </app-grid-list-header>
-    <div *ngIf="viewMode() === 'grid'" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+    <div *ngIf="viewMode() === 'grid'" class="grid grid-flow-col-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
       <div
         *ngFor="let table of filteredTables; trackBy: trackById"
         [class]="
@@ -202,24 +202,24 @@
         <div class="absolute top-4 right-4 hidden flex-col gap-2 group-hover:flex">
           <button
             [class]="
-              'w-11 h-11 rounded-full border !text-primary-hover hover:!text-white transition-fast border-gray-300 flex items-center justify-center transition-colors ' +
+              'w-10 h-10 rounded-full border transition-fast flex items-center justify-center transition-colors ' +
               (table.status === 'available'
-                ? 'hover:bg-emerald-300 hover:border-emerald-300'
+                ? 'hover:bg-emerald-300/20 border-emerald-300 text-emerald-300'
                 : table.status === 'occupied'
-                ? 'hover:bg-orange-300 hover:border-orange-300'
-                : 'hover:bg-amber-300 hover:border-amber-300')
+                ? 'hover:bg-orange-300/20 border-orange-300 text-orange-300'
+                : 'hover:bg-amber-300/20 border-amber-300 text-amber-300')
             "
           >
-            <i class="pi pi-pencil"></i>
+            <i class="pi pi-pencil text-xs"></i>
           </button>
           <button
             [class]="
-              'w-11 h-11 rounded-full border !text-primary-hover hover:!text-white transition-fast border-gray-300 flex items-center justify-center transition-colors ' +
+              'w-10 h-10 rounded-full border transition-fast flex items-center justify-center transition-colors ' +
               (table.status === 'available'
-                ? 'hover:bg-red-500 hover:border-red-500'
+                ? 'hover:bg-red-500/20 border-red-500 text-red-500'
                 : table.status === 'occupied'
-                ? 'hover:bg-red-500 hover:border-red-500'
-                : 'hover:bg-red-500 hover:border-red-500')
+                ? 'hover:bg-red-500/20 border-red-500 text-red-500'
+                : 'hover:bg-red-500/20 border-red-500 text-red-500')
             "
           >
             <i class="pi pi-trash"></i>

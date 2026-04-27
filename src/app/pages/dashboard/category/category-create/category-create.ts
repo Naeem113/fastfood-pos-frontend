@@ -13,10 +13,11 @@ import { ModalService } from '../../../../core/services/modal.service';
 import { BranchesSelectionModal } from '../../../../shared/components/dashboard/modals/branches-selection-modal/branches-selection-modal';
 import { BranchDto } from '../../../../shared/models/branch.model';
 import { CustomDialogService } from '../../../../core/services/custom.dialog.service';
+import { FormContentHeader } from '../../../../shared/components/dashboard/form-content-header/form-content-header';
 
 @Component({
   selector: 'app-category-create',
-  imports: [...COMMON_IMPORTS, FormField, CoverColorPicker, MediaPicker],
+  imports: [...COMMON_IMPORTS, FormField, CoverColorPicker, MediaPicker, FormContentHeader],
   templateUrl: './category-create.html',
   styleUrls: ['./category-create.scss'],
 })

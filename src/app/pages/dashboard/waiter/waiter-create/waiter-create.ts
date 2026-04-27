@@ -1,33 +1,36 @@
-import { Component, inject, Signal, signal } from '@angular/core';
-import { COMMON_IMPORTS } from '../../../../shared/common';
-import { form } from '@angular/forms/signals';
+import { Component, inject, signal } from '@angular/core';
 import { routesStrings } from '../../../../shared/routes';
-import { ApiService } from '../../../../core/services/api.service';
+import { form } from '@angular/forms/signals';
+import { waiterFormModel, waiterSchema } from '../form';
 import { Router } from '@angular/router';
-import { tableFormModel, tableSchema } from '../form';
-import { FloatingInput } from '../../../../shared/ui/floating-input/floating-input';
+import { ApiService } from '../../../../core/services/api.service';
 import { CustomDialogService } from '../../../../core/services/custom.dialog.service';
 import { BranchesSelectionModal } from '../../../../shared/components/dashboard/modals/branches-selection-modal/branches-selection-modal';
+import { COMMON_IMPORTS } from '../../../../shared/common';
+import { FloatingInput } from '../../../../shared/ui/floating-input/floating-input';
+import { collapse } from '../../../../core/services/animation.service';
 import { FormContentHeader } from '../../../../shared/components/dashboard/form-content-header/form-content-header';
+import { AuthStore } from '../../../../core/stores/auth.store';
 import { BranchDto } from '../../../../shared/models/branch.model';
 
 @Component({
-  selector: 'app-table-create',
+  selector: 'app-waiter-create',
   imports: [...COMMON_IMPORTS, FloatingInput, FormContentHeader],
-  templateUrl: './table-create.html',
-  styleUrls: ['./table-create.scss'],
+  templateUrl: './waiter-create.html',
+  styleUrl: './waiter-create.scss',
+  animations: [collapse]
 })
-export class TableCreate {
-  // ========================
+export class WaiterCreate {
+   // ========================
   // Variables & signals
   // ========================
   routesStrings =  routesStrings
-  tableForm = form(tableFormModel, tableSchema)
+  waiterForm = form(waiterFormModel, waiterSchema)
   formSubmitted = signal<boolean>(false);
   loading = signal<boolean>(false);
-  seatCapacityList: number[] = [2, 4, 6, 8, 10];
-  selectedBranchesCount =  signal<number>(0);
+  showAddress = signal<boolean>(false);
   selectedBranchesNames = signal<string>('');
+  selectedBranchesCount = signal<number>(0);
   totalBranchesCount = signal<number>(1);
 
   // ========================
@@ -36,18 +39,23 @@ export class TableCreate {
   router = inject(Router);
   apiService = inject(ApiService)
   dialogService = inject(CustomDialogService);
+  authStore = inject(AuthStore)
 
-
-  saveTable() {
-    this.formSubmitted.set(true);
-    if(this.loading() || this.tableForm().invalid()) {
-      return;
-    }
-    this.loading.set(true);
+  constructor(){
   }
 
-  goToTables() {
-    this.router.navigate([this.routesStrings.table.list]);
+
+  saveWaiter() {
+    this.formSubmitted.set(true);
+    // if(this.loading() || this.waiterForm().invalid()) {
+    //   return;
+    // }
+    this.loading.set(true);
+    console.log(this.waiterForm().value())
+  }
+
+  goToWaiters() {
+    this.router.navigate([this.routesStrings.waiter.list]);
   }
 
   openBranchesModal() {
@@ -56,7 +64,7 @@ export class TableCreate {
         title: 'Select Branch',
         description: 'Select a branch to assign this waiter.',
         multiSelect: false,
-        value: this.tableForm().value().branchId?[this.tableForm().value().branchId]:[]
+        value: this.waiterForm().value().branchId?[this.waiterForm().value().branchId]:[]
       }
     });
 
@@ -69,10 +77,11 @@ export class TableCreate {
         .map(branch => branch.name)
         .join(', ');
         this.selectedBranchesNames.set(branchesName);
-        this.tableForm.branchId().value.set(result[0].id);
+        this.waiterForm.branchId().value.set(result[0].id);
       } else {
         console.log('Modal dismissed — no selection made');
       }
     });
   }
+
 }

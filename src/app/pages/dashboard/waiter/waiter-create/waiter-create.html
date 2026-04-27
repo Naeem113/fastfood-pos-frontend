@@ -1,75 +1,111 @@
 <div class="h-full overflow-hidden bg-white flex flex-col">
 
   <app-form-content-header
-    title="Add Table"
+    title="Add Waiter"
     buttonText="Save"
-    (buttonClick)="saveTable()"
-    (closeClick)="goToTables()"
+    (buttonClick)="saveWaiter()"
+    (closeClick)="goToWaiters()"
   ></app-form-content-header>
 
   <!-- Main Content -->
   <div class="overflow-y-auto pt-10 pb-5 px-4 max-w-2xl mx-auto w-full no-scrollbar">
+
     <!-- Table Name Input -->
      <div class="flex flex-col gap-3">
        <app-floating-input
          label="Name"
-         placeholder="e.g, Table"
+         placeholder="e.g, John"
          [required]="true"
-         [field]="tableForm.name"
+         [field]="waiterForm.name"
          [submitted]="formSubmitted">
        </app-floating-input>
 
        <app-floating-input
-         label="Table Number"
-         [required]="true"
-         [field]="tableForm.tableNumber"
-         [submitted]="formSubmitted">
-       </app-floating-input>
-
-        <app-floating-input
-         label="Section / Floor"
-         placeholder="e.g, Hall, Ground, VIP"
-         [field]="tableForm.section"
+         label="Phone"
+         [required]="false"
+         [field]="waiterForm.phone"
          [submitted]="formSubmitted">
        </app-floating-input>
 
      </div>
+    <div class="h-0.5 bg-gray-200 w-full my-4 mt-8"></div>
 
     <!-- Seats Row -->
-    <div class="flex items-center gap-4 py-4">
+    <div class="flex items-center gap-4 py-4 cursor-pointer" (click)="showAddress.set(!showAddress())">
       <!-- Hierarchy Icon -->
       <div class="flex-shrink-0">
-        <i class="pi pi-table w-6 h-6 text-gray-700"></i>
+        <i class="pi pi-map-marker w-6 h-6 text-gray-700"></i>
       </div>
 
       <!-- Text -->
       <div class="flex-1 min-w-0">
-        <p class="text-sm font-semibold text-primary">Seats / Capacity</p>
+        <p class="text-sm font-semibold text-primary">Address detail</p>
         <p class="text-sm text-gray-500 mt-0.5">
-          Select the number of seats for this table.
+            Provide the waiter’s residential address to maintain accurate staff records.
         </p>
       </div>
+      <!-- Select Link -->
+      <button
+        (click)="showAddress.set(!showAddress())"
+        class="text-sm font-semibold text-primary underline underline-offset-2 hover:text-gray-600 transition-colors flex-shrink-0"
+      >
+        <i class="pi pi-chevron-down" ></i>
+      </button>
+    </div>
+    @if(showAddress()){
+      <div [@collapse] class="flex flex-col gap-6 mt-2">
+          <app-floating-input
+           class="w-full"
+           label="Street"
+           placeholder=""
+           [field]="waiterForm.address.street"
+           [submitted]="formSubmitted">
+         </app-floating-input>
+          <div class="flex flex-col md:flex-row gap-2">
+          <app-floating-input
+           class="w-full"
+           label="City"
+           placeholder="e.g, Lahore"
+           [field]="waiterForm.address.city"
+           [submitted]="formSubmitted">
+         </app-floating-input>
 
-    </div>
-    <!-- <div class="h-px bg-gray-200 w-full my-4"></div> -->
-    <div class="grid grid-cols-3 sm:grid-cols-5 gap-4 border border-gray-200 p-4 rounded-2xl">
-      @for (item of seatCapacityList; track $index) {
-        <div
-          (click)="tableForm.capacity().value.set(item)"
-          [ngClass]="{
-            'bg-black text-white border-black': tableForm.capacity().value() === item,
-            'bg-white text-gray-800 hover:bg-gray-100': tableForm.capacity().value() !== item
-          }"
-          class="h-20 flex items-center justify-center rounded-xl border cursor-pointer transition-base font-medium text-lg shadow-sm active:scale-95"
-        >
-          {{ item }}
+        <app-floating-input
+           class="w-full"
+           label="State"
+           placeholder="e.g, Punjab"
+           [field]="waiterForm.address.state"
+           [submitted]="formSubmitted">
+         </app-floating-input>
+
         </div>
-      }
-    </div>
+          <div class="flex flex-col md:flex-row gap-2">
+          <app-floating-input
+           class="w-full"
+           label="zip Code"
+           placeholder="e.g, 56300"
+           [field]="waiterForm.address.street"
+           [submitted]="formSubmitted">
+         </app-floating-input>
+
+        <app-floating-input
+           class="w-full"
+           label="Country"
+           placeholder="e.g, Pakistan"
+           [field]="waiterForm.address.country"
+           [submitted]="formSubmitted">
+         </app-floating-input>
+
+        </div>
+      </div>
+    }
+
+    <!-- <div class="h-px bg-gray-200 w-full my-4"></div> -->
+
     <div class="h-0.5 bg-gray-200 w-full my-4 mt-8"></div>
     <!-- Section Heading -->
     <h2 class="text-[19px] sm:text-xl font-bold text-gray-950 mb-5 mt-6 tracking-tight">
-      Sales branches and channels
+      Sales branch and status
     </h2>
     <div class="flex items-center gap-4 py-4">
       <!-- Hierarchy Icon -->
@@ -78,7 +114,7 @@
       </div>
 
       <!-- Text -->
-    <div class="flex-1 min-w-0">
+      <div class="flex-1 min-w-0">
         <div class="text-sm font-semibold text-primary">Branches <span class="px-2 text-xs rounded-full bg-yellow-300/70 text-yellow-800">{{selectedBranchesCount()}} of {{totalBranchesCount()}}</span> </div>
         <p class="text-sm text-gray-500 mt-0.5">
           @if(selectedBranchesNames()){
@@ -103,49 +139,22 @@
     <div class="flex items-center gap-4 pb-10">
       <!-- POS Icon -->
       <div class="shrink-0">
-        <svg
-          width="28"
-          height="28"
-          viewBox="0 0 28 28"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <!-- Receipt / register icon -->
-          <rect x="5" y="4" width="14" height="18" rx="1.5" stroke="#111" stroke-width="1.7" />
-          <rect x="8" y="8" width="8" height="5" rx="1" stroke="#111" stroke-width="1.5" />
-          <path d="M8 17h8M8 20h5" stroke="#111" stroke-width="1.5" stroke-linecap="round" />
-          <path
-            d="M19 10h2a1 1 0 011 1v10a1 1 0 01-1 1h-2"
-            stroke="#111"
-            stroke-width="1.5"
-            stroke-linecap="round"
-          />
-        </svg>
+        <i class="pi pi-power-off" ></i>
       </div>
 
       <!-- Text Block -->
       <div class="flex-1 min-w-0">
-        <p class="text-[15px] font-bold text-gray-950 leading-snug">Points of sale</p>
+        <p class="text-[15px] font-bold text-gray-950 leading-snug">Active status</p>
         <p class="text-[13px] text-gray-500 mt-0.5 leading-snug">
-          Categories appear on Standard mode and Retail mode only.
+          Enable or disable this waiter. Inactive staff cannot access the system or be assigned to orders.
         </p>
       </div>
 
       <!-- Info Icon -->
       <button class="shrink-0 text-gray-400 hover:text-gray-600 transition-colors">
-        <svg
-          width="20"
-          height="20"
-          viewBox="0 0 20 20"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <circle cx="10" cy="10" r="8.5" stroke="#9ca3af" stroke-width="1.5" />
-          <path d="M10 9v5" stroke="#9ca3af" stroke-width="1.5" stroke-linecap="round" />
-          <circle cx="10" cy="6.5" r="0.75" fill="#9ca3af" />
-        </svg>
+        <i class="pi pi-info-circle"></i>
       </button>
-
+<!-- When inactive, the waiter will not appear in POS or staff assignments. -->
       <!-- Toggle -->
       <label class="relative inline-flex cursor-pointer items-center">
         <!-- Hidden Checkbox -->

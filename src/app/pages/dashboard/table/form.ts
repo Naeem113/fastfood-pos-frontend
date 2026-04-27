@@ -6,15 +6,18 @@ interface TableFormData {
   tableNumber: number;
   capacity: number;
   section: string;
+  branchId: string;
 }
 export const tableFormModel = signal<TableFormData>({
     name: '',
     tableNumber: 1,
     capacity: 2,
-    section: ''
+    section: '',
+    branchId: ''
 });
 
 export function tableSchema(schema: SchemaPathTree<TableFormData, PathKind.Root>) {
   required(schema.name, { message: 'Table name is required' });
   required(schema.tableNumber, { message: 'Table number is required' });
+  required(schema.branchId, { message: 'Branch is required'})
 }

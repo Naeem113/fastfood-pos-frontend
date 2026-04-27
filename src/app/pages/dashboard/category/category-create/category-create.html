@@ -1,28 +1,14 @@
-<div class="bg-white h-full">
-  <div
-    class="sticky top-0 left-0 right-0 z-50 bg-white flex items-center justify-between px-4 sm:px-10 py-10"
-  >
-    <!-- Close Button -->
-    <button
-      (click)="goToCategories()"
-      class="w-11 h-11 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-200 transition-colors"
-    >
-      <i class="pi pi-times text-gray-700"></i>
-    </button>
+<div class="h-full overflow-hidden bg-white flex flex-col">
 
-    <h1 class="text-2xl sm:text-3xl font-bold text-primary">Create category</h1>
-
-    <!-- Save Button -->
-    <button
-      (click)="saveCategory()"
-      class="bg-primary text-white text-sm font-semibold px-6 py-3 rounded-full hover:bg-primary-hover transition-colors"
-    >
-      Save
-    </button>
-  </div>
+  <app-form-content-header
+    title="Add Category"
+    buttonText="Save"
+    (buttonClick)="saveCategory()"
+    (closeClick)="goToCategories()"
+  ></app-form-content-header>
 
   <!-- Main Content -->
-  <div class="pt-10 pb-5 px-4 max-w-2xl mx-auto w-full">
+  <div class="overflow-y-auto pt-10 pb-5 px-4 max-w-2xl mx-auto w-full no-scrollbar">
     <!-- Category Name Input -->
     <div class="mb-4 flex flex-col gap-2">
       <p class="text-base font-semibold text-primary">

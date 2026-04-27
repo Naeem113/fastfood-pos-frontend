@@ -7,6 +7,7 @@ import { ContentHeader } from '../../../../shared/components/dashboard/content-h
 import { Router } from '@angular/router';
 import { GridToggleButton } from '../../../../shared/ui/grid-toggle-button/grid-toggle-button';
 import { GridListHeader } from '../../../../shared/components/dashboard/grid-list-header/grid-list-header';
+import { PRIME_NG_IMPORTS } from '../../../../shared/primeng';
 interface StatCard {
   type: 'total' | 'available' | 'occupied' | 'reserved';
   label: string;
@@ -19,7 +20,7 @@ interface StatCard {
 }
 @Component({
   selector: 'app-table-list',
-  imports: [...COMMON_IMPORTS,ContentHeader, GridToggleButton, GridListHeader],
+  imports: [...COMMON_IMPORTS,ContentHeader, GridToggleButton, GridListHeader, PRIME_NG_IMPORTS],
   templateUrl: './table-list.html',
   styleUrl: './table-list.scss',
 })

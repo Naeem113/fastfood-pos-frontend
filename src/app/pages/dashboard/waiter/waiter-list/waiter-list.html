@@ -1,4 +1,4 @@
- <div class="p-6 h-full overflow-hidden bg-gray-50 flex flex-col">
+ <div class="p-6 h-full overflow-hidden flex flex-col">
   <app-content-header
     [title]="'All waiters'"
     [description]="'Manage your restaurant waiters, their status, and more.'"
@@ -10,6 +10,8 @@
   </app-content-header>
 
   <!-- ── Top bar ─────────────────────────────── -->
+  <div class="overflow-y-auto no-scrollbar">
+
    <app-grid-list-header>
     <div class="flex flex-wrap items-center gap-2 flex-1 min-w-0">
 
@@ -63,7 +65,7 @@
 
   <!-- ── Grid view ───────────────────────────── -->
   <div *ngIf="viewMode === 'grid'"
-    class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+    class="grid grid-flow-col-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
 
     <div *ngFor="let w of filteredWaiters; let i = index; trackBy: trackById"
       class="bg-white rounded-2xl border border-gray-200 p-4 flex flex-col items-center text-center gap-3 cursor-pointer hover:border-gray-300 hover:-translate-y-0.5 transition-all relative"
@@ -189,6 +191,7 @@
 
     <div *ngIf="filteredWaiters.length === 0"
       class="text-center py-16 text-gray-400">No waiters match</div>
+  </div>
   </div>
 <!-- parent.component.html -->
 <!-- <app-status-toggler-popover
