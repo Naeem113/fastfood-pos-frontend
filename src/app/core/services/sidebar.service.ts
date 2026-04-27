@@ -15,31 +15,68 @@ const MENU_ITEMS: MenuItem[] = [
     badge: { value: 1, color: 'accent' }
   },
   {
-    title: 'Categories',
-    icon: 'sitemap',
-    link: routesStrings.category.index,
+    title: 'Menu',
+    icon: 'book',
+    link: routesStrings.menu.item.list,
     active: false,
     access: ['company-admin'],
     badge: { value: 1, color: 'accent' },
     children: [
       {
-        title: 'list',
+        title: 'Items',
         icon: 'circle-on',
-        link: routesStrings.category.list,
+        link: routesStrings.menu.item.list,
         active: false,
         access: ['company-admin'],
-        badge: { value: 1, color: 'accent' }
+        badge: { value: 1, color: 'accent' },
+        children: [
+          {
+            title: 'list',
+            icon: 'circle-on',
+            link: routesStrings.menu.item.index,
+            active: false,
+            access: ['company-admin'],
+            badge: { value: 1, color: 'accent' }
+          },
+          {
+            title: 'create',
+            icon: 'circle-on',
+            link: routesStrings.menu.item.create,
+            active: false,
+            access: ['company-admin'],
+            badge: { value: 1, color: 'accent' }
+          }
+        ]
       },
       {
-        title: 'create',
+        title: 'Categories',
         icon: 'circle-on',
-        link: routesStrings.category.create,
+        link: routesStrings.menu.category.index,
         active: false,
         access: ['company-admin'],
-        badge: { value: 1, color: 'accent' }
-      }
+        badge: { value: 1, color: 'accent' },
+        children: [
+          {
+            title: 'list',
+            icon: 'circle-on',
+            link: routesStrings.menu.category.list,
+            active: false,
+            access: ['company-admin'],
+            badge: { value: 1, color: 'accent' }
+          },
+          {
+            title: 'create',
+            icon: 'circle-on',
+            link: routesStrings.menu.category.create,
+            active: false,
+            access: ['company-admin'],
+            badge: { value: 1, color: 'accent' }
+          }
+        ]
+      },
     ]
   },
+
   {
     title: 'Restaurant Setup',
     icon: 'shop',
@@ -131,6 +168,7 @@ readonly menu = computed(() => {
       .filter(item => !item.access || item.access.includes(role))
       .map(item => {
         const children = item.children ? filterAndMap(item.children) : [];
+        console.log(children);
 
         // ✅ Check if current item is active
 

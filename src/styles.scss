@@ -2,18 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('./app/shared/primeng/scss/checkbox.scss');
+
 .no-scrollbar {
   -webkit-overflow-scrolling: touch;
 
   /* Hide scrollbar (Chrome, Safari, Edge) */
-  scrollbar-width: none;       /* Firefox */
-  -ms-overflow-style: none;    /* IE/Edge */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
 }
 
 .no-scrollbar::-webkit-scrollbar {
-  display: none;               /* Chrome, Safari */
+  display: none; /* Chrome, Safari */
 }
-
 
 //table
 

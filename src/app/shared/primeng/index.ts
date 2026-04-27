@@ -6,6 +6,8 @@ import { TableModule } from 'primeng/table';
 import { ToolbarModule } from 'primeng/toolbar';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ToastModule } from 'primeng/toast';
 
 export const PRIME_NG_IMPORTS = [
   ButtonModule,
@@ -13,5 +15,7 @@ export const PRIME_NG_IMPORTS = [
   TableModule,
   ToolbarModule,
   IconFieldModule,
-  InputIconModule
+  InputIconModule,
+  ConfirmDialogModule,
+  ToastModule
 ];

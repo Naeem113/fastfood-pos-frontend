@@ -8,6 +8,8 @@ import { Router } from '@angular/router';
 import { GridToggleButton } from '../../../../shared/ui/grid-toggle-button/grid-toggle-button';
 import { GridListHeader } from '../../../../shared/components/dashboard/grid-list-header/grid-list-header';
 import { PRIME_NG_IMPORTS } from '../../../../shared/primeng';
+import { ConfirmService } from '../../../../core/services/confirm-dialog.service';
+import { collapse, slideX, slideY } from '../../../../core/services/animation.service';
 interface StatCard {
   type: 'total' | 'available' | 'occupied' | 'reserved';
   label: string;
@@ -23,10 +25,13 @@ interface StatCard {
   imports: [...COMMON_IMPORTS,ContentHeader, GridToggleButton, GridListHeader, PRIME_NG_IMPORTS],
   templateUrl: './table-list.html',
   styleUrl: './table-list.scss',
+  animations: [ slideY,slideX, collapse ],
+
 })
 export class TableList {
 
   router = inject(Router);
+  confirmService = inject(ConfirmService);
 
   routesString =  routesStrings
   viewMode = signal<ViewMode>('grid');
@@ -38,8 +43,8 @@ export class TableList {
     { label: 'Occupied',  value: TableStatus.Occupied },
     { label: 'Reserved',  value: TableStatus.Reserved },
   ];
-
-  private readonly allTables: RestaurantTable[] = [
+  selectedTables: RestaurantTable[] = [];
+  readonly allTables: RestaurantTable[] = [
     { id: 'T-01', status: TableStatus.Occupied,  section: 'Main',    seats: 2,  guest: 'Williams',   time: '7:30 PM', duration: '45 min' },
     { id: 'T-02', status: TableStatus.Available, section: 'Main',    seats: 4,  guest: null,          time: null,      duration: null     },
     { id: 'T-03', status: TableStatus.Occupied,  section: 'Main',    seats: 4,  guest: 'Martinez',    time: '8:00 PM', duration: '20 min' },
@@ -115,6 +120,10 @@ get stats(): StatCard[] {
     this.router.navigate([this.routesString.table.create]);
   }
 
+  editTable(table: RestaurantTable) {
+    this.router.navigate([this.routesString.table.create]);
+  }
+
   setFilter(filter: FilterMode): void {
     this.currentFilter.set(filter);
     this.applyFilter();
@@ -134,6 +143,25 @@ get stats(): StatCard[] {
 
   trackById(_: number, table: RestaurantTable): string {
     return table.id;
+  }
+
+  deleteSelectedTables() {
+    this.confirmService.delete(
+      async() => {
+        // Perform delete action here, e.g., call API to delete selected tables
+        console.log('Deleting tables:', this.selectedTables);
+        // After deletion, clear the selection
+        this.selectedTables = [];
+      }, `Are you sure you want to delete the selected ${this.selectedTables.length} tables?`
+    );
+  }
+
+  getStatusClass(status: TableStatus) {
+    return {
+      available: 'bg-emerald-100 text-emerald-600',
+      occupied: 'bg-orange-100 text-orange-600',
+      reserved: 'bg-amber-100 text-amber-600'
+    }[status];
   }
 
   private applyFilter(): void {

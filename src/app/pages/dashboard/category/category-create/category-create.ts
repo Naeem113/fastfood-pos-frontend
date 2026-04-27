@@ -64,7 +64,7 @@ export class CategoryCreate {
   }
 
   goToCategories() {
-    this.router.navigate([this.routesStrings.category.list]);
+    this.router.navigate([this.routesStrings.menu.category.list]);
   }
 
   private modalService = inject(ModalService);

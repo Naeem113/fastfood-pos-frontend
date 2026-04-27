@@ -3,6 +3,19 @@ export const routesStrings = {
   login: 'login',
   launcher: 'launcher',
   dashboard: 'dashboard',
+  menu: {
+    index: 'menu',
+    item: {
+      index: 'menu/items',
+      list: 'menu/items/list',
+      create: 'menu/items/create',
+    },
+    category: {
+      index: 'menu/categories',
+      list: 'menu/categories/list',
+      create: 'menu/categories/create',
+    },
+  },
   category: {
     index: 'categories',
     list: 'categories/list',

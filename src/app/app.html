@@ -1,2 +1,42 @@
   <router-outlet></router-outlet>
 <p-toast position="bottom-right"></p-toast>
+<p-confirmDialog
+  [visible]="confirm.visible()"
+  (visibleChange)="onDialogVisibleChange($event)"
+  [modal]="true"
+  [header]="confirm.currentConfig()?.header"
+  [message]="confirm.currentConfig()?.message"
+  [icon]="confirm.currentConfig()?.icon"
+  [closable]="!confirm.loading()"
+  (onHide)="confirm.cancel()"
+  [dismissableMask]="!confirm.loading()"
+  [style]="{ width: '400px' }"
+>
+
+  <ng-template pTemplate="footer">
+    <button
+      pButton
+      [label]="confirm.currentConfig()?.rejectLabel || 'Cancel'"
+      class="p-button-text"
+      (click)="confirm.cancel()"
+      [disabled]="confirm.loading()"
+    ></button>
+
+    <button
+      pButton
+      [severity]="confirm.currentConfig()?.acceptSeverity || 'primary'"
+      [label]="
+        confirm.loading()
+          ? 'Processing...'
+          : confirm.currentConfig()?.acceptLabel || 'Confirm'
+      "
+      [icon]="
+        confirm.loading()
+          ? 'pi pi-spin pi-spinner'
+          : confirm.currentConfig()?.icon || 'pi pi-check'
+      "
+      (click)="confirm.accept()"
+      [disabled]="confirm.loading()"
+    ></button>
+  </ng-template>
+</p-confirmDialog>

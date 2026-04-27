@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { COMMON_IMPORTS } from '../../../../shared/common';
 import { ContentHeader } from '../../../../shared/components/dashboard/content-header/content-header';
 import { Router } from '@angular/router';
@@ -9,13 +9,16 @@ import { Role } from '../../../../shared/enums/role.enum';
 import { GridToggleButton } from '../../../../shared/ui/grid-toggle-button/grid-toggle-button';
 import { GridListHeader } from '../../../../shared/components/dashboard/grid-list-header/grid-list-header';
 import { FilterPanelConfig, FilterPanelResult, StatusTogglerPopover } from '../../../../shared/components/dashboard/status-toggler-popover/status-toggler-popover';
+import { PRIME_NG_IMPORTS } from '../../../../shared/primeng';
+import { slideX, slideY } from '../../../../core/services/animation.service';
 type StatusFilter = '' | 'active' | 'inactive';
 
 @Component({
   selector: 'app-waiter-list',
-  imports: [...COMMON_IMPORTS, ContentHeader, GridToggleButton, GridListHeader, StatusTogglerPopover],
+  imports: [...COMMON_IMPORTS, ContentHeader, GridToggleButton, GridListHeader, StatusTogglerPopover, ...PRIME_NG_IMPORTS],
   templateUrl: './waiter-list.html',
   styleUrls: ['./waiter-list.scss'],
+  animations: [ slideY ],
 })
 export class WaiterList {
 
@@ -24,8 +27,8 @@ export class WaiterList {
   addWaiter() {
     this.router.navigate([routesStrings.waiter.create]);
   }
-
-  viewMode: ViewMode = 'grid';
+  selectedWaiters = signal<UserDto[]>([]);
+  viewMode = signal<ViewMode>('grid');
 
   searchQuery  = '';
   statusFilter: StatusFilter = '';
@@ -74,7 +77,7 @@ export class WaiterList {
     });
   }
 
-  setView(mode: ViewMode): void { this.viewMode = mode; }
+  setView(mode: ViewMode): void { this.viewMode.set(mode); }
 
   getInitials(u: UserDto): string {
     return (u.firstName[0] + (u.lastName?.[0] ?? '')).toUpperCase();

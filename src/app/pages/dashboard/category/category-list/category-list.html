@@ -7,7 +7,7 @@
     (buttonClick)="goToCreateCategory()"
   ></app-content-header>
 
-    <!-- <div class="sticky top-0 z-10 flex gap-4 bg-[#fafafa] rounded-2xl p-3 border border-gray-100">
+  <!-- <div class="sticky top-0 z-10 flex gap-4 bg-[#fafafa] rounded-2xl p-3 border border-gray-100">
 
     <div class="flex justify-center">
       <img
@@ -32,39 +32,52 @@
 
   </div> -->
 
-    <app-grid-list-header>
-      <div class="flex flex-col sm:flex-row gap-3 w-full lg:w-auto flex-1">
-        <div class="relative flex-1 sm:flex-initial">
-          <svg
-            class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-            />
-          </svg>
-          <input
-            type="text"
-            placeholder="Search"
-            (input)="dt.filterGlobal($event.target.value, 'contains')"
-            class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent"
-          />
-        </div>
-        <button
-          class="px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 whitespace-nowrap"
+  <app-grid-list-header>
+    <div class="flex flex-col sm:flex-row gap-3 w-full lg:w-auto flex-1">
+      <div class="relative flex-1 sm:flex-initial">
+        <svg
+          class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
         >
-          Category
-        </button>
-        <div class="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-lg">
-          <span class="text-sm text-gray-600">Status</span>
-          <span class="text-sm font-medium text-gray-900">Active</span>
-        </div>
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+          />
+        </svg>
+        <input
+          type="text"
+          placeholder="Search"
+          (input)="dt.filterGlobal($event.target.value, 'contains')"
+          class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent"
+        />
+      </div>
+      <div
+        (click)="toggleIsActiveStatus()"
+        class="flex items-center gap-2 px-4 py-2 border rounded-lg cursor-pointer transition"
+        [ngClass]="{
+          'border-green-300 bg-white text-green-500': isActiveStatus,
+          'border-red-300 bg-red-100 text-red-500': !isActiveStatus,
+        }"
+      >
+        <span class="text-sm">Status</span>
+        <span class="text-sm font-medium">
+          {{ isActiveStatus ? 'Active' : 'Inactive' }}
+        </span>
+      </div>
+      @if(selectedProducts?.length){
         <button
+         (click)="onSelectionDelete()"
+          class="px-4 py-2 border border-red-300 bg-red-100 text-red-600 rounded-lg text-sm font-medium hover:bg-red-200 transition flex items-center gap-2"
+        >
+          <i class="pi pi-trash"></i>
+          Delete ({{ selectedProducts?.length }})
+        </button>
+      }
+      <!-- <button
           class="px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 flex items-center gap-2"
         >
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -76,105 +89,106 @@
             />
           </svg>
           <span class="whitespace-nowrap">All filters</span>
-        </button>
-      </div>
-      <div class="flex gap-3 w-full sm:w-auto">
-        <button
-          class="flex-1 sm:flex-initial px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 flex items-center justify-center gap-2"
-        >
-          <span>Actions</span>
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M19 9l-7 7-7-7"
+        </button> -->
+    </div>
+    <div class="flex gap-3 w-full sm:w-auto">
+      <button
+        class="flex-1 sm:flex-initial px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 flex items-center justify-center gap-2"
+      >
+        <span>Actions</span>
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M19 9l-7 7-7-7"
+          />
+        </svg>
+      </button>
+    </div>
+  </app-grid-list-header>
+  <div class="bg-white border p-4 rounded-lg flex-1 min-h-0">
+    <p-table
+      [scrollable]="true"
+      scrollHeight="flex"
+      styleClass="h-full w-full"
+      #dt
+      [value]="products"
+      [rows]="10"
+      [columns]="cols"
+      [paginator]="false"
+      [globalFilterFields]="['name', 'country.name', 'representative.name', 'status']"
+      [(selection)]="selectedProducts"
+      [rowHover]="false"
+      dataKey="id"
+      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+      [showCurrentPageReport]="true"
+    >
+      <ng-template #header>
+        <tr>
+          <th style="width: 5%">
+            <p-tableHeaderCheckbox />
+          </th>
+          <th style="width: 10%">Image</th>
+          <th pSortableColumn="name" style="width: 30%">
+            <div class="flex items-center gap-2">
+              Name
+              <p-sortIcon field="name" />
+            </div>
+          </th>
+          <th style="width: 15%">
+            <div class="flex items-center gap-2">Parent Category</div>
+          </th>
+          <th style="width: 10%" pSortableColumn="quantity">
+            <div class="flex items-center gap-2">
+              Total Items
+              <p-sortIcon field="quantity" />
+            </div>
+          </th>
+          <th style="width: 10%">
+            <div class="flex items-center gap-2">Status</div>
+          </th>
+          <th style="width: 30%"></th>
+        </tr>
+      </ng-template>
+      <ng-template #body let-product>
+        <tr>
+          <td style="width: 5%">
+            <p-tableCheckbox [value]="product" />
+          </td>
+          <td style="width: 10%">
+            <img
+              [src]="'https://primefaces.org/cdn/primeng/images/demo/product/' + product.image"
+              [alt]="product.name"
+              style="width: 100px; height: 64px"
+              class="rounded"
             />
-          </svg>
-        </button>
-        <button
-          class="flex-1 sm:flex-initial px-6 py-2 bg-black text-white rounded-lg text-sm font-semibold hover:bg-gray-800 whitespace-nowrap"
-        >
-          Create item
-        </button>
-      </div>
-    </app-grid-list-header>
-<!-- <div class=" bg-white border p-4 rounded-lg flex-1 min-h-0"> -->
+          </td>
+          <td style="width: 30%">{{ product.name }}</td>
 
-            <p-table
-                [scrollable]="true"
-                scrollHeight="flex"
-                styleClass="h-full"
-                #dt
-                [value]="products"
-                [rows]="10"
-                [columns]="cols"
-                [paginator]="false"
-                [globalFilterFields]="['name', 'country.name', 'representative.name', 'status']"
-                [(selection)]="selectedProducts"
-                [rowHover]="false"
-                dataKey="id"
-                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-                [showCurrentPageReport]="true"
-            >
-                <ng-template #header>
-                    <tr>
-                      <th style="width: 5%">
-                        <p-tableHeaderCheckbox />
-                      </th>
-                        <th style="width: 10%;">Image</th>
-                        <th pSortableColumn="name" style="width:50%;">
-                            <div class="flex items-center gap-2">
-                                Name
-                                <p-sortIcon field="name" />
-                            </div>
-                        </th>
-                        <th pSortableColumn="category">
-                            <div class="flex items-center gap-2">
-                                Parent Category
-                                <p-sortIcon field="category" />
-                            </div>
-                        </th>
-                        <th pSortableColumn="rating">
-                          <div class="flex items-center gap-2">
-                            Total Items
-                            <p-sortIcon field="rating" />
-                          </div>
-                        </th>
-                        <th pSortableColumn="inventoryStatus" style="width: 10%">
-                          <div class="flex items-center gap-2">
-                            Status
-                            <p-sortIcon field="inventoryStatus" />
-                          </div>
-                        </th>
-                        <th style="width: 30%;"></th>
-                    </tr>
-                </ng-template>
-                <ng-template #body let-product>
-                    <tr>
-
-                        <td style="width: 5%">
-                            <p-tableCheckbox [value]="product" />
-                        </td>
-                        <td style="width: 10%">
-                            <img [src]="'https://primefaces.org/cdn/primeng/images/demo/product/' + product.image" [alt]="product.name" style="width: 100px;height: 64px;" class="rounded" />
-                        </td>
-                        <td style="width: 50%;">{{ product.name }}</td>
-
-                        <td>{{ product.category }}</td>
-                        <td>
-                          {{product.inventoryStatus}}
-                        </td>
-                        <td>{{ product.category }}</td>
-                        <td style="width: 30%;text-align: center;">
-                            <p-button icon="pi pi-pencil" class="mr-2" [rounded]="true" [outlined]="true" (click)="editProduct()" />
-                            <p-button icon="pi pi-trash" severity="danger" [rounded]="true" [outlined]="true" (click)="deleteProduct()" />
-                        </td>
-                    </tr>
-                </ng-template>
-            </p-table>
-
-        <!-- </div> -->
-
-
+          <td style="width: 15%">{{ product.parentCategory }}</td>
+          <td style="width: 10%">
+            {{ product.quantity }}
+          </td>
+          <td style="width: 10%">{{ product.status }}</td>
+          <td style="width: 30%; text-align: center">
+            <p-button
+              icon="pi pi-pencil"
+              class="mr-2"
+              [rounded]="true"
+              [outlined]="true"
+              (click)="editProduct()"
+            />
+            <p-button
+              icon="pi pi-trash"
+              severity="danger"
+              [rounded]="true"
+              [outlined]="true"
+              (click)="deleteProduct()"
+            />
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
 </div>
