@@ -14,10 +14,11 @@ import { BranchesSelectionModal } from '../../../../shared/components/dashboard/
 import { BranchDto } from '../../../../shared/models/branch.model';
 import { CustomDialogService } from '../../../../core/services/custom.dialog.service';
 import { FormContentHeader } from '../../../../shared/components/dashboard/form-content-header/form-content-header';
+import { FloatingInput } from '../../../../shared/ui/floating-input/floating-input';
 
 @Component({
   selector: 'app-category-create',
-  imports: [...COMMON_IMPORTS, FormField, CoverColorPicker, MediaPicker, FormContentHeader],
+  imports: [...COMMON_IMPORTS, FormField, CoverColorPicker, MediaPicker, FormContentHeader, FloatingInput],
   templateUrl: './category-create.html',
   styleUrls: ['./category-create.scss'],
 })

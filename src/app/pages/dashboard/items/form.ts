@@ -1,5 +1,5 @@
 import { signal, computed } from '@angular/core';
-import { PathKind, required, SchemaPathTree } from '@angular/forms/signals';
+import { applyEach, applyWhen, PathKind, required, schema, SchemaPathTree } from '@angular/forms/signals';
 
 export type ItemType = 'single' | 'variant';
 
@@ -64,46 +64,43 @@ export const itemFormModel  = signal<ItemFormData>({
   isActive: true
 });
 
-export function itemSchema(
-  schema: SchemaPathTree<ItemFormData, PathKind.Root>,
-  form: ItemFormData
-) {
-  // ── BASIC FIELDS ─────────────────────────────
-  required(schema.name, { message: 'Item name is required' });
-  required(schema.unit, { message: 'Unit is required' });
-  required(schema.categoryId, { message: 'Category is required' });
-  required(schema.type, { message: 'Type is required' });
+type ItemSchema = SchemaPathTree<ItemFormData, PathKind.Root>;
 
-  // ── SINGLE MODE ───────────────────────────────
-  if (form.type === 'single') {
-    required(schema.price, { message: 'Price required' });
-  }
+export function itemSchema(s: ItemSchema) {
+  // basic
+  required(s.name, { message: 'Item name is required' });
+  required(s.unit, { message: 'Unit is required' });
+  required(s.categoryId, { message: 'Category is required' });
+  required(s.type, { message: 'Type is required' });
 
-  // ── VARIANT MODE ──────────────────────────────
-  if (form.type === 'variant') {
+  // ✅ SINGLE MODE
+  applyWhen(
+    s, // ✅ use ROOT, not s.type
+    ({ valueOf }) => valueOf(s.type) === 'single',
+    (schema) => {
+      required(schema.price, { message: 'Price is required' });
+    }
+  );
 
-    // ✅ runtime check (NOT schema)
-    if (form.variants.length === 0) {
-      // ❗ correct way: attach error on root field, not schema.variants.error
+  // ✅ VARIANT MODE
+  applyWhen(
+    s, // ✅ use ROOT
+    ({ valueOf }) => valueOf(s.type) === 'variant',
+    (schema) => {
       required(schema.variants, {
         message: 'At least one variant is required'
       });
+
+      applyEach(schema.variants, (variant) => {
+        required(variant.name, {
+          message: `Variant name required`
+        });
+
+        required(variant.price, {
+          message: `Variant price required`
+        });
+      });
     }
-
-    // ✅ iterate runtime data
-    form.variants.forEach((_, i) => {
-
-      const variantSchema = schema.variants.at(i);
-
-      if (!variantSchema) return;
-
-      required(variantSchema.name, {
-        message: `Variant ${i + 1} name required`
-      });
-
-      required(variantSchema.price, {
-        message: `Variant ${i + 1} price required`
-      });
-    });
-  }
+  );
 }
+

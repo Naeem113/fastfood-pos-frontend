@@ -11,20 +11,13 @@
   <div class="overflow-y-auto pt-10 pb-5 px-4 max-w-2xl mx-auto w-full no-scrollbar">
     <!-- Category Name Input -->
     <div class="mb-4 flex flex-col gap-2">
-      <p class="text-base font-semibold text-primary">
-        Category Name <span class="text-red-500">*</span>
-      </p>
-
-      <input
-        type="text"
-        placeholder="Category name"
-        class="w-full border border-gray-200 rounded-xl px-4 py-4 text-black placeholder-gray-400 text-base outline-none focus:ring-1 focus:ring-black bg-white"
-        [formField]="categoryForm.name"
-        [ngClass]="{
-          'border-red-500 focus:ring-red-500 focus:border-red-500':
-            categoryForm.name().invalid() && (categoryForm.name().touched() || formSubmitted()),
-        }"
-      />
+       <app-floating-input
+         label="Category Name"
+         [required]="true"
+         placeholder="e.g, Pizza, Burger"
+         [field]="categoryForm.name"
+         [submitted]="formSubmitted">
+       </app-floating-input>
     </div>
 
     <!-- Image Upload Area -->

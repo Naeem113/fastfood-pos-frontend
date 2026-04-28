@@ -1,1 +1,9 @@
-<p>items-list works!</p>
+<div class="p-6 h-full overflow-hidden flex flex-col">
+  <app-content-header
+    buttonText="Create Menu Item"
+    title="All Menu Items"
+    description="Create and manage menu items, including pricing, variants, and availability across your branches."
+    buttonIcon="plus"
+    (buttonClick)="goToCreateItem()"
+  ></app-content-header>
+</div>

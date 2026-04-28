@@ -1,75 +1,33 @@
 <div class="h-full overflow-hidden bg-white flex flex-col">
 
   <app-form-content-header
-    title="Add Item"
+    [title]="'Add Item'"
     buttonText="Save"
     (buttonClick)="saveItem()"
     (closeClick)="goToItems()"
   ></app-form-content-header>
-<div class="space-y-4">
+  <!-- Main Content -->
+  <div class="overflow-y-auto pt-10 pb-5 px-4 max-w-2xl mx-auto w-full no-scrollbar">
 
-  <!-- Name -->
-  <input
-    class="border p-2 w-full"
-    placeholder="Item name"
-    [value]="form().name"
-    (input)="patchItem({ name: $any($event.target).value })"
-  />
-  <p class="text-red-500 text-xs">{{ errors().name }}</p>
-
-  <!-- Type -->
-  <div class="flex gap-2">
-    <button (click)="setType('single')">Single</button>
-    <button (click)="setType('variant')">Variable</button>
-  </div>
-
-  <!-- SINGLE -->
-  <div *ngIf="!isVariable()">
-    <input
-      type="number"
-      placeholder="Price"
-      [value]="form().price"
-      (input)="patchItem({ price: +$any($event.target).value })"
-    />
-    <p class="text-red-500 text-xs">{{ errors().price }}</p>
-  </div>
-
-  <!-- VARIANTS -->
-  <div *ngIf="isVariable()" class="space-y-3">
-
-    <button (click)="addVariant()">+ Add Variant</button>
-
-    <div *ngFor="let v of variants(); let i = index" class="border p-3">
-
-      <input
-        placeholder="Variant name"
-        [value]="v.name"
-        (input)="updateVariant(i, { name: $any($event.target).value })"
-      />
-
-      <input
-        type="number"
-        placeholder="Price"
-        [value]="v.price"
-        (input)="updateVariant(i, { price: +$any($event.target).value })"
-      />
-
-      <button (click)="removeVariant(i)">Delete</button>
-
-      <p class="text-red-500 text-xs">
-        {{ errors()['variant_name_' + i] }}
-      </p>
-      <p class="text-red-500 text-xs">
-        {{ errors()['variant_price_' + i] }}
-      </p>
-
+    <div class="mb-4 flex flex-col gap-2">
+       <app-floating-input
+         label="Item Name"
+         [required]="true"
+         placeholder="e.g, Zinger Burger, Hot Wings"
+         [field]="itemForm.name"
+         [submitted]="formSubmitted">
+       </app-floating-input>
     </div>
-
-    <p class="text-red-500 text-xs">{{ errors().variants }}</p>
-
   </div>
-
-</div>
+  <app-floating-select
+    [items]="categories"
+    labelKey="label"
+    [multiSelection]="false"
+    descriptionKey="description"
+    valueKey="id"
+    [submitted]="formSubmitted"
+    [field]="itemForm.categoryId"
+  />
   <!-- <div class="overflow-y-auto pt-10 pb-5 px-4 max-w-2xl mx-auto w-full no-scrollbar">
      <div class="flex flex-col gap-3">
        <app-floating-input

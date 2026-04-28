@@ -3,17 +3,17 @@ import { FormContentHeader } from '../../../../shared/components/dashboard/form-
 import { COMMON_IMPORTS } from '../../../../shared/common';
 import { FloatingInput } from '../../../../shared/ui/floating-input/floating-input';
 import { routesStrings } from '../../../../shared/routes';
-import { form } from '@angular/forms/signals';
+import { form, FormField } from '@angular/forms/signals';
 import { Router } from '@angular/router';
 import { ApiService } from '../../../../core/services/api.service';
 import { CustomDialogService } from '../../../../core/services/custom.dialog.service';
 import { BranchesSelectionModal } from '../../../../shared/components/dashboard/modals/branches-selection-modal/branches-selection-modal';
 import { BranchDto } from '../../../../shared/models/branch.model';
-import { itemFormModel, itemSchema } from '../form';
-export const itemForm = form(itemFormModel, itemSchema);
+import {  itemFormModel, itemSchema } from '../form';
+import { FloatingSelect } from '../../../../shared/ui/floating-select/floating-select';
 @Component({
   selector: 'app-items-create',
-  imports: [...COMMON_IMPORTS, FloatingInput, FormContentHeader],
+  imports: [...COMMON_IMPORTS, FloatingInput, FormContentHeader, FormField, FloatingSelect],
   templateUrl: './items-create.html',
   styleUrl: './items-create.scss',
 })
@@ -28,7 +28,45 @@ export class ItemsCreate {
   selectedBranchesCount =  signal<number>(0);
   selectedBranchesNames = signal<string>('');
   totalBranchesCount = signal<number>(1);
-
+  itemForm = form(itemFormModel, itemSchema);
+  categories =[
+    {
+      id: 'food',
+      label: 'Prepared food and beverage',
+      description: 'Best for restaurants or other food venues.',
+      icon: 'food',
+    },
+    {
+      id: 'physical',
+      label: 'Physical good',
+      description: 'Best for retail items such as clothing or jewelry.',
+      icon: 'tag',
+    },
+    {
+      id: 'event',
+      label: 'Event',
+      description: 'Sell tickets to events and include location address as well as times.',
+      icon: 'ticket',
+    },
+    {
+      id: 'donation',
+      label: 'Donation',
+      description: 'Allow site visitors to select from charitable donation amounts.',
+      icon: 'donation',
+    },
+    {
+      id: 'digital',
+      label: 'Digital',
+      description: 'Lets you provide a digital file for download.',
+      icon: 'download',
+    },
+    {
+      id: 'other',
+      label: 'Other',
+      description: 'Best for items you will fulfill manually.',
+      icon: 'box',
+    },
+  ]
   // ========================
   // inject services & stores
   // ========================
@@ -38,11 +76,13 @@ export class ItemsCreate {
 
 
   saveItem() {
-    // this.formSubmitted.set(true);
-    // if(this.loading() || this.itemForm().invalid()) {
-    //   return;
-    // }
-    // this.loading.set(true);
+    this.formSubmitted.set(true);
+    console.log(this.itemForm);
+
+    if(this.loading() || this.itemForm().invalid()) {
+      return;
+    }
+    this.loading.set(true);
   }
 
   goToItems() {
