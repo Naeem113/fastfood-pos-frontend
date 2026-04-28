@@ -1,33 +1,35 @@
 <div class="h-full overflow-hidden bg-white flex flex-col">
 
   <app-form-content-header
-    [title]="'Add Item'"
+    [title]="'Create Item'"
     buttonText="Save"
     (buttonClick)="saveItem()"
     (closeClick)="goToItems()"
   ></app-form-content-header>
   <!-- Main Content -->
-  <div class="overflow-y-auto pt-10 pb-5 px-4 max-w-2xl mx-auto w-full no-scrollbar">
+  <div class="overflow-y-auto min-h-full pt-10 pb-5 px-4 max-w-2xl mx-auto w-full no-scrollbar">
 
     <div class="mb-4 flex flex-col gap-2">
        <app-floating-input
-         label="Item Name"
+         label="Name"
          [required]="true"
          placeholder="e.g, Zinger Burger, Hot Wings"
          [field]="itemForm.name"
          [submitted]="formSubmitted">
        </app-floating-input>
-    </div>
+      </div>
+      <app-floating-select
+        class="w-full"
+        label="Product Type"
+        [items]="categories"
+        labelKey="label"
+        [multiSelection]="false"
+        descriptionKey="description"
+        valueKey="id"
+        [submitted]="formSubmitted"
+        [field]="itemForm.categoryId"
+      />
   </div>
-  <app-floating-select
-    [items]="categories"
-    labelKey="label"
-    [multiSelection]="false"
-    descriptionKey="description"
-    valueKey="id"
-    [submitted]="formSubmitted"
-    [field]="itemForm.categoryId"
-  />
   <!-- <div class="overflow-y-auto pt-10 pb-5 px-4 max-w-2xl mx-auto w-full no-scrollbar">
      <div class="flex flex-col gap-3">
        <app-floating-input

@@ -11,12 +11,14 @@ import {
 } from '@angular/core';
 
 import { COMMON_IMPORTS } from '../../common';
+import { slideY } from '../../../core/services/animation.service';
 
 @Component({
   selector: 'app-floating-select',
   imports: [...COMMON_IMPORTS],
   templateUrl: './floating-select.html',
   styleUrl: './floating-select.scss',
+  animations: [slideY]
 })
 export class FloatingSelect {
   private elRef = inject(ElementRef);
@@ -30,7 +32,7 @@ export class FloatingSelect {
   @Input() valueKey?: string;
   @Input() descriptionKey?: string;
   @Input() iconKey?: string;
-
+  @Input() label = 'Select';
   @Input() placeholder = 'Select item';
 
   @Input() multiSelection = false; // ⭐ NEW

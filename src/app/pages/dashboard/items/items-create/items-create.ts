@@ -31,41 +31,15 @@ export class ItemsCreate {
   itemForm = form(itemFormModel, itemSchema);
   categories =[
     {
-      id: 'food',
-      label: 'Prepared food and beverage',
-      description: 'Best for restaurants or other food venues.',
-      icon: 'food',
+      id: '01',
+      label: 'Single',
+      description: 'One type of product.',
     },
     {
-      id: 'physical',
-      label: 'Physical good',
-      description: 'Best for retail items such as clothing or jewelry.',
-      icon: 'tag',
-    },
-    {
-      id: 'event',
-      label: 'Event',
-      description: 'Sell tickets to events and include location address as well as times.',
-      icon: 'ticket',
-    },
-    {
-      id: 'donation',
-      label: 'Donation',
-      description: 'Allow site visitors to select from charitable donation amounts.',
-      icon: 'donation',
-    },
-    {
-      id: 'digital',
-      label: 'Digital',
-      description: 'Lets you provide a digital file for download.',
-      icon: 'download',
-    },
-    {
-      id: 'other',
-      label: 'Other',
-      description: 'Best for items you will fulfill manually.',
-      icon: 'box',
-    },
+      id: '02',
+      label: 'Variant',
+      description: 'Several types of products.',
+    }
   ]
   // ========================
   // inject services & stores

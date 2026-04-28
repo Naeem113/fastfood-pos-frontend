@@ -1,11 +1,11 @@
-<div class="relative w-full max-w-lg font-sans">
+<div class="relative w-full font-sans">
 
   <!-- ───────── Trigger ───────── -->
   <button
     #trigger
     (click)="toggle()"
-    class="w-full flex items-center gap-4 px-4 py-3 bg-white border rounded-xl text-left transition-all"
-    [ngClass]="isOpen() ? 'border-gray-900' : 'border-gray-200 hover:border-gray-400'"
+    class="w-full flex items-center gap-4 px-4 py-2 border outline-none focus:ring-1 focus:ring-black rounded-xl text-left transition-all"
+    [ngClass]="isOpen() ? '' : 'border-gray-300'"
     [ngClass]="{
       'border-red-500 focus:ring-red-500 focus:border-red-500': hasError()
     }"
@@ -23,16 +23,16 @@
 
     <!-- Text -->
     <div class="flex-1 min-w-0">
-      <p class="text-[11px] font-semibold text-gray-500 uppercase tracking-wide">
-        Select
+      <p class="text-sm -mt-1 text-gray-black tracking-wide">
+        {{label}}
       </p>
-      <p class="text-[15px] font-semibold text-gray-900 truncate">
+      <p class="text-base text-black truncate">
         {{ displayLabel() }}
       </p>
     </div>
 
     <!-- Arrow -->
-    <svg class="w-5 h-5 text-gray-500 transition-transform"
+    <svg class="w-5 h-5 text-gray-500 transition-transform transition-base"
          [class.rotate-180]="isOpen()"
          viewBox="0 0 24 24" fill="none" stroke="currentColor">
       <path stroke-width="2" d="M5 15l7-7 7 7"/>
@@ -42,13 +42,14 @@
   <!-- ───────── Dropdown ───────── -->
   <div
     *ngIf="isOpen()"
-    class="absolute left-0 right-0 mt-2 bg-white border rounded-xl shadow-xl z-50 overflow-y-auto max-h-[300px]"
+    [@slideY]
+    class="absolute left-0 right-0 mt-2 bg-white border rounded-xl shadow-xl z-50 overflow-y-auto max-h-[300px] no-scrollbar"
     [ngClass]="openUpward() ? 'bottom-full mb-2' : 'top-full mt-2'"
   >
     <button
       *ngFor="let item of items; let i = index"
       (click)="select(item)"
-      class="w-full flex items-center gap-4 px-4 py-3 text-left hover:bg-gray-50 transition"
+      class="w-full flex items-center gap-4 px-4 py-3 text-left hover:bg-gray-50 transition border-b"
     [ngClass]="{
   'bg-gray-100': multiSelection
     ? selectedItems().includes(item)

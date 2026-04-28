@@ -3,11 +3,11 @@
      <div
       class="w-10 h-10 bg-[#ffffff1a] backdrop-blur-sm rounded-[6px] flex items-center justify-center"
     >
-      <span class="font-bold text-[#f59e0b] text-[30px] pb-1">D</span>
+      <span class="font-bold text-secondary text-[30px] pb-1">D</span>
     </div>
     <h1 class="text-lg sm:text-xl font-medium">
       Devaxix<span
-        class="font-semibold bg-gradient-to-r from-[#F97316] to-[#f59e0b] text-transparent bg-clip-text"
+        class="font-semibold bg-gradient-to-r from-[#F97316] to-secondary text-transparent bg-clip-text"
         >POS</span
       >
     </h1>
@@ -28,7 +28,7 @@
       <li class="">
         <a
           class="flex justify-between items-center px-2  font-medium uppercase tracking-wider text-xs  transition-all min-h-[35px] bg-primary-white text-[#aeaeb2]"
-          [ngClass]="item.active?'text-[#f59e0b]':'hover:text-white'"
+          [ngClass]="item.active?'text-secondary':'hover:text-white'"
           [title]="item.title"
           [routerLink]="item.link">
           <div class="flex justify-center gap-3">
@@ -46,7 +46,7 @@
                <li>
                  <a
                    class="flex items-center gap-3 -ml-1.5 font-medium uppercase tracking-wider text-xs  transition-all min-h-[30px] bg-primary-white text-[#aeaeb2]"
-                   [ngClass]="cItem.active?'text-[#f59e0b]':'hover:text-white'"
+                   [ngClass]="cItem.active?'text-secondary':'hover:text-white'"
                    [title]="cItem.title"
                    [routerLink]="cItem.link">
                    <i class="pi pi-{{cItem.icon}}" style="font-size: 0.7rem;"></i>
