@@ -1,5 +1,4 @@
 <div class="h-full overflow-hidden bg-white flex flex-col">
-
   <app-form-content-header
     [title]="'Create Item'"
     buttonText="Save"
@@ -7,161 +6,391 @@
     (closeClick)="goToItems()"
   ></app-form-content-header>
   <!-- Main Content -->
-  <div class="overflow-y-auto min-h-full pt-10 pb-5 px-4 max-w-2xl mx-auto w-full no-scrollbar">
-
-    <div class="mb-4 flex flex-col gap-2">
-       <app-floating-input
-         label="Name"
-         [required]="true"
-         placeholder="e.g, Zinger Burger, Hot Wings"
-         [field]="itemForm.name"
-         [submitted]="formSubmitted">
-       </app-floating-input>
-      </div>
-      <app-floating-select
-        class="w-full"
-        label="Product Type"
-        [items]="categories"
-        labelKey="label"
-        [multiSelection]="false"
-        descriptionKey="description"
-        valueKey="id"
-        [submitted]="formSubmitted"
-        [field]="itemForm.categoryId"
-      />
-  </div>
-  <!-- <div class="overflow-y-auto pt-10 pb-5 px-4 max-w-2xl mx-auto w-full no-scrollbar">
-     <div class="flex flex-col gap-3">
-       <app-floating-input
-         label="Name"
-         placeholder="e.g, Zinger Burger"
-         [required]="true"
-         [field]="itemForm.name"
-         [submitted]="formSubmitted">
-       </app-floating-input>
-
-       <app-floating-input
-         label="Table Number"
-         [required]="true"
-         [field]="itemForm.tableNumber"
-         [submitted]="formSubmitted">
-       </app-floating-input>
-
-        <app-floating-input
-         label="Section / Floor"
-         placeholder="e.g, Hall, Ground, VIP"
-         [field]="itemForm.section"
-         [submitted]="formSubmitted">
-       </app-floating-input>
-
-     </div>
-    <div class="flex items-center gap-4 py-4">
-      <div class="flex-shrink-0">
-        <i class="pi pi-table w-6 h-6 text-gray-700"></i>
-      </div>
-
-      <div class="flex-1 min-w-0">
-        <p class="text-sm font-semibold text-primary">Seats / Capacity</p>
-        <p class="text-sm text-gray-500 mt-0.5">
-          Select the number of seats for this table.
-        </p>
-      </div>
-
-    </div>
-    <div class="grid grid-cols-3 sm:grid-cols-5 gap-4 border border-gray-200 p-4 rounded-2xl">
-      @for (item of seatCapacityList; track $index) {
-        <div
-          (click)="itemForm.capacity().value.set(item)"
-          [ngClass]="{
-            'bg-black text-white border-black': itemForm.capacity().value() === item,
-            'bg-white text-gray-800 hover:bg-gray-100': itemForm.capacity().value() !== item
-          }"
-          class="h-20 flex items-center justify-center rounded-xl border cursor-pointer transition-base font-medium text-lg shadow-sm active:scale-95"
-        >
-          {{ item }}
-        </div>
-      }
-    </div>
-    <div class="h-0.5 bg-gray-200 w-full my-4 mt-8"></div>
-    <h2 class="text-[19px] sm:text-xl font-bold text-gray-950 mb-5 mt-6 tracking-tight">
-      Sales branches and channels
-    </h2>
-    <div class="flex items-center gap-4 py-4">
-      <div class="flex-shrink-0">
-        <i class="pi pi-warehouse w-6 ml-1"></i>
-      </div>
-
-    <div class="flex-1 min-w-0">
-        <div class="text-sm font-semibold text-primary">Branches <span class="px-2 text-xs rounded-full bg-yellow-300/70 text-yellow-800">{{selectedBranchesCount()}} of {{totalBranchesCount()}}</span> </div>
-        <p class="text-sm text-gray-500 mt-0.5">
-          @if(selectedBranchesNames()){
-            {{selectedBranchesNames()}}
-          }@else{
-            Select the branch where this waiter will be available.
-          }
-        </p>
-      </div>
-
-      <button
-        (click)="openBranchesModal()"
-        class="text-sm font-semibold text-primary underline underline-offset-2 hover:text-gray-600 transition-colors flex-shrink-0"
-      >
-        Edit
-      </button>
-    </div>
-    <div class="h-px bg-gray-200 w-full my-8 mt-4"></div>
-
-    <div class="flex items-center gap-4 pb-10">
-      <div class="shrink-0">
-        <svg
-          width="28"
-          height="28"
-          viewBox="0 0 28 28"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <rect x="5" y="4" width="14" height="18" rx="1.5" stroke="#111" stroke-width="1.7" />
-          <rect x="8" y="8" width="8" height="5" rx="1" stroke="#111" stroke-width="1.5" />
-          <path d="M8 17h8M8 20h5" stroke="#111" stroke-width="1.5" stroke-linecap="round" />
-          <path
-            d="M19 10h2a1 1 0 011 1v10a1 1 0 01-1 1h-2"
-            stroke="#111"
-            stroke-width="1.5"
-            stroke-linecap="round"
+  <div class="overflow-y-auto pt-6 pb-5 px-4 max-w-5xl mx-auto w-full no-scrollbar">
+    <div class="flex flex-col lg:flex-row gap-6">
+      <!-- Left Column -->
+      <div class="flex-1 flex flex-col gap-4">
+        <div class="mb-4 flex flex-col gap-3">
+          <app-floating-input
+            label="Name"
+            [required]="true"
+            placeholder="e.g, Zinger Burger, Hot Wings"
+            [field]="itemForm.name"
+            [submitted]="formSubmitted"
+          >
+          </app-floating-input>
+          <app-floating-select
+            class="w-full"
+            label="Product Type"
+            [items]="itemTypes"
+            labelKey="label"
+            [multiSelection]="false"
+            descriptionKey="description"
+            valueKey="value"
+            [submitted]="formSubmitted"
+            [field]="itemForm.type"
           />
-        </svg>
-      </div>
+          <textarea
+            placeholder="Description"
+            rows="4"
+            class="w-full text-base text-black placeholder-gray-400 bg-transparent resize-none focus:ring-1 border border-gray-300 rounded-xl px-4 py-3 transition"
+          ></textarea>
+          @if(!isVariant()){
+            <div class="mt-6">
+              <h2 class="text-lg font-bold text-gray-900 mb-4">Manage prices and barcodes</h2>
+              <div class="flex flex-col md:flex-row gap-3 w-full">
+                <app-floating-input
+                  class="w-full"
+                  label="Cost Price"
+                  placeholder="e.g, 100, 200"
+                  [field]="itemForm.costPrice"
+                  [submitted]="formSubmitted"
+                >
+                </app-floating-input>
+                <app-floating-input
+                  class="w-full"
+                  label="Selling Price"
+                  [required]="true"
+                  placeholder="e.g, 150, 250"
+                  [field]="itemForm.price"
+                  [submitted]="formSubmitted"
+                >
+                </app-floating-input>
+                <!-- <app-floating-input
+            class="w-full"
+            label="Retail Margin (%)"
+            placeholder="e.g, 10%, 20%"
+            [field]="itemForm.retailMargin"
+            [submitted]="formSubmitted"
+          >
+          </app-floating-input> -->
+              </div>
+              <div class="flex flex-col md:flex-row gap-3 w-full mt-3">
+                <app-floating-input
+                  class="w-full"
+                  label="SKU"
+                  placeholder="e.g, SKU-150, SKU-250"
+                  [field]="itemForm.sku"
+                  [submitted]="formSubmitted"
+                >
+                </app-floating-input>
+                <app-floating-input
+                  class="w-full"
+                  label="Barcode"
+                  placeholder="e.g, 1234567890123"
+                  [field]="itemForm.barcode"
+                  [submitted]="formSubmitted"
+                >
+                </app-floating-input>
+              </div>
+            </div>
+          }@else {
+            <!-- ───────── VARIANTS ───────── -->
+<div class="mt-6">
 
-      <div class="flex-1 min-w-0">
-        <p class="text-[15px] font-bold text-gray-950 leading-snug">Points of sale</p>
-        <p class="text-[13px] text-gray-500 mt-0.5 leading-snug">
-          Categories appear on Standard mode and Retail mode only.
-        </p>
-      </div>
+  <!-- Header -->
+  <div class="flex items-center justify-between mb-4">
+    <h2 class="text-lg font-bold text-gray-900">
+      Variants
+    </h2>
 
-      <button class="shrink-0 text-gray-400 hover:text-gray-600 transition-colors">
-        <svg
-          width="20"
-          height="20"
-          viewBox="0 0 20 20"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <circle cx="10" cy="10" r="8.5" stroke="#9ca3af" stroke-width="1.5" />
-          <path d="M10 9v5" stroke="#9ca3af" stroke-width="1.5" stroke-linecap="round" />
-          <circle cx="10" cy="6.5" r="0.75" fill="#9ca3af" />
-        </svg>
+    <button
+      (click)="addVariant()"
+      class="text-sm font-semibold text-primary hover:underline"
+    >
+      + Add Variant
+    </button>
+  </div>
+
+  <!-- Empty state -->
+  <div
+    *ngIf="!itemForm().value().variants?.length"
+    class="text-sm text-gray-400 text-center py-6 border border-dashed rounded-xl"
+  >
+    No variants added yet
+  </div>
+
+  <!-- Variant List -->
+  <div class="flex flex-col gap-3">
+
+    <div
+      *ngFor="let v of itemForm().value().variants; let i = index"
+      class="border border-gray-200 rounded-xl p-4 flex flex-col gap-3 relative hover:border-gray-300 transition"
+    >
+
+      <!-- Delete -->
+      <button
+        (click)="removeVariant(i)"
+        class="absolute top-3 right-3 text-gray-400 hover:text-red-500"
+      >
+        ✕
       </button>
 
-      <label class="relative inline-flex cursor-pointer items-center">
-        <input type="checkbox" class="peer sr-only" checked />
+      <!-- Row -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
 
-        <div class="h-6 w-12 rounded-full bg-gray-400 duration-300 peer-checked:bg-black"></div>
+        <!-- Name -->
+        <input
+          type="text"
+          placeholder="Variant name (e.g. Small, Large)"
+          class="border rounded-lg px-3 py-2 text-sm"
+          [value]="v.name"
+          (input)="updateVariant(i, 'name', $any($event.target).value)"
+        />
 
-        <div
-          class="absolute left-1 top-1 h-4 w-4 rounded-full bg-white transition-all duration-300 peer-checked:translate-x-6"
-        ></div>
-      </label>
+        <!-- Cost -->
+        <input
+          type="number"
+          placeholder="Cost Price"
+          class="border rounded-lg px-3 py-2 text-sm"
+          [value]="v.costPrice"
+          (input)="updateVariant(i, 'costPrice', +$any($event.target).value)"
+        />
+
+        <!-- Selling -->
+        <input
+          type="number"
+          placeholder="Selling Price"
+          class="border rounded-lg px-3 py-2 text-sm"
+          [value]="v.price"
+          (input)="updateVariant(i, 'price', +$any($event.target).value)"
+        />
+
+      </div>
+
     </div>
-  </div> -->
+
+  </div>
+</div>
+          }
+        </div>
+      </div>
+      <div class="w-full lg:w-72 xl:w-80 flex flex-col gap-4">
+        <div class="border border-gray-200 rounded-xl p-4 flex justify-between items-start">
+          <div>
+            <h3 class="text-base font-semibold text-gray-900">Category</h3>
+            <p class="text-xs text-gray-500 leading-relaxed">Select a category for this item</p>
+          </div>
+          <button
+          (click)="openCategoryModal()"
+            class="text-sm font-semibold text-primary underline underline-offset-2 hover:text-gray-600 transition-colors flex-shrink-0"
+          >
+            Edit
+          </button>
+        </div>
+        <div
+          class="border border-dashed border-gray-300 rounded-xl flex flex-col items-center justify-center py-6 px-6 cursor-pointer hover:bg-gray-50 transition"
+        >
+          <!-- Upload icon -->
+          <div class="mb-3 text-gray-500">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-8 h-8"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="1.5"
+            >
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+              <circle cx="8.5" cy="8.5" r="1.5" />
+              <polyline points="21 15 16 10 5 21" />
+              <line x1="14" y1="3" x2="14" y2="7" stroke-width="2" />
+              <line x1="12" y1="3" x2="16" y2="3" stroke-width="2" />
+            </svg>
+          </div>
+          <p class="text-sm text-gray-600 text-center">
+            Drop images here,
+            <a
+              href="#"
+              class="underline underline-offset-2 text-gray-900 font-medium hover:text-black"
+              >browse files</a
+            >, or
+            <a
+              href="#"
+              class="underline underline-offset-2 text-gray-900 font-medium hover:text-black"
+              >add from image library</a
+            >
+          </p>
+        </div>
+        <div class="border border-gray-200 rounded-xl p-4">
+          <h3 class="text-base font-semibold text-gray-900">Cover</h3>
+          <p class="text-xs text-gray-500 leading-relaxed mb-2">
+            Used on item tile when no image is added
+          </p>
+          <app-cover-color-picker
+            [firstName]="itemForm().value().name"
+            [selectedColor]="selectedCoverColor"
+            (colorChange)="selectedCoverColor.set($event)"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="flex flex-col lg:flex-row gap-6">
+      <!-- Left Column -->
+      <div class="flex-1 flex flex-col ">
+        <div class="h-0.5 bg-gray-200 w-full my-4 mt-8"></div>
+        <!-- Section Heading -->
+        <h2 class="text-[19px] sm:text-xl font-bold text-gray-950 mb-5 mt-6 tracking-tight">
+          Sales branches and channels
+        </h2>
+        <div class="flex items-center gap-4 py-4">
+          <!-- Hierarchy Icon -->
+          <div class="flex-shrink-0">
+            <i class="pi pi-warehouse w-6 ml-1"></i>
+          </div>
+
+          <!-- Text -->
+          <div class="flex-1 min-w-0">
+            <div class="text-sm font-semibold text-primary">
+              Branches
+              <span class="px-2 text-xs rounded-full bg-yellow-300/70 text-yellow-800"
+                >{{ selectedBranchesCount() }} of {{ totalBranchesCount() }}</span
+              >
+            </div>
+            <p class="text-sm text-gray-500 mt-0.5">
+              @if (selectedBranchesNames()) {
+                {{ selectedBranchesNames() }}
+              } @else {
+                Select the branch where this waiter will be available.
+              }
+            </p>
+          </div>
+
+          <!-- Select Link -->
+          <button
+            (click)="openBranchesModal()"
+            class="text-sm font-semibold text-primary underline underline-offset-2 hover:text-gray-600 transition-colors flex-shrink-0"
+          >
+            Edit
+          </button>
+        </div>
+
+        <div class="h-0.5 bg-gray-200 w-full my-4 mt-8"></div>
+        <!-- Section Heading -->
+        <h2 class="text-[19px] sm:text-xl font-bold text-gray-950 mb-5 mt-6 tracking-tight">
+          Availability
+        </h2>
+        <div class="flex items-center gap-4 pb-6">
+          <!-- POS Icon -->
+          <div class="shrink-0">
+            <svg
+              width="28"
+              height="28"
+              viewBox="0 0 28 28"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <!-- Receipt / register icon -->
+              <rect x="5" y="4" width="14" height="18" rx="1.5" stroke="#111" stroke-width="1.7" />
+              <rect x="8" y="8" width="8" height="5" rx="1" stroke="#111" stroke-width="1.5" />
+              <path d="M8 17h8M8 20h5" stroke="#111" stroke-width="1.5" stroke-linecap="round" />
+              <path
+                d="M19 10h2a1 1 0 011 1v10a1 1 0 01-1 1h-2"
+                stroke="#111"
+                stroke-width="1.5"
+                stroke-linecap="round"
+              />
+            </svg>
+          </div>
+
+          <!-- Text Block -->
+          <div class="flex-1 min-w-0">
+            <p class="text-[15px] font-bold text-gray-950 leading-snug">Sellable</p>
+            <p class="text-[13px] text-gray-500 mt-0.5 leading-snug">Can be added to orders</p>
+          </div>
+
+          <!-- Info Icon -->
+          <button class="shrink-0 text-gray-400 hover:text-gray-600 transition-colors">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <circle cx="10" cy="10" r="8.5" stroke="#9ca3af" stroke-width="1.5" />
+              <path d="M10 9v5" stroke="#9ca3af" stroke-width="1.5" stroke-linecap="round" />
+              <circle cx="10" cy="6.5" r="0.75" fill="#9ca3af" />
+            </svg>
+          </button>
+
+          <!-- Toggle -->
+          <label class="relative inline-flex cursor-pointer items-center">
+            <!-- Hidden Checkbox -->
+            <input type="checkbox" class="peer sr-only" checked />
+
+            <!-- The Background Track -->
+            <div class="h-6 w-12 rounded-full bg-gray-400 duration-300 peer-checked:bg-black"></div>
+
+            <!-- The Sliding Circle -->
+            <div
+              class="absolute left-1 top-1 h-4 w-4 rounded-full bg-white transition-all duration-300 peer-checked:translate-x-6"
+            ></div>
+          </label>
+        </div>
+        <div class="flex items-center gap-4 pb-10">
+          <!-- POS Icon -->
+          <div class="shrink-0">
+            <svg
+              width="28"
+              height="28"
+              viewBox="0 0 28 28"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <!-- Receipt / register icon -->
+              <rect x="5" y="4" width="14" height="18" rx="1.5" stroke="#111" stroke-width="1.7" />
+              <rect x="8" y="8" width="8" height="5" rx="1" stroke="#111" stroke-width="1.5" />
+              <path d="M8 17h8M8 20h5" stroke="#111" stroke-width="1.5" stroke-linecap="round" />
+              <path
+                d="M19 10h2a1 1 0 011 1v10a1 1 0 01-1 1h-2"
+                stroke="#111"
+                stroke-width="1.5"
+                stroke-linecap="round"
+              />
+            </svg>
+          </div>
+
+          <!-- Text Block -->
+          <div class="flex-1 min-w-0">
+            <p class="text-[15px] font-bold text-gray-950 leading-snug">Active Status</p>
+            <p class="text-[13px] text-gray-500 mt-0.5 leading-snug">
+              If inactive, the item won't appear anywhere in the POS and can't be added to orders.
+              Use this to temporarily hide items without deleting them.
+            </p>
+          </div>
+
+          <!-- Info Icon -->
+          <button class="shrink-0 text-gray-400 hover:text-gray-600 transition-colors">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <circle cx="10" cy="10" r="8.5" stroke="#9ca3af" stroke-width="1.5" />
+              <path d="M10 9v5" stroke="#9ca3af" stroke-width="1.5" stroke-linecap="round" />
+              <circle cx="10" cy="6.5" r="0.75" fill="#9ca3af" />
+            </svg>
+          </button>
+
+          <!-- Toggle -->
+          <label class="relative inline-flex cursor-pointer items-center">
+            <!-- Hidden Checkbox -->
+            <input type="checkbox" class="peer sr-only" checked />
+
+            <!-- The Background Track -->
+            <div class="h-6 w-12 rounded-full bg-gray-400 duration-300 peer-checked:bg-black"></div>
+
+            <!-- The Sliding Circle -->
+            <div
+              class="absolute left-1 top-1 h-4 w-4 rounded-full bg-white transition-all duration-300 peer-checked:translate-x-6"
+            ></div>
+          </label>
+        </div>
+      </div>
+      <div class="w-full lg:w-72 xl:w-80 flex flex-col gap-4"></div>
+    </div>
+  </div>
 </div>

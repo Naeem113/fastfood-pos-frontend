@@ -11,9 +11,11 @@ import { BranchesSelectionModal } from '../../../../shared/components/dashboard/
 import { BranchDto } from '../../../../shared/models/branch.model';
 import {  itemFormModel, itemSchema } from '../form';
 import { FloatingSelect } from '../../../../shared/ui/floating-select/floating-select';
+import { CoverColorPicker } from '../../../../shared/components/dashboard/cover-color-picker/cover-color-picker';
+import { ParentCategoryModal } from '../../../../shared/components/dashboard/modals/parent-category-modal/parent-category-modal';
 @Component({
   selector: 'app-items-create',
-  imports: [...COMMON_IMPORTS, FloatingInput, FormContentHeader, FormField, FloatingSelect],
+  imports: [...COMMON_IMPORTS, FloatingInput, FormContentHeader, FormField, FloatingSelect, CoverColorPicker],
   templateUrl: './items-create.html',
   styleUrl: './items-create.scss',
 })
@@ -29,18 +31,21 @@ export class ItemsCreate {
   selectedBranchesNames = signal<string>('');
   totalBranchesCount = signal<number>(1);
   itemForm = form(itemFormModel, itemSchema);
-  categories =[
+  selectedCoverColor = signal(this.itemForm().value().coverColor || '#6B7280');
+
+  itemTypes =[
     {
-      id: '01',
       label: 'Single',
+      value: 'single',
       description: 'One type of product.',
     },
     {
-      id: '02',
       label: 'Variant',
+      value: 'variant',
       description: 'Several types of products.',
     }
   ]
+  isVariant = () => this.itemForm().value().type === 'variant';
   // ========================
   // inject services & stores
   // ========================
@@ -59,33 +64,96 @@ export class ItemsCreate {
     this.loading.set(true);
   }
 
+  onColorChange(event: string) {
+    this.itemForm().controlValue.set({
+      ...this.itemForm().value(),
+      coverColor: event
+    })
+  }
+
   goToItems() {
     this.router.navigate([this.routesStrings.menu.item.list]);
   }
 
-  // openBranchesModal() {
-  //   const ref =this.dialogService.open(BranchesSelectionModal, {
-  //     data: {
-  //       title: 'Select Branch',
-  //       description: 'Select a branch to assign this item.',
-  //       multiSelect: false,
-  //       value: this.itemForm().value().branchId?[this.itemForm().value().branchId]:[]
-  //     }
-  //   });
+  async openCategoryModal() {
+    const ref =this.dialogService.open(ParentCategoryModal, {
+      data: {
+        title: 'Category',
+        description: 'Select a category for this item.',
+      }
+    });
 
-  //   ref?.onClose?.subscribe((result: BranchDto[]) => {
-  //     if (result) {
-  //       console.log('User selected:', result);
-  //       this.selectedBranchesCount.set(result.length)
-  //       // branch name concatenation
-  //       const branchesName = result
-  //       .map(branch => branch.name)
-  //       .join(', ');
-  //       this.selectedBranchesNames.set(branchesName);
-  //       this.itemForm().branchId().value.set(result[0].id);
-  //     } else {
-  //       console.log('Modal dismissed — no selection made');
-  //     }
-  //   });
-  // }
+    ref?.onClose.subscribe((result: any) => {
+      if (result) {
+        console.log('User selected:', result);
+      } else {
+        console.log('Modal dismissed — no selection made');
+      }
+    });
+  }
+
+  openBranchesModal() {
+    const ref =this.dialogService.open(BranchesSelectionModal, {
+      data: {
+        title: 'Select Branch',
+        description: 'Select a branch to assign this item.',
+        multiSelect: true,
+        value: this.itemForm().value().allowedBranches?this.itemForm().value().allowedBranches:[]
+      }
+    });
+
+    ref?.onClose?.subscribe((result: BranchDto[]) => {
+      if (result) {
+        console.log('User selected:', result);
+        this.selectedBranchesCount.set(result.length)
+        // branch name concatenation
+        const branchesName = result
+        .map(branch => branch.name)
+        .join(', ');
+        this.selectedBranchesNames.set(branchesName);
+        this.itemForm.allowedBranches().value.set(result.map(branch => branch.id));
+      } else {
+        console.log('Modal dismissed — no selection made');
+      }
+    });
+  }
+
+  addVariant() {
+    const form = this.itemForm();
+
+    form.controlValue.set({
+      ...form.value(),
+      variants: [
+        ...(form.value().variants || []),
+        { name: '', costPrice: 0, price: 0 }
+      ]
+    });
+  }
+
+  removeVariant(index: number) {
+    const form = this.itemForm();
+    const variants = [...form.value().variants];
+
+    variants.splice(index, 1);
+
+    form.controlValue.set({
+      ...form.value(),
+      variants
+    });
+  }
+
+  updateVariant(index: number, key: string, value: any) {
+    const form = this.itemForm();
+    const variants = [...form.value().variants];
+
+    variants[index] = {
+      ...variants[index],
+      [key]: value
+    };
+
+    form.controlValue.set({
+      ...form.value(),
+      variants
+    });
+  }
 }

@@ -21,7 +21,7 @@ export interface ItemFormData {
   price: number;
   costPrice: number;
   retailMargin: number;
-
+  coverColor?: string;
   sku: string;
   barcode: string;
 
@@ -49,7 +49,7 @@ export const itemFormModel  = signal<ItemFormData>({
   price: 0,
   costPrice: 0,
   retailMargin: 0,
-
+  coverColor: '#6B7280',
   sku: '',
   barcode: '',
 

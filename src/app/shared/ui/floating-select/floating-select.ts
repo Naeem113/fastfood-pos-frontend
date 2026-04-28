@@ -49,6 +49,25 @@ export class FloatingSelect {
   selectedItem = signal<any | null>(null);
   selectedItems = signal<any[]>([]); // ⭐ NEW for multi
 
+  ngOnInit() {
+    if (this.field) {
+      const value = this.field().value();
+      if (value) {
+        if (this.multiSelection) {
+          const selected = this.items.filter((i: any) =>
+            this.valueKey ? value.includes(i[this.valueKey]) : value.includes(i)
+          );
+          this.selectedItems.set(selected);
+        } else {
+          const selected = this.items.find((i: any) =>
+            this.valueKey ? i[this.valueKey] === value : i === value
+          );
+          this.selectedItem.set(selected || null);
+        }
+      }
+    }
+  }
+
   @ViewChild('trigger') triggerEl!: ElementRef<HTMLButtonElement>;
 
   hasError() {
