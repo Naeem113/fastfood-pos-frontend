@@ -6,11 +6,8 @@ import { routesStrings } from '../../../../shared/routes';
 import { GridListHeader } from '../../../../shared/components/dashboard/grid-list-header/grid-list-header';
 import { PRIME_NG_IMPORTS } from '../../../../shared/primeng';
 import { ConfirmService } from '../../../../core/services/confirm-dialog.service';
-interface Column {
-  field: string;
-  header: string;
-  customExportHeader?: string;
-}
+import { TableColumn } from '../../../../shared/interfaces/tableColumn';
+
 @Component({
   selector: 'app-category-list',
   imports: [...COMMON_IMPORTS, ContentHeader, GridListHeader, ...PRIME_NG_IMPORTS],
@@ -23,14 +20,14 @@ export class CategoryList {
   confirmService = inject(ConfirmService)
   //filter
   isActiveStatus = true
-  cols!: Column[];
+  cols!: TableColumn[];
   selectedProducts!: any[] | null;
   products = [
     {
       id: '1000',
       name: 'Pizza',
       description: 'Product Description',
-      image: 'bamboo-watch.jpg',
+      image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTytpqBakUgp5FnLM_Ezyoq0xKzEUP8qq_I2w&s',
       parentCategory: '-',
       quantity: 24,
       status: 'Active',
@@ -38,7 +35,7 @@ export class CategoryList {
       id: '1000',
       name: 'Burger',
       description: 'Product Description',
-      image: 'bamboo-watch.jpg',
+      image: 'https://i0.wp.com/flaevor.com/wp-content/uploads/2022/04/SambalFriedChickenBurger1.jpg?resize=1024%2C830&ssl=1',
       parentCategory: '-',
       quantity: 24,
       status: 'Active',
@@ -46,7 +43,7 @@ export class CategoryList {
       id: '1000',
       name: 'Shawarma',
       description: 'Product Description',
-      image: 'bamboo-watch.jpg',
+      image: 'https://pekis.net/sites/default/files/styles/social_share_1200/public/2025-04/Shawarma.webp?itok=TeUFSs0R',
       parentCategory: '-',
       quantity: 24,
       status: 'Active',
@@ -54,7 +51,7 @@ export class CategoryList {
       id: '1000',
       name: 'Pasta',
       description: 'Product Description',
-      image: 'bamboo-watch.jpg',
+      image: 'https://images.immediate.co.uk/production/volatile/sites/30/2013/05/Puttanesca-fd5810c.jpg?quality=90&resize=708,643',
       parentCategory: '-',
       quantity: 24,
       status: 'Active',

@@ -80,8 +80,8 @@
 
     <app-cover-color-picker
       [firstName]="categoryForm().value().name"
-      [selectedColor]="selectedColor"
-      (colorChange)="selectedColor.set($event)"
+      [selectedColor]="categoryForm().value().color"
+      (colorChange)="onColorChange($event)"
     />
 
     <div class="h-0.5 bg-gray-200 w-full my-4 mt-8"></div>

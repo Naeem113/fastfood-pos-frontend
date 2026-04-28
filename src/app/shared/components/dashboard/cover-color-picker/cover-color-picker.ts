@@ -11,7 +11,7 @@ import { COMMON_IMPORTS } from '../../../common';
 export class CoverColorPicker {
   @Input() firstName = '';
   @Input() lastName = '';
-  @Input() selectedColor = signal<string>('#6B7280');
+  @Input() selectedColor = '#6B7280';
 
   @Output() colorChange = new EventEmitter<string>();
 
@@ -38,7 +38,7 @@ export class CoverColorPicker {
   }
 
   selectColor(color: string) {
-    this.selectedColor.set(color);
+    this.selectedColor = color;
     this.colorChange.emit(color); // 🔥 send to parent
   }
 }

@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { FormContentHeader } from '../../../../shared/components/dashboard/form-content-header/form-content-header';
 import { COMMON_IMPORTS } from '../../../../shared/common';
 import { FloatingInput } from '../../../../shared/ui/floating-input/floating-input';
@@ -9,7 +9,7 @@ import { ApiService } from '../../../../core/services/api.service';
 import { CustomDialogService } from '../../../../core/services/custom.dialog.service';
 import { BranchesSelectionModal } from '../../../../shared/components/dashboard/modals/branches-selection-modal/branches-selection-modal';
 import { BranchDto } from '../../../../shared/models/branch.model';
-import {  itemFormModel, itemSchema } from '../form';
+import {  itemFormModel, itemSchema, Variant } from '../form';
 import { FloatingSelect } from '../../../../shared/ui/floating-select/floating-select';
 import { CoverColorPicker } from '../../../../shared/components/dashboard/cover-color-picker/cover-color-picker';
 import { ParentCategoryModal } from '../../../../shared/components/dashboard/modals/parent-category-modal/parent-category-modal';
@@ -31,7 +31,7 @@ export class ItemsCreate {
   selectedBranchesNames = signal<string>('');
   totalBranchesCount = signal<number>(1);
   itemForm = form(itemFormModel, itemSchema);
-  selectedCoverColor = signal(this.itemForm().value().coverColor || '#6B7280');
+  selectedCoverColor = this.itemForm().value().coverColor || '#6B7280';
 
   itemTypes =[
     {
@@ -45,7 +45,7 @@ export class ItemsCreate {
       description: 'Several types of products.',
     }
   ]
-  isVariant = () => this.itemForm().value().type === 'variant';
+  isVariant = computed(()=> this.itemForm().value().type === 'variant') ;
   // ========================
   // inject services & stores
   // ========================
@@ -56,7 +56,7 @@ export class ItemsCreate {
 
   saveItem() {
     this.formSubmitted.set(true);
-    console.log(this.itemForm);
+    console.log(this.itemForm().value());
 
     if(this.loading() || this.itemForm().invalid()) {
       return;
@@ -65,7 +65,7 @@ export class ItemsCreate {
   }
 
   onColorChange(event: string) {
-    this.itemForm().controlValue.set({
+    this.itemForm().value.set({
       ...this.itemForm().value(),
       coverColor: event
     })
@@ -73,6 +73,13 @@ export class ItemsCreate {
 
   goToItems() {
     this.router.navigate([this.routesStrings.menu.item.list]);
+  }
+
+  onItemTypeChange(value:string) {
+
+    if(value === 'variant' && this.itemForm().value().variants.length === 0){
+      this.addVariant()
+    }
   }
 
   async openCategoryModal() {
@@ -118,29 +125,25 @@ export class ItemsCreate {
     });
   }
 
-  addVariant() {
-    const form = this.itemForm();
-
-    form.controlValue.set({
-      ...form.value(),
-      variants: [
-        ...(form.value().variants || []),
-        { name: '', costPrice: 0, price: 0 }
+  addVariant(variant?:Variant) {
+    itemFormModel.update((item)=>({
+      ...item,
+      variants:[
+        ...item.variants,
+        variant ??{ name: '', costPrice: 0, price: 0  }
       ]
-    });
+    }));
   }
 
   removeVariant(index: number) {
-    const form = this.itemForm();
-    const variants = [...form.value().variants];
-
-    variants.splice(index, 1);
-
-    form.controlValue.set({
-      ...form.value(),
-      variants
-    });
-  }
+  itemFormModel.update((item) => ({
+    ...item,
+    variants: [
+      ...item.variants.slice(0, index),
+      ...item.variants.slice(index + 1)
+    ]
+  }));
+}
 
   updateVariant(index: number, key: string, value: any) {
     const form = this.itemForm();

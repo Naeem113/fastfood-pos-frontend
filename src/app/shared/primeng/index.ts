@@ -8,6 +8,7 @@ import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToastModule } from 'primeng/toast';
+import { TagModule } from 'primeng/tag';
 
 export const PRIME_NG_IMPORTS = [
   ButtonModule,
@@ -17,5 +18,6 @@ export const PRIME_NG_IMPORTS = [
   IconFieldModule,
   InputIconModule,
   ConfirmDialogModule,
-  ToastModule
+  ToastModule,
+  TagModule
 ];

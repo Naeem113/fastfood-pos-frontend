@@ -131,6 +131,7 @@ export class FloatingSelect {
   // ─────────────────────────────
   select(item: any) {
     const value = this.valueKey ? item[this.valueKey] : item;
+    console.log(value);
 
     // ─── MULTI SELECT ───
     if (this.multiSelection) {

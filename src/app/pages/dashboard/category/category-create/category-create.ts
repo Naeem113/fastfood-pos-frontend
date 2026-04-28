@@ -31,7 +31,7 @@ export class CategoryCreate {
   categoryForm = form(categoryFormModel, categorySchema)
   formSubmitted = signal<boolean>(false);
   loading = signal<boolean>(false);
-  selectedColor = signal(this.categoryForm().value().color);
+  selectedColor = this.categoryForm().value().color;
   selectedFile: File | null = null;
   // ========================
   // inject services & stores
@@ -66,6 +66,13 @@ export class CategoryCreate {
 
   goToCategories() {
     this.router.navigate([this.routesStrings.menu.category.list]);
+  }
+
+  onColorChange(color:string){
+    this.categoryForm().value.set({
+      ...this.categoryForm().value(),
+      color
+    })
   }
 
   private modalService = inject(ModalService);

@@ -1,5 +1,5 @@
 import { signal, computed } from '@angular/core';
-import { applyEach, applyWhen, PathKind, required, schema, SchemaPathTree } from '@angular/forms/signals';
+import { applyEach, applyWhen, PathKind, required, schema, SchemaPathTree, min } from '@angular/forms/signals';
 
 export type ItemType = 'single' | 'variant';
 
@@ -79,6 +79,7 @@ export function itemSchema(s: ItemSchema) {
     ({ valueOf }) => valueOf(s.type) === 'single',
     (schema) => {
       required(schema.price, { message: 'Price is required' });
+      min(schema.price, 1, { message: 'Price must be grater than 0'});
     }
   );
 

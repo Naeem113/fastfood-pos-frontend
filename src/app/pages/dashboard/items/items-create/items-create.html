@@ -1,6 +1,6 @@
 <div class="h-full overflow-hidden bg-white flex flex-col">
   <app-form-content-header
-    [title]="'Create Item'"
+    [title]="'Create Menu Item'"
     buttonText="Save"
     (buttonClick)="saveItem()"
     (closeClick)="goToItems()"
@@ -21,7 +21,7 @@
           </app-floating-input>
           <app-floating-select
             class="w-full"
-            label="Product Type"
+            label="Item Type"
             [items]="itemTypes"
             labelKey="label"
             [multiSelection]="false"
@@ -29,14 +29,33 @@
             valueKey="value"
             [submitted]="formSubmitted"
             [field]="itemForm.type"
+            (valueChange)="onItemTypeChange($event)"
           />
           <textarea
             placeholder="Description"
             rows="4"
             class="w-full text-base text-black placeholder-gray-400 bg-transparent resize-none focus:ring-1 border border-gray-300 rounded-xl px-4 py-3 transition"
           ></textarea>
-          @if(!isVariant()){
-            <div class="mt-6">
+          <div class="flex flex-col md:flex-row gap-3 w-full">
+            <app-floating-input
+              class="w-full"
+              label="SKU"
+              placeholder="e.g, SKU-150, SKU-250"
+              [field]="itemForm.sku"
+              [submitted]="formSubmitted"
+            >
+            </app-floating-input>
+            <app-floating-input
+              class="w-full"
+              label="Barcode"
+              placeholder="e.g, 1234567890123"
+              [field]="itemForm.barcode"
+              [submitted]="formSubmitted"
+            >
+            </app-floating-input>
+          </div>
+          @if (!isVariant()) {
+            <div class="mt-2">
               <h2 class="text-lg font-bold text-gray-900 mb-4">Manage prices and barcodes</h2>
               <div class="flex flex-col md:flex-row gap-3 w-full">
                 <app-floating-input
@@ -65,103 +84,74 @@
           >
           </app-floating-input> -->
               </div>
-              <div class="flex flex-col md:flex-row gap-3 w-full mt-3">
-                <app-floating-input
-                  class="w-full"
-                  label="SKU"
-                  placeholder="e.g, SKU-150, SKU-250"
-                  [field]="itemForm.sku"
-                  [submitted]="formSubmitted"
+            </div>
+          } @else {
+            <!-- ───────── VARIANTS ───────── -->
+            <div class="mt-2">
+              <!-- Header -->
+              <div class="flex items-center justify-between mb-4">
+                <h2 class="text-lg font-bold text-gray-900">Manage item variants</h2>
+
+                <button
+                  (click)="addVariant()"
+                  class="text-sm font-semibold text-primary hover:underline"
                 >
-                </app-floating-input>
-                <app-floating-input
-                  class="w-full"
-                  label="Barcode"
-                  placeholder="e.g, 1234567890123"
-                  [field]="itemForm.barcode"
-                  [submitted]="formSubmitted"
-                >
-                </app-floating-input>
+                  + Add Variant
+                </button>
+              </div>
+
+              <!-- Variant List -->
+              <div class="flex flex-col gap-3">
+                @for (v of itemForm.variants; track v; let i = $index) {
+                  <div
+                    class="border group border-gray-200 bg-gray-100 rounded-lg px-2 py-3 flex flex-col gap-3 relative hover:border-gray-300 transition"
+                  >
+                    @if (itemForm.variants.length > 1) {
+                      <button
+                        (click)="removeVariant(i)"
+                        class="absolute -top-3 z-10 -right-2 bg-red-500 rounded-full h-6 w-6 text-white hover:bg-red-400"
+                      >
+                        ✕
+                      </button>
+                    }
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                      <app-floating-input
+                        size="sm"
+                        class="w-full"
+                        label="Name"
+                        [required]="true"
+                        placeholder="e.g. Small, Large"
+                        [field]="v.name"
+                        [submitted]="formSubmitted"
+                      >
+                      </app-floating-input>
+                      <app-floating-input
+                        size="sm"
+                        class="w-full"
+                        type="number"
+                        label="Cost Price"
+                        placeholder="e.g. Small, Large"
+                        [field]="v.costPrice"
+                        [submitted]="formSubmitted"
+                      >
+                      </app-floating-input>
+                      <app-floating-input
+                        size="sm"
+                        type="number"
+                        [required]="true"
+                        class="w-full"
+                        label="Sell Price"
+                        placeholder="e.g. Small, Large"
+                        [field]="v.price"
+                        [submitted]="formSubmitted"
+                      >
+                      </app-floating-input>
+                    </div>
+                  </div>
+                }
               </div>
             </div>
-          }@else {
-            <!-- ───────── VARIANTS ───────── -->
-<div class="mt-6">
-
-  <!-- Header -->
-  <div class="flex items-center justify-between mb-4">
-    <h2 class="text-lg font-bold text-gray-900">
-      Variants
-    </h2>
-
-    <button
-      (click)="addVariant()"
-      class="text-sm font-semibold text-primary hover:underline"
-    >
-      + Add Variant
-    </button>
-  </div>
-
-  <!-- Empty state -->
-  <div
-    *ngIf="!itemForm().value().variants?.length"
-    class="text-sm text-gray-400 text-center py-6 border border-dashed rounded-xl"
-  >
-    No variants added yet
-  </div>
-
-  <!-- Variant List -->
-  <div class="flex flex-col gap-3">
-
-    <div
-      *ngFor="let v of itemForm().value().variants; let i = index"
-      class="border border-gray-200 rounded-xl p-4 flex flex-col gap-3 relative hover:border-gray-300 transition"
-    >
-
-      <!-- Delete -->
-      <button
-        (click)="removeVariant(i)"
-        class="absolute top-3 right-3 text-gray-400 hover:text-red-500"
-      >
-        ✕
-      </button>
-
-      <!-- Row -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-
-        <!-- Name -->
-        <input
-          type="text"
-          placeholder="Variant name (e.g. Small, Large)"
-          class="border rounded-lg px-3 py-2 text-sm"
-          [value]="v.name"
-          (input)="updateVariant(i, 'name', $any($event.target).value)"
-        />
-
-        <!-- Cost -->
-        <input
-          type="number"
-          placeholder="Cost Price"
-          class="border rounded-lg px-3 py-2 text-sm"
-          [value]="v.costPrice"
-          (input)="updateVariant(i, 'costPrice', +$any($event.target).value)"
-        />
-
-        <!-- Selling -->
-        <input
-          type="number"
-          placeholder="Selling Price"
-          class="border rounded-lg px-3 py-2 text-sm"
-          [value]="v.price"
-          (input)="updateVariant(i, 'price', +$any($event.target).value)"
-        />
-
-      </div>
-
-    </div>
-
-  </div>
-</div>
           }
         </div>
       </div>
@@ -172,7 +162,7 @@
             <p class="text-xs text-gray-500 leading-relaxed">Select a category for this item</p>
           </div>
           <button
-          (click)="openCategoryModal()"
+            (click)="openCategoryModal()"
             class="text-sm font-semibold text-primary underline underline-offset-2 hover:text-gray-600 transition-colors flex-shrink-0"
           >
             Edit
@@ -219,15 +209,15 @@
           </p>
           <app-cover-color-picker
             [firstName]="itemForm().value().name"
-            [selectedColor]="selectedCoverColor"
-            (colorChange)="selectedCoverColor.set($event)"
+            [selectedColor]="itemForm().value().coverColor || ''"
+            (colorChange)="onColorChange($event)"
           />
         </div>
       </div>
     </div>
     <div class="flex flex-col lg:flex-row gap-6">
       <!-- Left Column -->
-      <div class="flex-1 flex flex-col ">
+      <div class="flex-1 flex flex-col">
         <div class="h-0.5 bg-gray-200 w-full my-4 mt-8"></div>
         <!-- Section Heading -->
         <h2 class="text-[19px] sm:text-xl font-bold text-gray-950 mb-5 mt-6 tracking-tight">
