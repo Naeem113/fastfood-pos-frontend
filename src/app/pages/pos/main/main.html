@@ -1,0 +1,218 @@
+<!-- ROOT -->
+<div class="h-screen flex flex-col bg-[#0D0E0C] text-[#DFE1D8] overflow-auto">
+
+  <!-- TOPBAR -->
+<header class="flex items-center justify-between px-5 h-[58px] bg-[#141512] border-b-2 border-orange-500">
+
+  <!-- Brand -->
+  <div class="flex items-center gap-3">
+    <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center shadow-[0_0_12px_rgba(249,115,22,0.4)]">
+      🔥
+    </div>
+    <div>
+      <div class="font-bold text-lg tracking-wide">FlamePoint</div>
+      <div class="text-[10px] tracking-widest text-orange-500 -mt-1">FAST FOOD POS</div>
+    </div>
+  </div>
+
+  <!-- Order Tabs -->
+  <div class="flex gap-1 bg-black/40 p-1 rounded-lg">
+    <button
+      *ngFor="let type of ['Dine In','Takeaway','Delivery']"
+      (click)="orderType = type"
+      class="px-4 py-1.5 rounded-md text-sm font-semibold flex items-center gap-1 transition"
+      [ngClass]="orderType === type
+        ? 'bg-orange-500 text-white shadow-md'
+        : 'text-gray-400 hover:bg-[#1F211D] hover:text-white'">
+      {{ type === 'Dine In' ? '🍽️' : type === 'Takeaway' ? '🛍️' : '🛵' }}
+      {{ type }}
+    </button>
+  </div>
+
+  <!-- Right -->
+  <div class="flex items-center gap-3">
+    <div class="text-right">
+      <div class="text-sm">{{ currentTime }}</div>
+      <div class="text-[10px] text-gray-500">{{ currentDate }}</div>
+    </div>
+
+    <div class="flex items-center gap-1 px-3 py-1 rounded-full border border-green-400/40 bg-green-500/10 text-green-400 text-xs">
+      <span class="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse"></span>
+      ACTIVE
+    </div>
+
+    <div class="w-8 h-8 rounded-full bg-indigo-600 flex items-center justify-center text-xs font-bold">
+      AR
+    </div>
+
+    <button class="px-3 py-1 text-red-400 border border-red-400/40 rounded-md hover:bg-red-500/10 text-sm">
+      ⏹ END
+    </button>
+  </div>
+
+</header>
+
+  <!-- SUBBAR -->
+<div class="flex items-center justify-between px-5 h-[36px] bg-[#141512] border-b border-[#2A2D26] text-xs">
+
+  <div class="flex items-center gap-2">
+    📍
+    <span class="text-gray-500 tracking-wider">LOCATION:</span>
+    <span class="text-white tracking-wide">MAIN STORE — REG 01</span>
+  </div>
+
+  <div class="flex gap-4">
+    <span class="text-green-400">💵 CASH</span>
+    <span class="text-gray-500">SHIFT #A2024</span>
+  </div>
+
+</div>
+
+  <!-- MAIN -->
+  <div class="grid grid-cols-[1fr_360px] flex-1 overflow-auto">
+
+    <!-- LEFT PANEL -->
+<div class="flex flex-col p-4 gap-3 border-r border-[#2A2D26] overflow-hidden">
+
+  <!-- Search -->
+  <div class="flex items-center gap-2 px-4 h-11 bg-[#1A1C18] border border-[#333630] rounded-lg focus-within:ring-2 focus-within:ring-orange-500/20">
+    🔍
+    <input
+      [(ngModel)]="searchQuery"
+      placeholder="Search products..."
+      class="flex-1 bg-transparent outline-none text-sm text-white placeholder-gray-500"
+    />
+    <button class="px-2 py-1 bg-[#333630] rounded hover:bg-orange-500">📷</button>
+  </div>
+
+  <!-- Categories -->
+  <div class="flex flex-wrap gap-2">
+    <button
+      *ngFor="let cat of categories"
+      (click)="activeCategory = cat"
+      class="px-4 py-1.5 rounded-full text-sm font-semibold transition"
+      [ngClass]="activeCategory === cat
+        ? 'bg-orange-500 text-white shadow'
+        : 'bg-[#1A1C18] text-gray-400 hover:text-white'">
+      {{ cat }}
+    </button>
+  </div>
+
+  <!-- Products -->
+  <div class="grid grid-cols-[repeat(auto-fill,minmax(160px,1fr))] gap-3 overflow-y-auto pr-1">
+
+    <div
+      *ngFor="let p of filteredProducts"
+      (click)="addToCart(p)"
+      class="relative p-4 rounded-xl bg-[#1F211D] border border-[#2A2D26] cursor-pointer transition hover:border-orange-500 hover:-translate-y-1">
+
+      <div class="text-3xl text-center">{{ p.emoji }}</div>
+
+      <div class="mt-2 space-y-1">
+        <div class="font-semibold">{{ p.name }}</div>
+        <div class="text-xs text-gray-500">
+          {{ p.stock === 0 ? 'Out of stock' : 'Stock: ' + p.stock }}
+        </div>
+        <div class="text-orange-300 font-semibold">
+          Rs {{ p.price }}
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+    <!-- RIGHT PANEL -->
+<div class="flex flex-col bg-[#1A1C18]">
+
+  <!-- Header -->
+  <div class="p-4 border-b border-[#2A2D26] bg-[#141512]">
+    <div class="flex items-center gap-2">
+      <span class="text-lg font-bold tracking-wider">ORDER</span>
+      <span class="w-5 h-5 bg-orange-500 text-xs flex items-center justify-center rounded-full">
+        {{ cartCount }}
+      </span>
+    </div>
+    <div class="text-xs text-gray-500">
+      {{ cart.length }} items
+    </div>
+  </div>
+
+  <!-- Items -->
+  <div class="flex-1 overflow-y-auto p-3 space-y-2">
+
+    <div
+      *ngFor="let item of cart"
+      class="flex gap-2 bg-[#1F211D] border border-[#2A2D26] p-2 rounded-lg">
+
+      <div class="text-xl">{{ item.product.emoji }}</div>
+
+      <div class="flex-1">
+        <div class="font-semibold text-sm">{{ item.product.name }}</div>
+        <div class="text-xs text-gray-500">Rs {{ item.product.price }}</div>
+      </div>
+
+      <div class="flex items-center gap-1">
+        <button (click)="decrement(item)" class="w-6 h-6 bg-[#333630] rounded hover:bg-orange-500">−</button>
+        <span>{{ item.qty }}</span>
+        <button (click)="increment(item)" class="w-6 h-6 bg-[#333630] rounded hover:bg-orange-500">+</button>
+      </div>
+
+      <div class="text-sm font-semibold text-orange-300">
+        Rs {{ itemTotal(item) }}
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Totals -->
+  <div class="p-4 border-t border-[#2A2D26] bg-[#141512] space-y-2 text-sm">
+
+    <div class="flex justify-between text-gray-400">
+      <span>Subtotal</span>
+      <span>Rs {{ subtotal }}</span>
+    </div>
+
+    <div class="flex justify-between text-gray-400">
+      <span>Tax</span>
+      <span>Rs {{ tax }}</span>
+    </div>
+
+    <div class="flex justify-between text-lg font-bold text-orange-400">
+      <span>Total</span>
+      <span>Rs {{ total }}</span>
+    </div>
+
+  </div>
+
+  <!-- Actions -->
+  <div class="p-3 grid grid-cols-2 gap-2 bg-[#141512]">
+
+    <button class="py-2 text-sm border border-yellow-500/40 text-yellow-400 rounded hover:bg-yellow-500/10">
+      ⏸ HOLD
+    </button>
+
+    <button class="py-2 text-sm border border-blue-500/40 text-blue-400 rounded hover:bg-blue-500/10">
+      ⑃ SPLIT
+    </button>
+
+    <button
+      class="col-span-2 py-3 bg-gradient-to-r from-green-500 to-green-600 rounded text-white font-bold flex justify-between px-4">
+      PAY
+      <span>Rs {{ total }}</span>
+    </button>
+
+    <button class="col-span-2 py-2 border border-red-500/40 text-red-400 rounded hover:bg-red-500/10">
+      🗑 CLEAR
+    </button>
+
+  </div>
+
+</div>
+
+  </div>
+
+</div>

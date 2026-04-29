@@ -1,0 +1,250 @@
+<div class="min-h-screen flex items-center justify-center bg-[#111210] relative overflow-hidden ">
+
+  <!-- Grid Background -->
+  <!-- <div class="absolute inset-0 opacity-30 pointer-events-none"
+       style="background-image:
+         linear-gradient(#2E3028 1px, transparent 1px),
+         linear-gradient(90deg, #2E3028 1px, transparent 1px);
+         background-size: 40px 40px;">
+  </div> -->
+
+  <!-- Glow -->
+<div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+  <div class="w-[700px] h-[600px]
+              bg-[radial-gradient(ellipse_at_center,rgba(245,158,11,0.12)_0%,transparent_70%)]">
+  </div>
+</div>
+
+  <!-- Card -->
+  <div class="relative z-10 w-full max-w-md bg-[#1A1C19] border border-[#2E3028]
+              rounded-md shadow-md overflow-hidden animate-[fadeUp_0.5s_ease]">
+
+    <!-- Status Bar -->
+    <div class="flex items-center justify-between px-5 py-3 border-b border-[#2E3028] bg-black/30">
+      <div class="flex items-center gap-2 text-xs uppercase tracking-widest text-[#5C6352]">
+        <span class="w-2 h-2 rounded-full bg-[#5C6352] animate-pulse"></span>
+        POS Terminal
+      </div>
+
+      <span class="text-xs text-[#5C6352] tracking-wider">
+        {{ time() }}
+      </span>
+    </div>
+
+    <!-- Body -->
+    <div class="px-8 py-8">
+
+      <!-- Clock Ring -->
+      <div class="relative w-20 h-20 mx-auto mb-6">
+        <svg class="rotate-[-90deg]" viewBox="0 0 88 88">
+          <circle cx="44" cy="44" r="35"
+                  class="stroke-[#2E3028] stroke-2 fill-none"></circle>
+
+          <circle cx="44" cy="44" r="35"
+                  class="stroke-amber-500 stroke-2 fill-none
+                         [stroke-dasharray:220] [stroke-dashoffset:60]
+                         transition-all duration-1000 ease-out">
+          </circle>
+        </svg>
+
+        <div class="absolute inset-0 flex items-center justify-center">
+          <svg class="w-6 h-6 text-amber-500" viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M12 6v6l4 2" stroke="currentColor" stroke-width="1.5"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Title -->
+      <h1 class="text-2xl text-center font-bold text-[#E8EAE0] leading-tight mb-2 font-sans">
+        Begin
+        <span class="text-amber-500">Your Shift</span>
+      </h1>
+
+      <!-- Store Badge -->
+      <div class="mb-6">
+        <div class="inline-flex justify-center w-full items-center gap-2 px-3 py-1 text-xs uppercase tracking-widest
+                    border border-amber-500/30 bg-amber-500/10 text-amber-300">
+          Main Store — Register 01
+        </div>
+      </div>
+
+      <!-- Info -->
+      <div class="space-y-3 text-xs text-[#5C6352] mb-6">
+
+        <div class="flex justify-between border-b border-[#2E3028] pb-2">
+          <span>Shift date</span>
+          <span class="text-[#E8EAE0]">{{ date() }}</span>
+        </div>
+
+        <div class="flex justify-between border-b border-[#2E3028] pb-2">
+          <span>Shift type</span>
+          <span class="text-green-400 flex items-center gap-2">
+            <span class="w-2 h-2 bg-green-400 rounded-full"></span>
+            Morning
+          </span>
+        </div>
+
+        <div class="flex justify-between border-b border-[#2E3028] pb-2">
+          <span>Cashier</span>
+          <span class="text-[#E8EAE0]">Ahmad Raza</span>
+        </div>
+
+        <div class="flex justify-between">
+          <span>Opening drawer</span>
+          <span class="text-amber-400 font-medium">PKR 5,000</span>
+        </div>
+
+      </div>
+
+      <!-- Divider -->
+      <div class="flex items-center gap-3 text-[10px] uppercase tracking-widest text-[#5C6352] mb-5">
+        <div class="flex-1 h-px bg-[#2E3028]"></div>
+        Confirm to proceed
+        <div class="flex-1 h-px bg-[#2E3028]"></div>
+      </div>
+
+      <!-- Button -->
+      <button
+        (click)="startShift()"
+        [disabled]="loading()"
+        class="w-full py-4 flex items-center justify-center gap-2
+               bg-amber-500 hover:bg-amber-400
+               text-black font-bold uppercase tracking-widest text-sm
+               transition-all rounded-sm relative overflow-hidden">
+
+        <!-- Loading -->
+        <ng-container *ngIf="loading()">
+          <svg class="w-4 h-4 animate-spin" viewBox="0 0 24 24">
+            <path d="M21 12a9 9 0 1 1-6-8" stroke="black" stroke-width="2"/>
+          </svg>
+          Opening Shift…
+        </ng-container>
+
+        <!-- Success -->
+        <ng-container *ngIf="!loading() && started()">
+          ✔ Shift Active
+        </ng-container>
+
+        <!-- Default -->
+        <ng-container *ngIf="!loading() && !started()">
+          → Start Shift
+        </ng-container>
+
+      </button>
+
+      <!-- Footer -->
+      <p class="text-[11px] text-[#5C6352] mt-4 text-center">
+        Count cash drawer before starting
+      </p>
+
+    </div>
+  </div>
+</div>
+<div class="relative min-h-screen bg-primary/20 overflow-hidden hidden">
+
+  <!-- 🔥 Gradient Blur Background -->
+  <div class="absolute inset-0 -z-10">
+
+    <!-- Primary blob -->
+    <div class="absolute w-[600px] h-[600px] bg-[#1d1d1f] opacity-40 blur-[140px] rounded-full
+                top-[-150px] left-[-150px] animate-blob"></div>
+
+    <!-- Dark hover blob -->
+    <div class="absolute w-[600px] h-[600px] bg-[#1f2937] opacity-40 blur-[140px] rounded-full
+                bottom-[-150px] right-[-150px] animate-blob animation-delay-2000"></div>
+
+    <!-- Accent blob -->
+    <div class="absolute w-[600px] h-[600px] bg-[#f59e0b] opacity-80 blur-[140px] rounded-full
+                top-[25%] left-[32%] animate-blob animation-delay-4000"></div>
+
+
+  </div>
+
+  <!-- 🌟 Content -->
+  <div class="relative z-10 flex items-center justify-center min-h-screen">
+
+ <div class="w-full max-w-md bg-white/80 backdrop-blur-xl rounded-2xl shadow-xl border border-gray-100 p-6">
+
+  <!-- 🔷 Header -->
+  <div class="mb-6">
+    <h1 class="text-xl font-semibold text-gray-900">
+      Start Shift
+    </h1>
+    <p class="text-sm text-gray-500 mt-1">
+      Begin a new shift for
+      <span class="font-medium text-gray-700">Main Store</span>
+    </p>
+  </div>
+
+  <!-- 💰 Amount Section -->
+  <div class="mb-6">
+
+    <label class="text-sm font-medium text-gray-600 mb-2 block">
+      Opening Cash
+    </label>
+
+    <div class="relative">
+      <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm">
+        PKR
+      </span>
+
+      <input
+        type="number"
+        placeholder="0.00"
+        class="w-full pl-12 pr-4 py-3 text-lg font-semibold rounded-xl border border-gray-200
+               focus:ring-2 focus:ring-[#f59e0b] focus:border-[#f59e0b] outline-none transition"
+      />
+    </div>
+
+  </div>
+
+  <!-- 🧾 Breakdown -->
+  <div class="mb-6">
+
+    <button
+      type="button"
+      class="text-sm text-[#f59e0b] font-medium hover:underline flex items-center gap-1"
+    >
+      + Add cash breakdown
+    </button>
+
+    <!-- Expandable -->
+    <div class="mt-4 space-y-3">
+
+      <div class="flex justify-between items-center">
+        <span class="text-sm text-gray-600">Notes</span>
+        <input type="number"
+          class="w-24 text-right border rounded-lg px-2 py-1 focus:ring-1 focus:ring-[#f59e0b] outline-none" />
+      </div>
+
+      <div class="flex justify-between items-center">
+        <span class="text-sm text-gray-600">Coins</span>
+        <input type="number"
+          class="w-24 text-right border rounded-lg px-2 py-1 focus:ring-1 focus:ring-[#f59e0b] outline-none" />
+      </div>
+
+      <div class="flex justify-between items-center pt-2 border-t font-medium text-gray-800">
+        <span>Total</span>
+        <span>PKR 0.00</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ℹ️ Info -->
+  <div class="flex items-center justify-between text-xs text-gray-500 mb-6">
+    <span>Cashier: <span class="font-medium text-gray-700">Admin</span></span>
+    <span>Starts now</span>
+  </div>
+
+  <!-- 🚀 Action -->
+  <button
+    class="w-full bg-[#f59e0b] hover:bg-yellow-500 text-black font-semibold py-3 rounded-xl transition shadow-sm"
+  >
+    Start Shift
+  </button>
+
+</div>
+</div>
+</div>

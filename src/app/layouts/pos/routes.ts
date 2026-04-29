@@ -1,0 +1,36 @@
+import { Routes } from '@angular/router';
+import { AuthGuard } from '../../shared/guards/auth.guard';
+import { categoryRoutes } from '../../pages/dashboard/category/routes';
+import { waiterRoutes } from '../../pages/dashboard/waiter/routes';
+import { tableRoutes } from '../../pages/dashboard/table/routes';
+import { itemRoutes } from '../../pages/dashboard/items/routes';
+export const POSRoutes: Routes = [
+  {
+    path: '',
+    loadComponent: () =>
+      import('./pos').then((m) => m.Pos),
+    children: [
+      {
+        path: '',
+        redirectTo: 'pos',
+        pathMatch: 'full',
+      },
+      {
+        path: 'pos',
+        canActivate: [AuthGuard],
+        loadComponent: () =>
+          import('./../../pages/pos/main/main').then(
+            (m) => m.Main,
+          )
+      },
+      {
+        path: 'start',
+        canActivate: [AuthGuard],
+        loadComponent: () =>
+          import('./../../pages/pos/start/start').then(
+            (m) => m.Start,
+          )
+      },
+    ],
+  },
+];

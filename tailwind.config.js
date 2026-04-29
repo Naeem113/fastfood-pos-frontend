@@ -11,6 +11,25 @@ module.exports = {
         'primary-hover': '#1f2937',
         secondary: '#f59e0b',
       },
+      keyframes: {
+    float: {
+      '0%, 100%': { transform: 'translate(0, 0)' },
+      '50%': { transform: 'translate(10px, -15px)' },
+    },
+    floatSlow: {
+      '0%, 100%': { transform: 'translate(0, 0)' },
+      '50%': { transform: 'translate(15px, -25px)' },
+    },
+    floatSlower: {
+      '0%, 100%': { transform: 'translate(0, 0)' },
+      '50%': { transform: 'translate(-10px, 20px)' },
+    },
+  },
+  animation: {
+    float: 'float 10s ease-in-out infinite',
+    'float-slow': 'floatSlow 18s ease-in-out infinite',
+    'float-slower': 'floatSlower 24s ease-in-out infinite',
+  }
     },
   },
   plugins: [
