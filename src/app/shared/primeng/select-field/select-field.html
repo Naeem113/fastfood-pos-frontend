@@ -1,0 +1,101 @@
+@if (label) {
+  <label [attr.for]="id" class="form-label"
+    >{{ label }}
+    @if (isRequired) {
+      <strong class="text-danger">*</strong>
+    }
+  </label>
+}
+<p-inputgroup>
+  @if (prefixIcon) {
+    <p-inputgroup-addon>
+      <i class="pi" [ngClass]="'pi-' + prefixIcon"></i>
+    </p-inputgroup-addon>
+  }
+  <p-select
+    [options]="options"
+    [optionLabel]="optionLabel"
+    [optionValue]="optionValue"
+    [optionDisabled]="optionDisabled"
+    [placeholder]="placeholder"
+    [disabled]="isDisabled"
+    [showClear]="showClear"
+    [ngModel]="value"
+    [loading]="loading"
+    [filter]="showFilter"
+    appendTo="body"
+    (onChange)="handleChange($event)"
+    (onBlur)="onTouched()"
+    class="w-full"
+  >
+    <!-- Selected Item Template -->
+    @if (selectedTemplate) {
+      <ng-template pTemplate="selectedItem" let-selectedOption>
+        <ng-container
+          *ngTemplateOutlet="
+            selectedTemplate;
+            context: { $implicit: selectedOption }
+          "
+        >
+        </ng-container>
+      </ng-template>
+    }
+
+    <!-- Item Template -->
+    @if (itemTemplate) {
+      <ng-template pTemplate="item" let-item>
+        <ng-container
+          *ngTemplateOutlet="itemTemplate; context: { $implicit: item }"
+        >
+        </ng-container>
+      </ng-template>
+    }
+
+    <!-- Header -->
+    @if (headerTemplate) {
+      <ng-template pTemplate="header">
+        <ng-container *ngTemplateOutlet="headerTemplate"> </ng-container>
+      </ng-template>
+    }@else if(showAddOptionButton){
+      <ng-template pTemplate="header">
+          <p-button
+           label="Add New"
+           fluid
+           severity="secondary"
+           text
+           size="small"
+           icon="pi pi-plus"
+           (click)="addOption.emit()"
+         />
+       </ng-template>
+    }
+
+
+    <!-- Footer -->
+    @if (footerTemplate) {
+      <ng-template pTemplate="footer">
+        <ng-container *ngTemplateOutlet="footerTemplate"> </ng-container>
+      </ng-template>
+    }
+  </p-select>
+</p-inputgroup>
+@if(finalErrorMessage){
+  <div class="text-danger mt-1">
+    {{ finalErrorMessage }}
+  </div>
+}
+
+<!-- @if (finalErrorMessage) {
+  <div class="flex gap-2 mt-2 h-5 items-center">
+    <div
+      class="w-[20.74px] h-[20.8px] rounded-full flex justify-center items-center"
+      >
+      <i class="pi pi-info-circle text-[#FF3C3C] text-[12px]"></i>
+    </div>
+    <p
+    class="text-[#FF3C3C] text-[12px] tracking-[-1%] leading-[14.6px] font-normal font-rocaOneBold"
+    >
+    {{ finalErrorMessage }}
+    </p>
+  </div>
+} -->

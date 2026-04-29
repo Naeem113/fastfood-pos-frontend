@@ -32,7 +32,14 @@ export const dashboardRoutes: Routes = [
           ...itemRoutes
           ]
       },
-
+      {
+        path: 'shift-history',
+        canActivate: [AuthGuard],
+        loadComponent: () =>
+          import('./../../pages/dashboard/shift-history/shift-history').then(
+            (m) => m.ShiftHistory,
+          )
+      },
       ...waiterRoutes,
       ...tableRoutes
 

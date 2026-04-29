@@ -27,7 +27,7 @@
         </svg>
         <input
           type="text"
-          [(ngModel)]="searchQuery"
+          [(ngModel)]="filter.query"
           (ngModelChange)="applyFilters()"
           placeholder="Search name, username…"
           class="w-full pl-8 pr-3 py-2 text-sm border border-gray-200 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-gray-300"
@@ -44,23 +44,27 @@
       </select> -->
 
       <!-- Status filter -->
-      <select
-        [(ngModel)]="statusFilter"
-        (ngModelChange)="applyFilters()"
-        class="py-2 px-3 text-sm border border-gray-200 rounded-lg bg-white text-gray-500 focus:outline-none cursor-pointer"
-      >
-        <option *ngFor="let opt of statusOptions" [value]="opt.value">{{ opt.label }}</option>
-      </select>
+       <app-select-field
+        [options]="statusOptions"
+        [optionValue]="'value'"
+        [optionLabel]="'label'"
+        [(ngModel)]="filter.status"
+        (selectionChange)="applyFilters()"
+        placeholder="Filter by status"
+        class="min-w-[200px]"
+      ></app-select-field>
+
 
       <!-- Branch filter -->
-      <select
-        [(ngModel)]="branchFilter"
-        (ngModelChange)="applyFilters()"
-        class="py-2 px-3 text-sm border border-gray-200 rounded-lg bg-white text-gray-500 focus:outline-none cursor-pointer"
-      >
-        <option value="">All branches</option>
-        <option *ngFor="let b of branches" [value]="b">{{ b }}</option>
-      </select>
+      <app-select-field
+        [options]="branches.map(b => ({ label: b, value: b }))"
+        [optionValue]="'value'"
+        [optionLabel]="'label'"
+        [(ngModel)]="filter.branch"
+        (selectionChange)="applyFilters()"
+        placeholder="Filter by branch"
+        class="min-w-[200px]"
+      ></app-select-field>
     </div>
 
     <app-grid-toggle-button [(value)]="viewMode"></app-grid-toggle-button>

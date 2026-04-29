@@ -11,11 +11,19 @@ import { GridListHeader } from '../../../../shared/components/dashboard/grid-lis
 import { FilterPanelConfig, FilterPanelResult, StatusTogglerPopover } from '../../../../shared/components/dashboard/status-toggler-popover/status-toggler-popover';
 import { PRIME_NG_IMPORTS } from '../../../../shared/primeng';
 import { slideX, slideY } from '../../../../core/services/animation.service';
-type StatusFilter = '' | 'active' | 'inactive';
+import { SelectField } from '../../../../shared/primeng/select-field/select-field';
+import { FormField } from "@angular/forms/signals";
 
+
+type StatusFilter = '' | 'active' | 'inactive';
+interface waiterFilter {
+  status: boolean | null;
+  branch: string | null;
+  query: string;
+}
 @Component({
   selector: 'app-waiter-list',
-  imports: [...COMMON_IMPORTS, ContentHeader, GridToggleButton, GridListHeader, StatusTogglerPopover, ...PRIME_NG_IMPORTS],
+  imports: [...COMMON_IMPORTS, ContentHeader, GridToggleButton, GridListHeader, StatusTogglerPopover, ...PRIME_NG_IMPORTS, SelectField, FormField],
   templateUrl: './waiter-list.html',
   styleUrls: ['./waiter-list.scss'],
   animations: [ slideY ],
@@ -31,14 +39,20 @@ export class WaiterList {
   viewMode = signal<ViewMode>('grid');
 
   searchQuery  = '';
-  statusFilter: StatusFilter = '';
+  statusFilter: string = '';
   branchFilter = '';
+
+  filter: waiterFilter = {
+    status: null,
+    branch: null,
+    query: '',
+  }
 
 
   readonly statusOptions = [
-    { label: 'All statuses', value: '' as StatusFilter },
-    { label: 'Active',       value: 'active'  as StatusFilter },
-    { label: 'Inactive',     value: 'inactive' as StatusFilter },
+    { label: 'All statuses', value: null },
+    { label: 'Active',       value: true },
+    { label: 'Inactive',     value: false },
   ];
 
   branches: string[] = [];
@@ -66,13 +80,21 @@ export class WaiterList {
     this.applyFilters();
   }
 
+  OnStatusFilterChange(status: boolean | null): void {
+    this.filter = {
+      ...this.filter,
+      status
+    }
+    this.applyFilters();
+  }
+
   applyFilters(): void {
-    const q = this.searchQuery.toLowerCase().trim();
+    const q = this.filter.query.toLowerCase().trim();
     this.filteredWaiters = this.allWaiters.filter(w => {
       const name = `${w.firstName} ${w.lastName ?? ''} ${w.username}`.toLowerCase();
       const matchQ = !q || name.includes(q);
-      const matchS = !this.statusFilter || (this.statusFilter === 'active' ? w.isActive : !w.isActive);
-      const matchB = !this.branchFilter || w.branch?.name === this.branchFilter;
+      const matchS = this.filter.status === null || this.filter.status === w.isActive;
+      const matchB = !this.filter.branch || w.branch?.name === this.filter.branch;
       return matchQ && matchS && matchB;
     });
   }

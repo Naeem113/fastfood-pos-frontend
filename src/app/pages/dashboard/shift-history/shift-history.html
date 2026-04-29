@@ -1,0 +1,235 @@
+<div class="p-6 h-full overflow-auto flex flex-col">
+  <app-content-header
+    [title]="'Shift History'"
+    [description]="'Track and review all past shifts, including timings and activity details.'"
+    [showButton]="false"
+  >
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-4">
+    <app-stats-card
+      [title]="'Total Shifts'"
+      [value]="6"
+      [description]="'Total shifts'"
+      [icon]="'clock'"
+      color="orange"
+    />
+
+    <app-stats-card
+      [title]="'Closed Shifts'"
+      [value]="5"
+      [description]="'Total closed shifts'"
+      [icon]="'clock'"
+      color="red"
+    />
+
+      <app-stats-card
+      [title]="'Opened Shifts'"
+      [value]="1"
+      [description]="'Total opened shifts'"
+      [icon]="'clock'"
+      color="yellow"
+    />
+
+      <app-stats-card
+        [title]="'Total Orders'"
+        [value]="'345'"
+        [icon]="'receipt'"
+        [description]="'Total orders of 6 shifts'"
+        color="blue"
+      />
+  <app-stats-card
+    [title]="'Total Sales'"
+    [value]="'59k'"
+    [icon]="'credit-card'"
+    [description]="'Total sales of 6 shifts'"
+    color="green"
+  />
+</div>
+  </app-content-header>
+<div class="bg-white rounded-2xl border border-gray-200 ">
+
+  <!-- Desktop Header -->
+  <div class="hidden md:grid grid-cols-[1.3fr_120px_100px_110px_120px_100px_40px] px-5 py-3 text-xs font-medium text-gray-400 uppercase tracking-wide">
+    <span>Cashier</span>
+    <span class="text-right">Sales</span>
+    <span class="text-right">Orders</span>
+    <span class="text-right">Opening</span>
+    <span class="text-right">Difference</span>
+    <span class="text-center">Status</span>
+    <span></span>
+  </div>
+
+  <!-- Rows -->
+  <ng-container *ngFor="let shift of filteredShifts; trackBy: trackById">
+
+    <!-- Row -->
+    <div (click)="toggleDetail(shift._id)"
+      class="border-t border-gray-100 hover:bg-gray-50/60 transition cursor-pointer"
+      [ngClass]="{'bg-gray-50':expandedId === shift._id}"
+      >
+
+      <!-- 🖥 Desktop Layout -->
+      <div class="hidden md:grid grid-cols-[1.3fr_120px_100px_110px_120px_100px_40px] px-5 py-4 items-center">
+
+        <!-- Cashier -->
+        <div class="flex items-center gap-3 min-w-100">
+          <div class="w-9 h-9 rounded-xl bg-gray-100 flex items-center justify-center text-xs font-semibold">
+            {{ getInitials(shift.user.name) }}
+          </div>
+          <div class="min-w-0">
+            <p class="text-sm font-medium text-gray-800 truncate">
+              {{ shift.user.name }}
+            </p>
+            <p class="text-xs text-gray-400">
+              {{ shift.shiftName ?? '—' }}
+            </p>
+          </div>
+        </div>
+
+        <!-- Sales -->
+        <div class="text-right">
+          <p class="font-semibold text-gray-900">
+            PKR {{ shift.totalSales | number }}
+          </p>
+          <div class="flex h-[3px] rounded-full overflow-hidden mt-1 ml-auto w-16">
+            <div class="bg-orange-400" [style.width.%]="getCashPct(shift)"></div>
+            <div class="bg-blue-400"   [style.width.%]="getCardPct(shift)"></div>
+            <div class="bg-emerald-400" [style.width.%]="getOnlinePct(shift)"></div>
+          </div>
+        </div>
+
+        <!-- Orders -->
+        <div class="text-right">
+          <p>{{ shift.ordersCount }}</p>
+          <p class="text-xs text-gray-400">
+            avg {{ getAvgOrder(shift) | number }}
+          </p>
+        </div>
+
+        <!-- Opening -->
+        <div class="text-right text-sm">
+          PKR {{ shift.openingCash | number }}
+        </div>
+
+        <!-- Difference -->
+        <div class="text-right">
+          <p class="font-medium"
+            [ngClass]="{
+              'text-emerald-600': getDifference(shift) > 0,
+              'text-red-600': getDifference(shift) < 0,
+              'text-gray-400': !getDifference(shift)
+            }">
+            {{ formatDifference(shift) }}
+          </p>
+        </div>
+
+        <!-- Status -->
+        <div class="flex justify-center">
+          <span class="text-xs px-2.5 py-1 rounded-md font-medium"
+            [ngClass]="shift.status === 'OPEN'
+              ? 'bg-emerald-50 text-emerald-600'
+              : 'bg-gray-100 text-gray-500'">
+            {{ shift.status }}
+          </span>
+        </div>
+
+        <!-- Arrow -->
+        <div class="flex justify-end">
+          <div [class.rotate-180]="expandedId === shift._id"
+               class="transition-transform text-gray-400">
+            ▼
+          </div>
+        </div>
+      </div>
+
+      <!-- 📱 Mobile Card Layout -->
+      <div class="md:hidden p-4 space-y-3">
+
+        <!-- Top -->
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded-xl bg-gray-100 flex items-center justify-center text-xs font-semibold">
+              {{ getInitials(shift.user.name) }}
+            </div>
+            <div>
+              <p class="text-sm font-medium text-gray-800">
+                {{ shift.user.name }}
+              </p>
+              <p class="text-xs text-gray-400">
+                {{ shift.shiftName ?? '—' }}
+              </p>
+            </div>
+          </div>
+
+          <span class="text-xs px-2 py-1 rounded-md"
+            [ngClass]="shift.status === 'OPEN'
+              ? 'bg-emerald-100 text-emerald-700'
+              : 'bg-gray-100 text-gray-500'">
+            {{ shift.status }}
+          </span>
+        </div>
+
+        <!-- Stats -->
+        <div class="grid grid-cols-2 gap-3 text-sm">
+          <div>
+            <p class="text-gray-400 text-xs">Sales</p>
+            <p class="font-semibold">PKR {{ shift.totalSales | number }}</p>
+          </div>
+
+          <div>
+            <p class="text-gray-400 text-xs">Orders</p>
+            <p>{{ shift.ordersCount }}</p>
+          </div>
+
+          <div>
+            <p class="text-gray-400 text-xs">Opening</p>
+            <p>PKR {{ shift.openingCash | number }}</p>
+          </div>
+
+          <div>
+            <p class="text-gray-400 text-xs">Difference</p>
+            <p>{{ formatDifference(shift) }}</p>
+          </div>
+        </div>
+
+        <!-- Payment Bar -->
+        <div class="flex h-2 rounded-full overflow-hidden">
+          <div class="bg-orange-400" [style.width.%]="getCashPct(shift)"></div>
+          <div class="bg-blue-400"   [style.width.%]="getCardPct(shift)"></div>
+          <div class="bg-emerald-400" [style.width.%]="getOnlinePct(shift)"></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Expand -->
+     @if(expandedId === shift._id) {
+      <div
+        [@collapse]
+        class="px-5 py-4 bg-gray-50 border-t border-gray-100">
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+
+          <div class="bg-white border rounded-xl p-3">
+            <p class="text-xs text-gray-400">Cash</p>
+            <p class="font-medium">PKR {{ shift.paymentSummary.cash | number }}</p>
+          </div>
+
+          <div class="bg-white border rounded-xl p-3">
+            <p class="text-xs text-gray-400">Card</p>
+            <p class="font-medium">PKR {{ shift.paymentSummary.card | number }}</p>
+          </div>
+
+          <div class="bg-white border rounded-xl p-3">
+            <p class="text-xs text-gray-400">Online</p>
+            <p class="font-medium">PKR {{ shift.paymentSummary.online | number }}</p>
+          </div>
+
+        </div>
+
+      </div>
+    }
+
+  </ng-container>
+
+</div>
+</div>

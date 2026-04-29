@@ -9,6 +9,10 @@ import { InputIconModule } from 'primeng/inputicon';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToastModule } from 'primeng/toast';
 import { TagModule } from 'primeng/tag';
+import { SelectModule } from 'primeng/select';
+import { InputTextModule } from 'primeng/inputtext';
+import { InputGroupModule } from 'primeng/inputgroup';
+import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 
 export const PRIME_NG_IMPORTS = [
   ButtonModule,
@@ -19,5 +23,9 @@ export const PRIME_NG_IMPORTS = [
   InputIconModule,
   ConfirmDialogModule,
   ToastModule,
-  TagModule
+  SelectModule,
+  TagModule,
+  InputTextModule,
+  InputGroupModule,
+  InputGroupAddonModule
 ];

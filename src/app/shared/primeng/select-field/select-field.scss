@@ -1,0 +1,14 @@
+:host ::ng-deep {
+  .p-select-option.p-select-option-selected,
+  .p-select-option.p-select-option-selected.p-focus {
+    background-color: #f1f5f9 !important;
+    color: #6c7688 !important;
+  }
+  .p-select-option:not(.p-select-option-selected):not(.p-disabled).p-focus {
+    background-color: #f9f9f9 !important;
+    color: #6c7688 !important;
+  }
+  .p-select {
+    border-color: #cbd5e1 !important;
+  }
+}

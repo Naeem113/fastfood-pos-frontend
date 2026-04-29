@@ -9,7 +9,7 @@ const MENU_ITEMS: MenuItem[] = [
   {
     title: 'Dashboard',
     icon: 'home',
-    link: 'dashboard',
+    link: routesStrings.dashboard,
     active: false,
     access: ['company-admin'],
     badge: { value: 1, color: 'accent' }
@@ -102,6 +102,14 @@ const MENU_ITEMS: MenuItem[] = [
         badge: { value: 1, color: 'accent' }
       }
     ]
+  },
+  {
+    title: 'Shift History',
+    icon: 'history',
+    link: routesStrings.shiftHistory,
+    active: false,
+    access: ['company-admin'],
+    badge: { value: 1, color: 'accent' }
   },
   // {
   //   title: 'Payments',

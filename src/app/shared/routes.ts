@@ -16,11 +16,7 @@ export const routesStrings = {
       create: 'menu/categories/create',
     },
   },
-  category: {
-    index: 'categories',
-    list: 'categories/list',
-    create: 'categories/create',
-  },
+  shiftHistory : 'shift-history',
   waiter: {
     index: 'waiters',
     list: 'waiters/list',
