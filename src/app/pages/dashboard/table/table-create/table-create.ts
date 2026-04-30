@@ -47,7 +47,7 @@ export class TableCreate {
   }
 
   goToTables() {
-    this.router.navigate([this.routesStrings.table.list]);
+    this.router.navigate([this.routesStrings.restaurantSetup.table.list]);
   }
 
   openBranchesModal() {

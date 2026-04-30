@@ -1,0 +1,220 @@
+<div class="p-6 h-full overflow-hidden flex flex-col">
+  <!-- HEADER -->
+  <app-content-header
+    [title]="'Kitchen Stations'"
+    [description]="'Manage kitchen stations and assign them to products.'"
+    [showButton]="true"
+    [buttonText]="'Create Kitchen'"
+    [buttonIcon]="'plus'"
+    (buttonClick)="addKitchen()"
+  >
+    <!-- STATS -->
+    <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+      @for (stat of stats; track $index) {
+        <div class="bg-white rounded-xl border border-gray-200 p-4 flex items-center gap-3 w-full">
+          <div class="w-10 h-10 rounded-xl flex items-center justify-center" [ngClass]="stat.bg">
+            <i [class]="stat.icon + ' ' + stat.text"></i>
+          </div>
+
+          <div>
+            <p class="text-xs text-gray-500">{{ stat.label }}</p>
+            <p class="text-xl font-semibold" [ngClass]="stat.text">
+              {{ stat.value }}
+            </p>
+            <p class="text-xs" [ngClass]="stat.subText">{{ stat.sub }}</p>
+          </div>
+        </div>
+      }
+    </div>
+  </app-content-header>
+
+  <!-- FILTER + VIEW -->
+  <app-grid-list-header>
+    <div class="flex gap-3 items-center">
+      <div class="flex border border-gray-200 rounded-lg overflow-hidden bg-white">
+        <button
+          *ngFor="let opt of statusFilterOptions"
+          (click)="onStatusFilterChange(opt.value)"
+          [class]="
+            'px-4 py-2 text-sm ' +
+            (currentFilter().status === opt.value
+              ? 'bg-gray-100 text-primary'
+              : 'text-gray-500 hover:bg-gray-50')
+          "
+        >
+          {{ opt.label }}
+        </button>
+      </div>
+      <div *ngIf="selectedKitchens.length && viewMode() === 'list'" class="flex gap-3">
+        <button
+          class="px-4 py-1.5 bg-red-100 text-red-600 rounded-lg"
+          (click)="deleteSelectedKitchens()"
+        >
+          Delete ({{ selectedKitchens.length }})
+        </button>
+      </div>
+    </div>
+
+    <app-grid-toggle-button [(value)]="viewMode" (valueChange)="selectedKitchens=[]"></app-grid-toggle-button>
+  </app-grid-list-header>
+
+  <!-- GRID VIEW -->
+  <div *ngIf="viewMode() === 'grid'" class="overflow-y-auto">
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+
+<div
+  *ngFor="let kitchen of filteredKitchens; let i = index"
+  class="group relative bg-white border border-gray-200 rounded-2xl
+         p-5 flex flex-col justify-between
+         hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200"
+>
+  <!-- HEADER -->
+  <div class="flex items-start justify-between">
+    <div>
+      <!-- CODE -->
+      <p class="text-[11px] font-medium text-gray-400 tracking-wide">
+        KC-{{ (i + 1) | number:'2.0' }}
+      </p>
+
+      <!-- NAME -->
+      <h3 class="text-lg font-semibold text-gray-800 leading-tight">
+        {{ kitchen.name }}
+      </h3>
+
+      <!-- BRANCH -->
+      <p class="text-xs text-gray-400 mt-0.5">
+        {{ kitchen.branch }}
+      </p>
+    </div>
+
+    <!-- STATUS DOT -->
+    <span
+      class="w-2.5 h-2.5 rounded-full mt-1"
+      [ngClass]="kitchen.active ? 'bg-emerald-500' : 'bg-gray-300'"
+    ></span>
+  </div>
+
+  <!-- COLOR + INFO BLOCK -->
+  <div class="mt-5 flex items-center gap-4">
+    <!-- COLOR BOX -->
+    <div
+      class="w-12 h-12 rounded-xl shadow-inner border"
+      [style.background]="kitchen.color"
+    ></div>
+
+    <!-- META -->
+    <div class="text-xs text-gray-500 space-y-1">
+      <p>Color: <span class="text-gray-700 font-medium">{{ kitchen.color }}</span></p>
+      <p>
+        Status:
+        <span
+          [ngClass]="kitchen.active ? 'text-emerald-600' : 'text-gray-500'"
+          class="font-medium"
+        >
+          {{ kitchen.active ? 'Active' : 'Inactive' }}
+        </span>
+      </p>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="mt-5 flex items-center justify-between">
+    <!-- FUTURE METRIC -->
+    <span class="text-xs text-gray-400">
+      12 items assigned
+    </span>
+
+    <!-- ACTIONS -->
+    <div class="flex gap-2 opacity-0 group-hover:opacity-100 transition">
+      <button
+      (click)="editKitchen(kitchen)"
+        class="w-8 h-8 rounded-full border border-gray-200 bg-white shadow-sm
+               hover:bg-gray-50 flex items-center justify-center"
+      >
+        <i class="pi pi-pencil text-xs text-gray-600"></i>
+      </button>
+
+      <button
+        class="w-8 h-8 rounded-full border border-red-200 bg-white shadow-sm
+               hover:bg-red-50 flex items-center justify-center"
+        (click)="onDelete(kitchen, $event)"
+      >
+        <i class="pi pi-trash text-xs text-red-500"></i>
+      </button>
+    </div>
+  </div>
+</div>
+
+      <!-- EMPTY -->
+      <div *ngIf="filteredKitchens.length === 0" class="col-span-full text-center py-16 text-gray-400">
+        No kitchens found
+      </div>
+
+    </div>
+  </div>
+
+  <!-- LIST VIEW -->
+  <div *ngIf="viewMode() === 'list'" class="min-h-0 no-scrollbar">
+    <p-table
+    [value]="filteredKitchens"
+      [(selection)]="selectedKitchens"
+      dataKey="id"
+      [scrollable]="true"
+      scrollHeight="flex"
+      styleClass="custom-style-table"
+      class="h-full">
+
+      <ng-template #header>
+        <tr>
+          <th style="width: 5%">
+            <p-tableHeaderCheckbox />
+          </th>
+          <th>Name</th>
+          <th>Branch</th>
+          <th>Color</th>
+          <th>Status</th>
+          <th></th>
+        </tr>
+      </ng-template>
+
+      <ng-template #body let-k>
+        <tr>
+          <td>
+            <p-tableCheckbox [value]="k" />
+          </td>
+          <td>{{ k.name }}</td>
+          <td>{{ k.branch }}</td>
+
+          <td>
+
+            <p-tag
+              [value]="k.color"
+              [ngStyle]="{ background: k.color, color: '#fff' }"
+            />
+          </td>
+
+          <td>
+              <p-tag [severity]="k.active?'success':'danger'" [value]="k.active?'Active':'Inactive'" />
+          </td>
+
+          <td class="text-center">
+            <p-button
+              icon="pi pi-pencil"
+              class="mr-2"
+              [rounded]="true"
+              [outlined]="true"
+              (click)="editKitchen(k)"
+            />
+            <p-button
+              icon="pi pi-trash"
+              severity="danger"
+              [rounded]="true"
+              [outlined]="true"
+              (click)="onDelete(k, $event)"
+            />
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>

@@ -117,11 +117,11 @@ get stats(): StatCard[] {
   }
 
   addTable(){
-    this.router.navigate([this.routesString.table.create]);
+    this.router.navigate([this.routesString.restaurantSetup.table.create]);
   }
 
   editTable(table: RestaurantTable) {
-    this.router.navigate([this.routesString.table.create]);
+    this.router.navigate([this.routesString.restaurantSetup.table.create]);
   }
 
   setFilter(filter: FilterMode): void {

@@ -1,11 +1,11 @@
 <div class="p-6 h-full overflow-hidden flex flex-col">
   <app-content-header
-    [title]="'All Waiters'"
-    [description]="'Manage your restaurant waiters, their status, and more.'"
+    [title]="'All Riders'"
+    [description]="'Manage your restaurant riders, their status, and more.'"
     [showButton]="true"
-    [buttonText]="'Create Waiter'"
+    [buttonText]="'Create Rider'"
     [buttonIcon]="'plus'"
-    (buttonClick)="addWaiter()"
+    (buttonClick)="addRider()"
   >
   </app-content-header>
 
@@ -74,37 +74,37 @@
   <div *ngIf="viewMode() === 'grid'" class="overflow-y-auto no-scrollbar">
     <div class="grid grid-flow-col-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
       <div
-        *ngFor="let w of filteredWaiters; let i = index; trackBy: trackById"
+        *ngFor="let r of filteredRiders; let i = index; trackBy: trackById"
         class="bg-white rounded-2xl border border-gray-200 p-4 flex flex-col items-center text-center gap-3 cursor-pointer hover:border-gray-300 hover:-translate-y-0.5 transition-all relative"
       >
         <!-- Online pip -->
         <span
           [class]="
             'absolute text-xs top-4 left-4 font-medium px-2 py-0.5 rounded-full flex items-center gap-1 ' +
-            (w.isActive ? 'bg-emerald-100 text-emerald-700' : 'bg-orange-100 text-orange-700')
+            (r.isActive ? 'bg-emerald-100 text-emerald-700' : 'bg-orange-100 text-orange-700')
           "
         >
           <span
             [class]="
-              'w-1.5 h-1.5 rounded-full ' + (w.isActive ? 'bg-emerald-500' : 'bg-orange-500')
+              'w-1.5 h-1.5 rounded-full ' + (r.isActive ? 'bg-emerald-500' : 'bg-orange-500')
             "
           ></span>
-          {{ w.isActive ? 'Active' : 'Inactive' }}
+          {{ r.isActive ? 'Active' : 'Inactive' }}
         </span>
 
         <!-- Avatar -->
         <div
           class="w-13 h-13 rounded-full flex items-center justify-center text-base font-medium w-12 h-12 bg-black text-white"
         >
-          {{ getInitials(w) }}
+          {{ getInitials(r) }}
         </div>
 
         <!-- Name -->
         <div>
           <p class="text-sm font-semibold text-gray-800 leading-tight">
-            {{ w.firstName }} {{ w.lastName }}
+            {{ r.firstName }} {{ r.lastName }}
           </p>
-          <p class="text-xs text-gray-400 mt-0.5">@{{ w.username }}</p>
+          <p class="text-xs text-gray-400 mt-0.5">@{{ r.username }}</p>
         </div>
 
         <!-- Badges -->
@@ -112,9 +112,9 @@
           [class]="'text-xs font-medium px-2 py-0.5 rounded-full flex items-center gap-1 bg-gray-100 text-primary'"
         >
           <span
-            [class]="'text-xs font-medium px-2 py-0.5 rounded-full ' + getRoleMeta(w.role).cssClass"
+            [class]="'text-xs font-medium px-2 py-0.5 rounded-full ' + getRoleMeta(r.role).cssClass"
           >
-            {{ getRoleMeta(w.role).label }}
+            {{ getRoleMeta(r.role).label }}
           </span>
         </span>
 
@@ -132,9 +132,9 @@
                 d="M2 2.5c0-.3.2-.5.5-.5h2l1 2.5-1.5 1c.8 1.6 2 2.8 3.5 3.5l1-1.5L11 8.5v2c0 .3-.2.5-.5.5C5.5 11 1 6.5 1 2.5z"
               />
             </svg>
-            {{ w.phone || 'No phone' }}
+            {{ r.phone || 'No phone' }}
           </div>
-          <div *ngIf="w.branch" class="flex items-center justify-center gap-1">
+          <div *ngIf="r.branch" class="flex items-center justify-center gap-1">
             <svg
               class="w-3 h-3"
               fill="none"
@@ -145,20 +145,20 @@
               <path d="M6 1C4 1 2.5 2.5 2.5 4.5 2.5 7 6 11 6 11s3.5-4 3.5-6.5C9.5 2.5 8 1 6 1z" />
               <circle cx="6" cy="4.5" r="1" />
             </svg>
-            {{ w.branch.name }}
+            {{ r.branch.name }}
           </div>
         </div>
 
         <!-- Actions -->
         <div class="flex gap-2 w-full border-t border-gray-100 pt-2.5 mt-0.5">
           <button
-            (click)="onEdit(w, $event)"
+            (click)="onEdit(r, $event)"
             class="flex-1 text-xs py-1.5 border border-gray-200 rounded-lg text-primary-hover hover:text-white hover:bg-primary-hover transition-colors"
           >
             Edit
           </button>
           <button
-            (click)="onDelete(w, $event)"
+            (click)="onDelete(r, $event)"
             class="flex-1 text-xs py-1.5 border rounded-lg text-primary-hover hover:text-white hover:bg-red-500 hover:border-red-500 transition-colors"
           >
             Delete
@@ -168,10 +168,10 @@
 
       <!-- Empty state -->
       <div
-        *ngIf="filteredWaiters.length === 0"
+        *ngIf="filteredRiders.length === 0"
         class="col-span-full text-center py-16 text-gray-400"
       >
-        <p class="font-medium">No waiters match your filters</p>
+        <p class="font-medium">No riders match your filters</p>
       </div>
     </div>
   </div>
@@ -179,8 +179,8 @@
   <!-- ── List view ────────────────────────────── -->
   <div *ngIf="viewMode() === 'list'" class="min-h-0 no-scrollbar">
     <p-table
-      [value]="filteredWaiters"
-      [(selection)]="selectedWaiters"
+      [value]="filteredRiders"
+      [(selection)]="selectedRiders"
       dataKey="id"
       [scrollable]="true"
       scrollHeight="flex"
@@ -194,7 +194,7 @@
             <p-tableHeaderCheckbox />
           </th>
 
-          <th style="width: 25%">Waiter</th>
+          <th style="width: 25%">Rider</th>
 
           <th style="width: 15%">Role</th>
 
@@ -300,10 +300,4 @@
       </ng-template>
     </p-table>
   </div>
-  <!-- parent.component.html -->
-  <!-- <app-status-toggler-popover
-  [config]="availabilityConfig"
-  (apply)="onFilterApply($event)"
-  (cancel)="onFilterCancel()"
-/> -->
 </div>

@@ -15,7 +15,6 @@ import { SelectField } from '../../../../shared/primeng/select-field/select-fiel
 import { FormField } from "@angular/forms/signals";
 
 
-type StatusFilter = '' | 'active' | 'inactive';
 interface waiterFilter {
   status: boolean | null;
   branch: string | null;
@@ -33,7 +32,7 @@ export class WaiterList {
   router = inject(Router);
 
   addWaiter() {
-    this.router.navigate([routesStrings.waiter.create]);
+    this.router.navigate([routesStrings.restaurantSetup.waiter.create]);
   }
   selectedWaiters = signal<UserDto[]>([]);
   viewMode = signal<ViewMode>('grid');

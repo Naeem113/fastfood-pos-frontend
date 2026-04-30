@@ -4,6 +4,9 @@ import { categoryRoutes } from '../../pages/dashboard/category/routes';
 import { waiterRoutes } from '../../pages/dashboard/waiter/routes';
 import { tableRoutes } from '../../pages/dashboard/table/routes';
 import { itemRoutes } from '../../pages/dashboard/items/routes';
+import { riderRoutes } from '../../pages/dashboard/rider/routes';
+import { kitchenStationRoutes } from '../../pages/dashboard/kitchen-station/routes';
+import { floorHallRoutes } from '../../pages/dashboard/floor-hall/routes';
 export const dashboardRoutes: Routes = [
   {
     path: '',
@@ -33,6 +36,17 @@ export const dashboardRoutes: Routes = [
           ]
       },
       {
+        path: 'restaurant-setup',
+        canActivate: [AuthGuard],
+          children: [
+            ...riderRoutes,
+            ...tableRoutes,
+            ...waiterRoutes,
+            ...floorHallRoutes,
+            ...kitchenStationRoutes,
+          ]
+      },
+      {
         path: 'shift-history',
         canActivate: [AuthGuard],
         loadComponent: () =>
@@ -40,9 +54,6 @@ export const dashboardRoutes: Routes = [
             (m) => m.ShiftHistory,
           )
       },
-      ...waiterRoutes,
-      ...tableRoutes
-
     ],
   },
 ];

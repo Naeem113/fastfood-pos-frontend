@@ -1,7 +1,6 @@
 import { Component, inject, signal } from '@angular/core';
 import { routesStrings } from '../../../../shared/routes';
 import { form } from '@angular/forms/signals';
-import { waiterFormModel, waiterSchema } from '../form';
 import { Router } from '@angular/router';
 import { ApiService } from '../../../../core/services/api.service';
 import { CustomDialogService } from '../../../../core/services/custom.dialog.service';
@@ -12,20 +11,21 @@ import { collapse } from '../../../../core/services/animation.service';
 import { FormContentHeader } from '../../../../shared/components/dashboard/form-content-header/form-content-header';
 import { AuthStore } from '../../../../core/stores/auth.store';
 import { BranchDto } from '../../../../shared/models/branch.model';
+import { riderFormModel, riderSchema } from '../form';
 
 @Component({
-  selector: 'app-waiter-create',
+  selector: 'app-rider-create',
   imports: [...COMMON_IMPORTS, FloatingInput, FormContentHeader],
-  templateUrl: './waiter-create.html',
-  styleUrl: './waiter-create.scss',
+  templateUrl: './rider-create.html',
+  styleUrl: './rider-create.scss',
   animations: [collapse]
 })
-export class WaiterCreate {
+export class RiderCreate {
    // ========================
   // Variables & signals
   // ========================
   routesStrings =  routesStrings
-  waiterForm = form(waiterFormModel, waiterSchema)
+  riderForm = form(riderFormModel, riderSchema)
   formSubmitted = signal<boolean>(false);
   loading = signal<boolean>(false);
   showAddress = signal<boolean>(false);
@@ -45,26 +45,26 @@ export class WaiterCreate {
   }
 
 
-  saveWaiter() {
+  saveRider() {
     this.formSubmitted.set(true);
-    // if(this.loading() || this.waiterForm().invalid()) {
-    //   return;
-    // }
+    console.log(this.riderForm().value())
+    if(this.loading() || this.riderForm().invalid()) {
+      return;
+    }
     this.loading.set(true);
-    console.log(this.waiterForm().value())
   }
 
-  goToWaiters() {
-    this.router.navigate([this.routesStrings.restaurantSetup.waiter.list]);
+  goToRiders() {
+    this.router.navigate([this.routesStrings.restaurantSetup.rider.list]);
   }
 
   openBranchesModal() {
     const ref =this.dialogService.open(BranchesSelectionModal, {
       data: {
         title: 'Select Branch',
-        description: 'Select a branch to assign this waiter.',
+        description: 'Select a branch to assign this rider.',
         multiSelect: false,
-        value: this.waiterForm().value().branchId?[this.waiterForm().value().branchId]:[]
+        value: this.riderForm().value().branchId?[this.riderForm().value().branchId]:[]
       }
     });
 
@@ -77,7 +77,7 @@ export class WaiterCreate {
         .map(branch => branch.name)
         .join(', ');
         this.selectedBranchesNames.set(branchesName);
-        this.waiterForm.branchId().value.set(result[0].id);
+        this.riderForm.branchId().value.set(result[0].id);
       } else {
         console.log('Modal dismissed — no selection made');
       }

@@ -80,7 +80,7 @@ const MENU_ITEMS: MenuItem[] = [
   {
     title: 'Restaurant Setup',
     icon: 'shop',
-    link: routesStrings.table.index,
+    link: routesStrings.restaurantSetup.table.index,
     active: false,
     access: ['company-admin'],
     badge: { value: 1, color: 'accent' },
@@ -88,19 +88,133 @@ const MENU_ITEMS: MenuItem[] = [
       {
         title: 'tables',
         icon: 'circle-on',
-        link: routesStrings.table.list,
+        link: routesStrings.restaurantSetup.table.list,
         active: false,
         access: ['company-admin'],
-        badge: { value: 1, color: 'accent' }
+        badge: { value: 1, color: 'accent' },
+        children: [
+          {
+            title: 'list',
+            icon: 'circle-on',
+            link: routesStrings.restaurantSetup.table.index,
+            active: false,
+            access: ['company-admin'],
+            badge: { value: 1, color: 'accent' }
+          },
+          {
+            title: 'create',
+            icon: 'circle-on',
+            link: routesStrings.restaurantSetup.table.create,
+            active: false,
+            access: ['company-admin'],
+            badge: { value: 1, color: 'accent' }
+          }
+        ]
       },
       {
-        title: 'Waiters',
+        title: 'Floors',
         icon: 'circle-on',
-        link: routesStrings.waiter.list,
+        link: routesStrings.restaurantSetup.floorHall.list,
         active: false,
         access: ['company-admin'],
-        badge: { value: 1, color: 'accent' }
-      }
+        badge: { value: 1, color: 'accent' },
+        children: [
+          {
+            title: 'list',
+            icon: 'circle-on',
+            link: routesStrings.restaurantSetup.floorHall.index,
+            active: false,
+            access: ['company-admin'],
+            badge: { value: 1, color: 'accent' }
+          },
+          {
+            title: 'create',
+            icon: 'circle-on',
+            link: routesStrings.restaurantSetup.floorHall.create,
+            active: false,
+            access: ['company-admin'],
+            badge: { value: 1, color: 'accent' }
+          }
+        ]
+      },
+      {
+        title: 'Kitchens',
+        icon: 'circle-on',
+        link: routesStrings.restaurantSetup.kitchenStation.list,
+        active: false,
+        access: ['company-admin'],
+        badge: { value: 1, color: 'accent' },
+        children: [
+          {
+            title: 'list',
+            icon: 'circle-on',
+            link: routesStrings.restaurantSetup.kitchenStation.list,
+            active: false,
+            access: ['company-admin'],
+            badge: { value: 1, color: 'accent' }
+          },
+          {
+            title: 'create',
+            icon: 'circle-on',
+            link: routesStrings.restaurantSetup.kitchenStation.create,
+            active: false,
+            access: ['company-admin'],
+            badge: { value: 1, color: 'accent' }
+          }
+        ]
+      },
+            {
+        title: 'Waiters',
+        icon: 'circle-on',
+        link: routesStrings.restaurantSetup.waiter.list,
+        active: false,
+        access: ['company-admin'],
+        badge: { value: 1, color: 'accent' },
+        children: [
+          {
+            title: 'list',
+            icon: 'circle-on',
+            link: routesStrings.restaurantSetup.waiter.list,
+            active: false,
+            access: ['company-admin'],
+            badge: { value: 1, color: 'accent' }
+          },
+          {
+            title: 'create',
+            icon: 'circle-on',
+            link: routesStrings.restaurantSetup.waiter.create,
+            active: false,
+            access: ['company-admin'],
+            badge: { value: 1, color: 'accent' }
+          }
+        ]
+      },
+      {
+        title: 'Riders',
+        icon: 'circle-on',
+        link: routesStrings.restaurantSetup.rider.list,
+        active: false,
+        access: ['company-admin'],
+        badge: { value: 1, color: 'accent' },
+        children: [
+          {
+            title: 'list',
+            icon: 'circle-on',
+            link: routesStrings.restaurantSetup.rider.list,
+            active: false,
+            access: ['company-admin'],
+            badge: { value: 1, color: 'accent' }
+          },
+          {
+            title: 'create',
+            icon: 'circle-on',
+            link: routesStrings.restaurantSetup.rider.create,
+            active: false,
+            access: ['company-admin'],
+            badge: { value: 1, color: 'accent' }
+          }
+        ]
+      },
     ]
   },
   {

@@ -1,10 +1,10 @@
 <div class="h-full overflow-hidden bg-white flex flex-col">
 
   <app-form-content-header
-    title="Create Waiter"
+    title="Create Rider"
     buttonText="Save"
-    (buttonClick)="saveWaiter()"
-    (closeClick)="goToWaiters()"
+    (buttonClick)="saveRider()"
+    (closeClick)="goToRiders()"
   ></app-form-content-header>
 
   <!-- Main Content -->
@@ -16,14 +16,14 @@
          label="Name"
          placeholder="e.g, John"
          [required]="true"
-         [field]="waiterForm.name"
+         [field]="riderForm.name"
          [submitted]="formSubmitted">
        </app-floating-input>
 
        <app-floating-input
          label="Phone"
-         [required]="false"
-         [field]="waiterForm.phone"
+         [required]="true"
+         [field]="riderForm.phone"
          [submitted]="formSubmitted">
        </app-floating-input>
 
@@ -58,7 +58,7 @@
            class="w-full"
            label="Street"
            placeholder=""
-           [field]="waiterForm.address.street"
+           [field]="riderForm.address.street"
            [submitted]="formSubmitted">
          </app-floating-input>
           <div class="flex flex-col md:flex-row gap-2">
@@ -66,7 +66,7 @@
            class="w-full"
            label="City"
            placeholder="e.g, Lahore"
-           [field]="waiterForm.address.city"
+           [field]="riderForm.address.city"
            [submitted]="formSubmitted">
          </app-floating-input>
 
@@ -74,7 +74,7 @@
            class="w-full"
            label="State"
            placeholder="e.g, Punjab"
-           [field]="waiterForm.address.state"
+           [field]="riderForm.address.state"
            [submitted]="formSubmitted">
          </app-floating-input>
 
@@ -84,7 +84,7 @@
            class="w-full"
            label="zip Code"
            placeholder="e.g, 56300"
-           [field]="waiterForm.address.zipCode"
+           [field]="riderForm.address.zipCode"
            [submitted]="formSubmitted">
          </app-floating-input>
 
@@ -92,7 +92,7 @@
            class="w-full"
            label="Country"
            placeholder="e.g, Pakistan"
-           [field]="waiterForm.address.country"
+           [field]="riderForm.address.country"
            [submitted]="formSubmitted">
          </app-floating-input>
 

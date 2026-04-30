@@ -3,7 +3,7 @@
     [title]="'All tables'"
     [description]="'Manage your restaurant tables, their status, and more.'"
     [showButton]="true"
-    [buttonText]="'Add Table'"
+    [buttonText]="'Create Table'"
     [buttonIcon]="'plus'"
     (buttonClick)="addTable()"
   >
@@ -253,13 +253,14 @@
   </div>
 
   <!-- List View -->
-  <div *ngIf="viewMode() === 'list'" class="bg-white border p-4 rounded-lg flex-1 min-h-0 no-scrollbar">
+  <div *ngIf="viewMode() === 'list'" class="min-h-0 no-scrollbar">
     <p-table
       [value]="filteredTables"
       [(selection)]="selectedTables"
       dataKey="id"
       [scrollable]="true"
       scrollHeight="flex"
+      styleClass="custom-style-table"
       class="h-full"
     >
       <!-- HEADER -->

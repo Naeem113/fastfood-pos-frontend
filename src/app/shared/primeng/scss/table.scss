@@ -1,0 +1,41 @@
+//table
+.custom-style-table.p-datatable {
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid #e5e7eb;
+}
+
+/* HEADER */
+.custom-style-table .p-datatable-thead > tr > th {
+  background: #f9fafb !important;
+  color: #374151;
+  font-weight: 600;
+  padding: 12px 16px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+/* BODY */
+.custom-style-table .p-datatable-tbody > tr > td {
+  padding: 12px 16px;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+/* HOVER */
+.custom-style-table .p-datatable-tbody > tr:hover {
+  background: #f9fafb;
+}
+
+/* FIX ROUNDING (important) */
+.custom-style-table .p-datatable-wrapper {
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.p-datatable-wrapper {
+  -ms-overflow-style: none !important;
+  scrollbar-width: none !important;
+}
+
+.p-datatable-wrapper::-webkit-scrollbar {
+  display: none !important;
+}

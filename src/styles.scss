@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 @import url('./app/shared/primeng/scss/checkbox.scss');
+@import url('./app/shared/primeng/scss/table.scss');
 
 .no-scrollbar {
   -webkit-overflow-scrolling: touch;
@@ -14,15 +15,4 @@
 
 .no-scrollbar::-webkit-scrollbar {
   display: none; /* Chrome, Safari */
-}
-
-//table
-
-:host ::ng-deep .p-datatable-wrapper {
-  -ms-overflow-style: none !important;
-  scrollbar-width: none !important;
-}
-
-:host ::ng-deep .p-datatable-wrapper::-webkit-scrollbar {
-  display: none !important;
 }
