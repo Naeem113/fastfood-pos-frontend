@@ -10,10 +10,11 @@ import { CustomDialogService } from '../../../../core/services/custom.dialog.ser
 import { BranchesSelectionModal } from '../../../../shared/components/dashboard/modals/branches-selection-modal/branches-selection-modal';
 import { FormContentHeader } from '../../../../shared/components/dashboard/form-content-header/form-content-header';
 import { BranchDto } from '../../../../shared/models/branch.model';
+import { FloatingSelect } from '../../../../shared/ui/floating-select/floating-select';
 
 @Component({
   selector: 'app-table-create',
-  imports: [...COMMON_IMPORTS, FloatingInput, FormContentHeader],
+  imports: [...COMMON_IMPORTS, FloatingInput, FormContentHeader, FloatingSelect],
   templateUrl: './table-create.html',
   styleUrls: ['./table-create.scss'],
 })
@@ -29,7 +30,18 @@ export class TableCreate {
   selectedBranchesCount =  signal<number>(0);
   selectedBranchesNames = signal<string>('');
   totalBranchesCount = signal<number>(1);
-
+  floors =[
+      {
+        label: 'Single',
+        value: 'single',
+        description: 'One type of product.',
+      },
+      {
+        label: 'Variant',
+        value: 'variant',
+        description: 'Several types of products.',
+      }
+    ]
   // ========================
   // inject services & stores
   // ========================

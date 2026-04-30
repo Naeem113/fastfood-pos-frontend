@@ -26,12 +26,17 @@
          [submitted]="formSubmitted">
        </app-floating-input>
 
-        <app-floating-input
-         label="Section / Floor"
-         placeholder="e.g, Hall, Ground, VIP"
-         [field]="tableForm.section"
-         [submitted]="formSubmitted">
-       </app-floating-input>
+          <app-floating-select
+            class="w-full"
+            label="Floor / Hall"
+            placeholder="e.g, Main Hall, Rooftop, VIP Lounge"
+            [items]="floors"
+            labelKey="label"
+            [multiSelection]="false"
+            valueKey="value"
+            [submitted]="formSubmitted"
+            [field]="tableForm.section"
+          />
 
      </div>
 
