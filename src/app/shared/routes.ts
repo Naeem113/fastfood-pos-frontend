@@ -16,6 +16,19 @@ export const routesStrings = {
       create: 'menu/categories/create',
     },
   },
+  salesAndReturns: {
+    index: 'sales-and-returns',
+    customer: {
+      index: 'sales-and-returns/customers',
+      list: 'sales-and-returns/customers/list',
+      create: 'sales-and-returns/customers/create',
+    },
+    discount: {
+      index: 'sales-and-returns/discounts',
+      list: 'sales-and-returns/discounts/list',
+      create: 'sales-and-returns/discounts/create',
+    },
+  },
   shiftHistory : 'shift-history',
   restaurantSetup:{
     index: 'restaurant-setup',

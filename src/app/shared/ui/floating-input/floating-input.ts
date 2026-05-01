@@ -1,4 +1,4 @@
-import { Component, input, Input, signal } from '@angular/core';
+import { Component, ElementRef, input, Input, signal, ViewChild } from '@angular/core';
 import { COMMON_IMPORTS } from '../../common';
 import { FieldTree, FormField } from '@angular/forms/signals';
 
@@ -9,23 +9,32 @@ import { FieldTree, FormField } from '@angular/forms/signals';
   styleUrls: ['./floating-input.scss'],
 })
 export class FloatingInput {
+
   @Input() size : 'sm' | 'md' | 'lg' = 'md';
   @Input() label!: string;
   @Input() placeholder: string = '';
   @Input() required: boolean = false;
   @Input() type: string = 'text';
-
+  @Input() prefixIcon?: string;   // e.g. 'pi pi-user'
+  @Input() postfixIcon?: string;  // e.g. 'pi pi-percentage'
   // signal-based form field
   @Input() field!: any;
 
   // parent form submitted signal
   @Input() submitted = signal(false);
+
  isFocused = signal(false);
   hasError() {
     return (
       this.field().invalid?.() &&
       (this.field().touched?.() || this.submitted())
     );
+  }
+
+  @ViewChild('input') inputRef!: ElementRef<HTMLInputElement | HTMLTextAreaElement>;
+
+  focusInput() {
+    this.inputRef?.nativeElement?.focus();
   }
 
   // ✅ Input size classes

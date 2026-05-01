@@ -76,6 +76,68 @@ const MENU_ITEMS: MenuItem[] = [
       },
     ]
   },
+    {
+    title: 'Sales & Returns',
+    icon: 'ticket',
+    link: routesStrings.salesAndReturns.customer.index,
+    active: false,
+    access: ['company-admin'],
+    badge: { value: 1, color: 'accent' },
+    children: [
+      {
+        title: 'Customers',
+        icon: 'circle-on',
+        link: routesStrings.salesAndReturns.customer.list,
+        active: false,
+        access: ['company-admin'],
+        badge: { value: 1, color: 'accent' },
+        children: [
+          {
+            title: 'list',
+            icon: 'circle-on',
+            link: routesStrings.salesAndReturns.customer.list,
+            active: false,
+            access: ['company-admin'],
+            badge: { value: 1, color: 'accent' }
+          },
+          {
+            title: 'create',
+            icon: 'circle-on',
+            link: routesStrings.salesAndReturns.customer.create,
+            active: false,
+            access: ['company-admin'],
+            badge: { value: 1, color: 'accent' }
+          }
+        ]
+      },
+      {
+        title: 'Discounts',
+        icon: 'circle-on',
+        link: routesStrings.salesAndReturns.discount.index,
+        active: false,
+        access: ['company-admin'],
+        badge: { value: 1, color: 'accent' },
+        children: [
+          {
+            title: 'list',
+            icon: 'circle-on',
+            link: routesStrings.salesAndReturns.discount.list,
+            active: false,
+            access: ['company-admin'],
+            badge: { value: 1, color: 'accent' }
+          },
+          {
+            title: 'create',
+            icon: 'circle-on',
+            link: routesStrings.salesAndReturns.discount.create,
+            active: false,
+            access: ['company-admin'],
+            badge: { value: 1, color: 'accent' }
+          }
+        ]
+      },
+    ]
+  },
 
   {
     title: 'Restaurant Setup',

@@ -1,0 +1,16 @@
+<p-drawer
+  [(visible)]="visible"
+  [position]="position"
+  [style]="{ width: width }"
+  [modal]="true"
+  (onHide)="handleHide()"
+>
+  <ng-template pTemplate="header">
+    <div class="flex items-center justify-between w-full">
+      <h3 class="font-semibold text-lg">{{ title }}</h3>
+    </div>
+  </ng-template>
+
+  <!-- Dynamic Content -->
+  <ng-container #container></ng-container>
+</p-drawer>

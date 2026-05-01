@@ -37,10 +37,6 @@ export class WaiterList {
   selectedWaiters = signal<UserDto[]>([]);
   viewMode = signal<ViewMode>('grid');
 
-  searchQuery  = '';
-  statusFilter: string = '';
-  branchFilter = '';
-
   filter: waiterFilter = {
     status: null,
     branch: null,

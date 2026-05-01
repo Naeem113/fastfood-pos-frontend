@@ -7,6 +7,8 @@ import { itemRoutes } from '../../pages/dashboard/items/routes';
 import { riderRoutes } from '../../pages/dashboard/rider/routes';
 import { kitchenStationRoutes } from '../../pages/dashboard/kitchen-station/routes';
 import { floorHallRoutes } from '../../pages/dashboard/floor-hall/routes';
+import { customerRoutes } from '../../pages/dashboard/customer/routes';
+import { discountRoutes } from '../../pages/dashboard/discount/routes';
 export const dashboardRoutes: Routes = [
   {
     path: '',
@@ -33,6 +35,14 @@ export const dashboardRoutes: Routes = [
           children: [
           ...categoryRoutes,
           ...itemRoutes
+          ]
+      },
+      {
+        path: 'sales-and-returns',
+        canActivate: [AuthGuard],
+          children: [
+          ...customerRoutes,
+          ...discountRoutes
           ]
       },
       {

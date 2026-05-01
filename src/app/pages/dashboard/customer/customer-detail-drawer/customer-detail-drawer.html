@@ -1,0 +1,285 @@
+<div class="pb-10 flex flex-col gap-3">
+
+  <!-- ── Profile header card ────────────────── -->
+  <div class="bg-white rounded-xl border border-gray-200 overflow-hidden">
+
+    <div class="flex items-start gap-4 p-5">
+      <!-- Avatar -->
+      <div class="w-14 h-14 rounded-full bg-blue-100 text-blue-800 flex items-center
+                  justify-center text-lg font-medium flex-shrink-0">
+        {{ getInitials() }}
+      </div>
+
+      <!-- Name + meta -->
+      <div class="flex-1 min-w-0">
+        <p class="text-base font-medium text-gray-800">
+          {{ customer.firstName }} {{ customer.lastName }}
+        </p>
+        <p class="text-xs text-gray-400 font-mono mt-0.5">#{{ customer.code }}</p>
+
+        <div class="flex flex-wrap gap-1.5 mt-2">
+          <!-- Active badge -->
+          <span [ngClass]="customer.isActive
+              ? 'bg-emerald-100 text-emerald-800'
+              : 'bg-gray-100 text-gray-600'"
+            class="inline-flex items-center gap-1 text-xs font-medium px-2 py-0.5 rounded-full">
+            <span [ngClass]="customer.isActive ? 'bg-emerald-500' : 'bg-gray-400'"
+              class="w-1.5 h-1.5 rounded-full"></span>
+            {{ customer.isActive ? 'Active' : 'Inactive' }}
+          </span>
+
+          <!-- Gender -->
+          <span
+            class="text-xs font-medium px-2 py-0.5 rounded-full bg-violet-100 text-violet-800">
+            {{ customer.gender || 'Male' }}
+          </span>
+
+          <!-- Discount -->
+          <span
+            class="text-xs font-medium px-2 py-0.5 rounded-full bg-blue-100 text-blue-800">
+            <!-- {{ customer.discount.value || 10 }}{{ customer.discount.type === 'PERCENTAGE' ? '%' : ' PKR' }} discount -->
+          </span>
+
+          <!-- Branch -->
+          <span
+            class="text-xs font-medium px-2 py-0.5 rounded-full bg-amber-100 text-amber-800">
+            {{ 'Okara' }}
+          </span>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="flex gap-2">
+      <button
+        class="flex items-center gap-1.5 px-3 py-1.5 text-xs border border-orange-200
+               text-orange-700 rounded-lg hover:bg-orange-50 transition-colors">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="1.4" viewBox="0 0 13 13">
+          <path d="M2 3h9M5 3V2h3v1M4 3v7a1 1 0 001 1h3a1 1 0 001-1V3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Delete
+      </button>
+      <button
+        class="flex items-center gap-1.5 px-3 py-1.5 text-xs rounded-lg
+               bg-gray-900 text-white hover:opacity-85 transition-opacity">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="1.4" viewBox="0 0 13 13">
+          <path d="M1.5 11l2-.4L9.5 4a1.2 1.2 0 00-1.7-1.7L2 8.9 1.5 11z" stroke-linejoin="round"/>
+        </svg>
+        Edit
+      </button>
+    </div>
+    </div>
+
+    <!-- Stats strip -->
+  </div>
+
+  <!-- ── Contact info ───────────────────────── -->
+  <div class="bg-white rounded-xl border border-gray-200">
+    <div class="flex items-center justify-between px-4 py-3 border-b border-gray-100">
+      <div class="flex items-center gap-2">
+        <div class="w-7 h-7 rounded-lg bg-blue-100 flex items-center justify-center">
+          <svg class="w-3.5 h-3.5 text-blue-700" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 14 14">
+            <circle cx="7" cy="4.5" r="2.5"/>
+            <path d="M1.5 12c0-2.5 2.5-4 5.5-4s5.5 1.5 5.5 4" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <span class="text-xs font-medium text-gray-400 uppercase tracking-wide">Contact information</span>
+      </div>
+      <button class="text-xs text-blue-600 underline">Edit</button>
+    </div>
+    <div class="grid grid-cols-2 gap-x-6 gap-y-4 p-4">
+      <div>
+        <p class="text-xs font-medium text-gray-400 uppercase tracking-wide mb-1">Phone</p>
+        <p class="text-sm text-blue-600">{{ customer.phone || '—' }}</p>
+      </div>
+      <div>
+        <p class="text-xs font-medium text-gray-400 uppercase tracking-wide mb-1">Email</p>
+        <p class="text-sm text-blue-600 truncate">{{ customer.email || '—' }}</p>
+      </div>
+      <div>
+        <p class="text-xs font-medium text-gray-400 uppercase tracking-wide mb-1">Date of birth</p>
+        <p class="text-sm text-gray-800">{{ customer.dob ? (customer.dob | date:'dd MMM yyyy') : '—' }}</p>
+      </div>
+      <div>
+        <p class="text-xs font-medium text-gray-400 uppercase tracking-wide mb-1">Gender</p>
+        <p class="text-sm text-gray-800">{{ customer.gender || '—' }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Identity & tax ────────────────────── -->
+  <div class="bg-white rounded-xl border border-gray-200">
+    <div class="flex items-center justify-between px-4 py-3 border-b border-gray-100">
+      <div class="flex items-center gap-2">
+        <div class="w-7 h-7 rounded-lg bg-amber-100 flex items-center justify-center">
+          <svg class="w-3.5 h-3.5 text-amber-700" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 14 14">
+            <rect x="1.5" y="2" width="11" height="10" rx="1.5"/>
+            <path d="M1.5 5.5h11" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <span class="text-xs font-medium text-gray-400 uppercase tracking-wide">Identity & tax numbers</span>
+      </div>
+      <button  class="text-xs text-blue-600 underline">Edit</button>
+    </div>
+    <div class="grid grid-cols-3 gap-x-6 gap-y-4 p-4">
+      <div>
+        <p class="text-xs font-medium text-gray-400 uppercase tracking-wide mb-1">CNIC</p>
+        <p class="text-sm font-mono text-gray-800">{{ customer.cnic || '—' }}</p>
+      </div>
+      <div>
+        <p class="text-xs font-medium text-gray-400 uppercase tracking-wide mb-1">NTN</p>
+        <p class="text-sm font-mono text-gray-800">{{ customer.ntn || '—' }}</p>
+      </div>
+      <div>
+        <p class="text-xs font-medium text-gray-400 uppercase tracking-wide mb-1">STRN</p>
+        <p class="text-sm font-mono text-gray-800">{{ customer.strn || '—' }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Discount ───────────────────────────── -->
+  <div class="bg-white rounded-xl border border-gray-200">
+    <div class="flex items-center justify-between px-4 py-3 border-b border-gray-100">
+      <div class="flex items-center gap-2">
+        <div class="w-7 h-7 rounded-lg bg-emerald-100 flex items-center justify-center">
+          <svg class="w-3.5 h-3.5 text-emerald-700" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 14 14">
+            <path d="M7 1l1.5 3.5H12L9.5 7l1 3.5L7 9l-3.5 1.5 1-3.5L2 5h3.5z" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <span class="text-xs font-medium text-gray-400 uppercase tracking-wide">Discount</span>
+      </div>
+      <button class="text-xs text-blue-600 underline">Edit</button>
+    </div>
+    <div class="flex items-center gap-5 flex-wrap p-4">
+      <!-- Toggle -->
+      <div class="flex items-center gap-2">
+        <div [ngClass]="customer.discount.enabled ? 'bg-emerald-500 justify-end' : 'bg-gray-200 justify-start'"
+          class="w-9 h-5 rounded-full flex items-center px-0.5 transition-colors">
+          <div class="w-4 h-4 rounded-full bg-white"></div>
+        </div>
+        <span class="text-sm text-gray-500">
+          {{ customer.discount.enabled ? 'Enabled' : 'Disabled' }}
+        </span>
+      </div>
+
+      <div class="w-px h-8 bg-gray-200"></div>
+
+      <!-- Value -->
+      <div *ngIf="customer.discount.enabled" class="flex items-baseline gap-1">
+        <span class="text-2xl font-medium text-blue-800">{{ customer.discount.value }}</span>
+        <span class="text-sm text-blue-600">
+          {{ customer.discount.type === 'PERCENTAGE' ? '%' : 'PKR' }}
+        </span>
+      </div>
+
+      <div *ngIf="customer.discount.enabled">
+        <p class="text-sm text-gray-500">
+          {{ customer.discount.type === 'PERCENTAGE' ? 'Percentage off every order' : 'Fixed amount off every order' }}
+        </p>
+        <p class="text-xs text-gray-400 mt-0.5">Applied at checkout automatically</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Address + Branch ───────────────────── -->
+  <div class="grid grid-cols-2 gap-3">
+
+    <div class="bg-white rounded-xl border border-gray-200">
+      <div class="flex items-center justify-between px-4 py-3 border-b border-gray-100">
+        <div class="flex items-center gap-2">
+          <div class="w-7 h-7 rounded-lg bg-violet-100 flex items-center justify-center">
+            <svg class="w-3.5 h-3.5 text-violet-700" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 14 14">
+              <path d="M7 1C5 1 3.5 2.5 3.5 4.5 3.5 7 7 12 7 12s3.5-5 3.5-7.5C10.5 2.5 9 1 7 1z"/>
+              <circle cx="7" cy="4.5" r="1.2"/>
+            </svg>
+          </div>
+          <span class="text-xs font-medium text-gray-400 uppercase tracking-wide">Address</span>
+        </div>
+        <button class="text-xs text-blue-600 underline">Edit</button>
+      </div>
+      <div class="p-4 flex flex-col gap-0.5">
+        <p class="text-sm text-gray-800">{{ customer.address?.street || '—' }}</p>
+        <p class="text-sm text-gray-800">{{ customer.address?.city }}</p>
+        <p class="text-sm text-gray-800">{{ customer.address?.state }}, {{ customer.address?.zip }}</p>
+        <p class="text-sm text-gray-400 mt-1">{{ customer.address?.country }}</p>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-xl border border-gray-200">
+      <div class="flex items-center gap-2 px-4 py-3 border-b border-gray-100">
+        <div class="w-7 h-7 rounded-lg bg-gray-100 flex items-center justify-center">
+          <svg class="w-3.5 h-3.5 text-gray-500" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 14 14">
+            <path d="M2 11V4a1 1 0 011-1h8a1 1 0 011 1v7" stroke-linecap="round"/>
+            <path d="M1 11h12" stroke-linecap="round"/>
+            <rect x="5" y="7" width="4" height="4" rx=".5"/>
+          </svg>
+        </div>
+        <span class="text-xs font-medium text-gray-400 uppercase tracking-wide">Branch</span>
+      </div>
+      <div class="p-4">
+        <p class="text-xs font-medium text-gray-400 uppercase tracking-wide mb-1.5">Assigned branch</p>
+        <p class="text-sm text-gray-800">{{ 'branch name'  }}</p>
+        <p class="text-xs text-gray-400 mt-1">{{ 'branch location' }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Comments ───────────────────────────── -->
+  <div class="bg-white rounded-xl border border-gray-200">
+    <div class="flex items-center justify-between px-4 py-3 border-b border-gray-100">
+      <div class="flex items-center gap-2">
+        <div class="w-7 h-7 rounded-lg bg-gray-100 flex items-center justify-center">
+          <svg class="w-3.5 h-3.5 text-gray-500" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 14 14">
+            <path d="M2 11V4a1 1 0 011-1h8a1 1 0 011 1v7" stroke-linecap="round"/>
+            <line x1="4" y1="6" x2="10" y2="6" stroke-linecap="round"/>
+            <line x1="4" y1="8.5" x2="8" y2="8.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <span class="text-xs font-medium text-gray-400 uppercase tracking-wide">Comments</span>
+      </div>
+      <button class="text-xs text-blue-600 underline">Edit</button>
+    </div>
+    <div class="p-4">
+      <p *ngIf="customer.comments; else noComment"
+        class="text-sm text-gray-500 bg-gray-50 rounded-lg px-3 py-2.5 leading-relaxed">
+        {{ customer.comments }}
+      </p>
+      <ng-template #noComment>
+        <p class="text-sm text-gray-300 italic">No comments added.</p>
+      </ng-template>
+    </div>
+  </div>
+
+  <!-- ── Account status toggle ─────────────── -->
+  <div class="bg-white rounded-xl border border-gray-200 px-4 py-3
+              flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <div class="w-7 h-7 rounded-lg bg-emerald-100 flex items-center justify-center">
+        <svg class="w-3.5 h-3.5 text-emerald-700" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 14 14">
+          <circle cx="7" cy="7" r="5.5"/>
+          <polyline points="4.5,7 6.5,9 9.5,5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div>
+        <p class="text-sm font-medium text-gray-800">Account status</p>
+        <p class="text-xs text-gray-400">Customer can place orders and log in</p>
+      </div>
+    </div>
+    <div class="flex items-center gap-2.5">
+      <span class="text-sm text-gray-400">{{ customer.isActive ? 'Active' : 'Inactive' }}</span>
+      <div
+        [ngClass]="customer.isActive ? 'bg-emerald-500 justify-end' : 'bg-gray-200 justify-start'"
+        class="w-9 h-5 rounded-full flex items-center px-0.5 cursor-pointer transition-colors duration-200">
+        <div class="w-4 h-4 rounded-full bg-white transition-all"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Footer ────────────────────────────── -->
+  <div class="flex items-center justify-between px-1">
+    <p class="text-xs text-gray-300">
+      Created {{ customer.createdAt | date:'dd MMM yyyy' }} ·
+      Last updated {{ customer.updatedAt | date:'dd MMM yyyy' }}
+    </p>
+  </div>
+
+</div>

@@ -1,0 +1,149 @@
+<div class="h-full overflow-hidden bg-white flex flex-col">
+
+  <app-form-content-header
+    title="Create Discount"
+    buttonText="Save"
+    (buttonClick)="saveDiscount()"
+    (closeClick)="goToDiscountList()"
+  ></app-form-content-header>
+
+  <!-- Main Content -->
+  <div class="overflow-y-auto pt-6 pb-5 px-4 max-w-2xl mx-auto w-full no-scrollbar">
+    <!-- Table Name Input -->
+     <div class="flex flex-col gap-3">
+       <app-floating-input
+         label="Name"
+         placeholder="e.g, Hot Kitchen"
+         [required]="true"
+         [field]="discountForm.name"
+         [submitted]="formSubmitted">
+       </app-floating-input>
+       <div [@collapse] class="flex items-center gap-4">
+          <app-floating-select
+           class="w-full"
+           label="Discount Type"
+           placeholder="e.g, Percentage"
+           [items]="[{label: 'Percentage', value: discountType.Percentage}, {label: 'Fixed', value: discountType.Flat}]"
+           valueKey="value"
+           labelKey="label"
+           [field]="discountForm.type"
+           [submitted]="formSubmitted">
+          </app-floating-select>
+          <app-floating-input
+           class="w-full"
+           label="Discount Value"
+           placeholder="e.g, 10%"
+           [postfixIcon]="discountForm.type().value() === discountType.Percentage ? 'pi pi-percentage' : 'pi pi-money-bill'"
+            [field]="discountForm.value"
+           [field]="discountForm.value"
+           [submitted]="formSubmitted">
+         </app-floating-input>
+      </div>
+      <div [@collapse] class="flex items-center gap-4 ">
+          <app-floating-input
+           class="w-full"
+           type="date"
+           label="From Date"
+           [field]="discountForm.fromDate"
+           [submitted]="formSubmitted">
+         </app-floating-input>
+          <app-floating-input
+           class="w-full"
+           type="date"
+           label="To Date"
+           [field]="discountForm.toDate"
+           [submitted]="formSubmitted">
+         </app-floating-input>
+      </div>
+        <app-floating-input
+          class="w-full"
+          type="textarea"
+          label="Comments or notes"
+          [field]="discountForm.description"
+          [submitted]="formSubmitted">
+        </app-floating-input>
+     </div>
+
+
+    <!-- <div class="h-0.5 bg-gray-200 w-full my-4 mt-8"></div> -->
+    <!-- Section Heading -->
+    <h2 class="text-[19px] sm:text-xl font-bold text-gray-950 mb-5 mt-6 tracking-tight">
+      Sales branches and Status
+    </h2>
+    <div class="flex items-center gap-4 py-4">
+      <!-- Hierarchy Icon -->
+      <div class="flex-shrink-0">
+        <i class="pi pi-warehouse w-6 ml-1"></i>
+      </div>
+
+      <!-- Text -->
+    <div class="flex-1 min-w-0">
+        <div class="text-sm font-semibold text-primary">Branches <span class="px-2 text-xs rounded-full bg-yellow-300/70 text-yellow-800">{{selectedBranchesCount()}} of {{totalBranchesCount()}}</span> </div>
+        <p class="text-sm text-gray-500 mt-0.5">
+          @if(selectedBranchesNames()){
+            {{selectedBranchesNames()}}
+          }@else{
+            Select the branch where this kitchen station will be available.
+          }
+        </p>
+      </div>
+
+      <!-- Select Link -->
+      <button
+        (click)="openBranchesModal()"
+        class="text-sm font-semibold text-primary underline underline-offset-2 hover:text-gray-600 transition-colors flex-shrink-0"
+      >
+        Edit
+      </button>
+    </div>
+    <div class="h-px bg-gray-200 w-full my-8 mt-4"></div>
+
+    <!-- Points of Sale Row -->
+    <div class="flex items-center gap-4 pb-10">
+      <!-- POS Icon -->
+      <div class="shrink-0">
+            <div class="shrink-0">
+            <i class="pi pi-flag w-6 ml-1"></i>
+          </div>
+      </div>
+
+      <!-- Text Block -->
+      <div class="flex-1 min-w-0">
+        <p class="text-[15px] font-bold text-gray-950 leading-snug">Active Status</p>
+            <p class="text-[13px] text-gray-500 mt-0.5 leading-snug">
+              If inactive, the kitchen station won't appear anywhere in the POS and can't be added to orders.
+              Use this to temporarily hide kitchen stations without deleting them.
+            </p>
+      </div>
+
+      <!-- Info Icon -->
+      <button class="shrink-0 text-gray-400 hover:text-gray-600 transition-colors">
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 20 20"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <circle cx="10" cy="10" r="8.5" stroke="#9ca3af" stroke-width="1.5" />
+          <path d="M10 9v5" stroke="#9ca3af" stroke-width="1.5" stroke-linecap="round" />
+          <circle cx="10" cy="6.5" r="0.75" fill="#9ca3af" />
+        </svg>
+      </button>
+
+      <!-- Toggle -->
+      <label class="relative inline-flex cursor-pointer items-center">
+        <!-- Hidden Checkbox -->
+        <input type="checkbox" class="peer sr-only" checked />
+
+        <!-- The Background Track -->
+        <div class="h-6 w-12 rounded-full bg-gray-400 duration-300 peer-checked:bg-black"></div>
+
+        <!-- The Sliding Circle -->
+        <div
+          class="absolute left-1 top-1 h-4 w-4 rounded-full bg-white transition-all duration-300 peer-checked:translate-x-6"
+        ></div>
+      </label>
+    </div>
+  </div>
+</div>

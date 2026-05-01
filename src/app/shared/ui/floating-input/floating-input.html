@@ -1,5 +1,11 @@
 <div class="relative w-full">
+  <!-- INPUT -->
+     @if(prefixIcon && type !== 'textarea') {
+    <i class="pi absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+       [ngClass]="prefixIcon"></i>
+  }
   <input
+    *ngIf="type !== 'textarea'; else textAreaTpl"
     #input
     [type]="type"
     [placeholder]="isFocused() ? placeholder : ''"
@@ -9,14 +15,42 @@
     class="peer w-full border outline-none transition-all"
     [ngClass]="[
       baseSizeClass,
+      prefixIcon ? 'pl-10' : '',
+      postfixIcon ? 'pr-10' : '',
       hasError()
         ? 'border-red-500 focus:ring-red-500 focus:border-red-500'
         : 'border-gray-300 focus:ring-1 focus:ring-black'
     ]"
   />
 
+  <!-- TEXTAREA -->
+  <ng-template #textAreaTpl>
+    <textarea
+      #input
+      [placeholder]="isFocused() || field()?.value ? placeholder : ''"
+      (focus)="isFocused.set(true)"
+      (blur)="isFocused.set(false)"
+      [formField]="field"
+      rows="3"
+      class="peer w-full border outline-none transition-all resize-none"
+      [ngClass]="[
+        baseSizeClass,
+        hasError()
+          ? 'border-red-500 focus:ring-red-500 focus:border-red-500'
+          : 'border-gray-300 focus:ring-1 focus:ring-black'
+      ]"
+    ></textarea>
+  </ng-template>
+
+  <!-- POSTFIX ICON -->
+    @if(postfixIcon && type !== 'textarea') {
+      <i class="pi absolute right-3 top-1/2 -translate-y-1/2 text-gray-400"
+        [ngClass]="postfixIcon"></i>
+    }
+
+  <!-- LABEL -->
   <label
-    (click)="input.focus()"
+    (click)="focusInput()"
     [ngClass]="labelSizeClass"
     class="absolute cursor-text text-gray-500 transition-all duration-200
            peer-placeholder-shown:text-gray-400

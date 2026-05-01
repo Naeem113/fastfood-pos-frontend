@@ -1,0 +1,335 @@
+<div class="h-full overflow-hidden bg-white flex flex-col">
+
+  <app-form-content-header
+    title="Create Customer"
+    buttonText="Save"
+    (buttonClick)="saveCustomer()"
+    (closeClick)="goToCustomers()"
+  ></app-form-content-header>
+
+  <!-- Main Content -->
+  <div class="overflow-y-auto pt-6 pb-5 px-4 max-w-2xl mx-auto w-full no-scrollbar">
+
+    <!-- Table Name Input -->
+     <div class="flex flex-col md:flex-row gap-3 mb-3">
+       <app-floating-input
+         class="w-full"
+         label="First Name"
+         placeholder="e.g, John"
+         [required]="true"
+         [field]="customerForm.firstName"
+         [submitted]="formSubmitted">
+       </app-floating-input>
+
+       <app-floating-input
+         class="w-full"
+         label="Last Name"
+         placeholder="e.g, Doe"
+         [required]="false"
+         [field]="customerForm.lastName"
+         [submitted]="formSubmitted">
+       </app-floating-input>
+     </div>
+
+     <app-floating-input
+         label="Phone"
+         placeholder="e.g, +1234567890"
+         [required]="false"
+         [field]="customerForm.phone"
+         [submitted]="formSubmitted">
+      </app-floating-input>
+
+    <!-- Customer other bio -->
+    <div class="flex items-center gap-4 py-4 cursor-pointer mt-3" (click)="$event.stopPropagation(); showOtherBio.set(!showOtherBio())">
+      <!-- Hierarchy Icon -->
+      <div class="flex-shrink-0">
+        <i class="pi pi-user w-6 h-6 text-gray-700"></i>
+      </div>
+
+      <!-- Text -->
+      <div class="flex-1 min-w-0">
+        <p class="text-sm font-semibold text-primary">Customer other bio</p>
+        <p class="text-sm text-gray-500 mt-0.5">
+            Provide the customer’s other bio information to maintain accurate records.
+        </p>
+      </div>
+      <!-- Select Link -->
+      <button
+        (click)="$event.stopPropagation(); showOtherBio.set(!showOtherBio())"
+        class="text-sm font-semibold text-primary underline underline-offset-2 hover:text-gray-600 transition-colors flex-shrink-0"
+      >
+        <i class="pi pi-chevron-down" ></i>
+      </button>
+    </div>
+    @if(showOtherBio()){
+       <div [@collapse] class="flex flex-col gap-3  py-4 ">
+         <div class="flex flex-col md:flex-row gap-3">
+           <app-floating-select
+            class="w-full"
+            label="Gender"
+            placeholder="e.g, Male"
+            [items]="[{label: 'Male', value: 'male', icon:'mars'}, {label: 'Female', value: 'female', icon:'venus'}, {label: 'Other', value: 'other', icon:'user'}]"
+            [field]="customerForm.gender"
+            iconKey="icon"
+            [submitted]="formSubmitted">
+           </app-floating-select>
+           <app-floating-input
+            class="w-full"
+            label="Date of Birth"
+            placeholder="e.g, 01/01/1990"
+            [field]="customerForm.dob"
+            [submitted]="formSubmitted">
+          </app-floating-input>
+
+       </div>
+       <div class="flex flex-col md:flex-row gap-3">
+        <app-floating-input
+          class="w-full"
+          label="Email"
+          placeholder="e.g, John@gmail.com"
+          [field]="customerForm.email"
+          [submitted]="formSubmitted">
+        </app-floating-input>
+
+        <app-floating-input
+          class="w-full"
+          label="Nationality Number"
+          placeholder="e.g, 35303-378343-2"
+          [required]="false"
+          [field]="customerForm.cnic"
+          [submitted]="formSubmitted">
+        </app-floating-input>
+      </div>
+      <div class="flex flex-col md:flex-row gap-3">
+        <app-floating-input
+          class="w-full"
+          label="National Tax Number"
+          placeholder="e.g, 123456789"
+          [field]="customerForm.ntn"
+          [submitted]="formSubmitted">
+        </app-floating-input>
+
+        <app-floating-input
+          class="w-full"
+          label="Sale Tax Return Number"
+          placeholder="e.g, 344378342"
+          [field]="customerForm.strn"
+          [submitted]="formSubmitted">
+        </app-floating-input>
+      </div>
+       </div>
+      <app-floating-input
+          class="w-full"
+          type="textarea"
+          label="Comments or notes"
+          [field]="customerForm.comments"
+          [submitted]="formSubmitted">
+        </app-floating-input>
+    }
+    <div class="h-px bg-gray-200 w-full my-4 mt-4"></div>
+
+    <!-- address Row -->
+    <div class="flex items-center gap-4 py-4 cursor-pointer" (click)="$event.stopPropagation(); showAddress.set(!showAddress())">
+      <!-- Hierarchy Icon -->
+      <div class="flex-shrink-0">
+        <i class="pi pi-map-marker w-6 h-6 text-gray-700"></i>
+      </div>
+
+      <!-- Text -->
+      <div class="flex-1 min-w-0">
+        <p class="text-sm font-semibold text-primary">Address detail</p>
+        <p class="text-sm text-gray-500 mt-0.5">
+            Provide the waiter’s residential address to maintain accurate staff records.
+        </p>
+      </div>
+      <!-- Select Link -->
+      <button
+        (click)="$event.stopPropagation(); showAddress.set(!showAddress())"
+        class="text-sm font-semibold text-primary underline underline-offset-2 hover:text-gray-600 transition-colors flex-shrink-0"
+      >
+        <i class="pi pi-chevron-down" ></i>
+      </button>
+    </div>
+    @if(showAddress()){
+      <div [@collapse] class="flex flex-col gap-6 py-4 ">
+          <app-floating-input
+           class="w-full"
+           label="Street"
+           placeholder=""
+           [field]="customerForm.address.street"
+           [submitted]="formSubmitted">
+         </app-floating-input>
+          <div class="flex flex-col md:flex-row gap-2">
+          <app-floating-input
+           class="w-full"
+           label="City"
+           placeholder="e.g, Lahore"
+           [field]="customerForm.address.city"
+           [submitted]="formSubmitted">
+         </app-floating-input>
+
+        <app-floating-input
+           class="w-full"
+           label="State"
+           placeholder="e.g, Punjab"
+           [field]="customerForm.address.state"
+           [submitted]="formSubmitted">
+         </app-floating-input>
+
+        </div>
+          <div class="flex flex-col md:flex-row gap-2">
+          <app-floating-input
+           class="w-full"
+           label="zip Code"
+           placeholder="e.g, 56300"
+           [field]="customerForm.address.zipCode"
+           [submitted]="formSubmitted">
+         </app-floating-input>
+
+        <app-floating-input
+           class="w-full"
+           label="Country"
+           placeholder="e.g, Pakistan"
+           [field]="customerForm.address.country"
+           [submitted]="formSubmitted">
+         </app-floating-input>
+
+        </div>
+      </div>
+    }
+
+    <!-- <div class="h-px bg-gray-200 w-full my-4"></div> -->
+    <div class="h-0.5 bg-gray-200 w-full my-8"></div>
+    <div class="">
+      <!-- Section Heading -->
+      <h2 class="text-[19px] sm:text-xl font-bold text-gray-950 mb-5 mt-6 tracking-tight">
+        Customer types and discounts
+      </h2>
+
+      <div class="flex items-center gap-4 pb-6">
+        <!-- POS Icon -->
+        <div class="shrink-0">
+          <i class="pi pi-tag" ></i>
+        </div>
+
+        <!-- Text Block -->
+        <div class="flex-1 min-w-0">
+          <p class="text-[15px] font-bold text-gray-950 leading-snug">Personal Discount</p>
+          <p class="text-[13px] text-gray-500 mt-0.5 leading-snug">
+            Allow this customer to apply a personal discount to orders. Disable to restrict discount usage for this user.
+          </p>
+        </div>
+
+        <!-- Info Icon -->
+        <button class="shrink-0 text-gray-400 hover:text-gray-600 transition-colors">
+          <i class="pi pi-info-circle"></i>
+        </button>
+        <!-- Toggle -->
+        <label class="relative inline-flex cursor-pointer items-center">
+          <!-- Hidden Checkbox -->
+          <input type="checkbox" class="peer sr-only" [formField]="customerForm.discount.enabled"/>
+
+          <!-- The Background Track -->
+          <div class="h-6 w-12 rounded-full bg-gray-400 duration-300 peer-checked:bg-black"></div>
+
+          <!-- The Sliding Circle -->
+          <div
+            class="absolute left-1 top-1 h-4 w-4 rounded-full bg-white transition-all duration-300 peer-checked:translate-x-6"
+          ></div>
+        </label>
+      </div>
+      @if(customerForm.discount.enabled().value()){
+         <div [@collapse] class="flex items-center gap-4 pb-6">
+           <app-floating-select
+            class="w-full"
+            label="Discount Type"
+            placeholder="e.g, Percentage"
+            [items]="[{label: 'Percentage', value: discountType.Percentage}, {label: 'Fixed', value: discountType.Flat}]"
+            valueKey="value"
+            labelKey="label"
+            [field]="customerForm.discount.type"
+            [submitted]="formSubmitted">
+           </app-floating-select>
+           <app-floating-input
+            class="w-full"
+            label="Discount Value"
+            placeholder="e.g, 10%"
+            [postfixIcon]="customerForm.discount.type().value() === discountType.Percentage ? 'pi pi-percentage' : 'pi pi-money-bill'"
+             [field]="customerForm.discount.value"
+            [field]="customerForm.discount.value"
+            [submitted]="formSubmitted">
+          </app-floating-input>
+       </div>
+      }
+
+    </div>
+
+    <div class="h-0.5 bg-gray-200 w-full my-4 mb-8"></div>
+    <!-- Section Heading -->
+    <h2 class="text-[19px] sm:text-xl font-bold text-gray-950 mb-5 mt-6 tracking-tight">
+      Sales branch and status
+    </h2>
+    <div class="flex items-center gap-4 py-4">
+      <!-- Hierarchy Icon -->
+      <div class="flex-shrink-0">
+        <i class="pi pi-warehouse w-6 ml-1"></i>
+      </div>
+
+      <!-- Text -->
+      <div class="flex-1 min-w-0">
+        <div class="text-sm font-semibold text-primary">Branches <span class="px-2 text-xs rounded-full bg-yellow-300/70 text-yellow-800">{{selectedBranchesCount()}} of {{totalBranchesCount()}}</span> </div>
+        <p class="text-sm text-gray-500 mt-0.5">
+          @if(selectedBranchesNames()){
+            {{selectedBranchesNames()}}
+          }@else{
+            Select the branch where this waiter will be available.
+          }
+        </p>
+      </div>
+
+      <!-- Select Link -->
+      <button
+        (click)="openBranchesModal()"
+        class="text-sm font-semibold text-primary underline underline-offset-2 hover:text-gray-600 transition-colors flex-shrink-0"
+      >
+        Edit
+      </button>
+    </div>
+    <div class="h-px bg-gray-200 w-full my-8 mt-4"></div>
+
+    <!-- Points of Sale Row -->
+    <div class="flex items-center gap-4 pb-10">
+      <!-- POS Icon -->
+      <div class="shrink-0">
+        <i class="pi pi-power-off" ></i>
+      </div>
+
+      <!-- Text Block -->
+      <div class="flex-1 min-w-0">
+        <p class="text-[15px] font-bold text-gray-950 leading-snug">Active status</p>
+        <p class="text-[13px] text-gray-500 mt-0.5 leading-snug">
+          Enable or disable this waiter. Inactive staff cannot access the system or be assigned to orders.
+        </p>
+      </div>
+
+      <!-- Info Icon -->
+      <button class="shrink-0 text-gray-400 hover:text-gray-600 transition-colors">
+        <i class="pi pi-info-circle"></i>
+      </button>
+<!-- When inactive, the waiter will not appear in POS or staff assignments. -->
+      <!-- Toggle -->
+      <label class="relative inline-flex cursor-pointer items-center">
+        <!-- Hidden Checkbox -->
+        <input type="checkbox" class="peer sr-only" checked />
+
+        <!-- The Background Track -->
+        <div class="h-6 w-12 rounded-full bg-gray-400 duration-300 peer-checked:bg-black"></div>
+
+        <!-- The Sliding Circle -->
+        <div
+          class="absolute left-1 top-1 h-4 w-4 rounded-full bg-white transition-all duration-300 peer-checked:translate-x-6"
+        ></div>
+      </label>
+    </div>
+  </div>
+</div>
