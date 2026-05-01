@@ -1,5 +1,5 @@
 <!-- ROOT -->
-<div class="h-screen flex flex-col bg-[#0D0E0C] text-[#DFE1D8] overflow-auto">
+<div class="h-screen flex-col bg-[#0D0E0C] text-[#DFE1D8] overflow-auto hidden">
 
   <!-- TOPBAR -->
 <header class="flex items-center justify-between px-5 h-[58px] bg-[#141512] border-b-2 border-orange-500">
@@ -215,4 +215,569 @@
 
   </div>
 
+</div>
+
+<!-- Main POS Container -->
+<div class="h-screen w-full bg-slate-900 text-slate-100 hidden flex-col overflow-hidden font-sans">
+
+  <!-- Top Bar: Status & Shift Info -->
+  <header class="h-16 bg-slate-800 border-b border-slate-700 flex items-center justify-between px-6 shrink-0">
+    <div class="flex items-center gap-4">
+      <div class="bg-orange-500 p-2 rounded-lg">
+        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/></svg>
+      </div>
+      <div>
+        <h1 class="text-lg font-bold leading-none">TERMINAL 01</h1>
+        <span class="text-xs text-slate-400 uppercase tracking-widest">Cashier: Alex M.</span>
+      </div>
+    </div>
+
+    <div class="flex items-center gap-6">
+      <div class="text-right">
+        <p class="text-sm font-medium">May 1, 2026</p>
+        <p class="text-xl font-mono font-bold text-orange-400">17:31</p>
+      </div>
+      <button class="bg-red-500/10 text-red-500 px-4 py-2 rounded-lg border border-red-500/20 font-bold hover:bg-red-500 hover:text-white transition">
+        LOCK
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Grid Area -->
+  <main class="flex-grow p-6 grid grid-cols-12 gap-6 overflow-hidden">
+
+    <!-- Left Column: Order Type Selection (The "Action" Zone) -->
+    <div class="col-span-8 grid grid-cols-2 gap-4">
+
+      <!-- Big Action Buttons -->
+      <button class="h-full bg-indigo-600 hover:bg-indigo-500 rounded-3xl flex flex-col items-center justify-center gap-4 shadow-xl border-b-8 border-indigo-800 active:translate-y-1 active:border-b-0 transition-all">
+        <span class="text-5xl">🍔</span>
+        <span class="text-3xl font-black uppercase tracking-tighter">Dine In</span>
+      </button>
+
+      <button class="h-full bg-emerald-600 hover:bg-emerald-500 rounded-3xl flex flex-col items-center justify-center gap-4 shadow-xl border-b-8 border-emerald-800 active:translate-y-1 active:border-b-0 transition-all">
+        <span class="text-5xl">🥡</span>
+        <span class="text-3xl font-black uppercase tracking-tighter">Take Away</span>
+      </button>
+
+      <button class="h-full bg-amber-500 hover:bg-amber-400 rounded-3xl flex flex-col items-center justify-center gap-4 shadow-xl border-b-8 border-amber-700 active:translate-y-1 active:border-b-0 transition-all">
+        <span class="text-5xl">🚲</span>
+        <span class="text-3xl font-black uppercase tracking-tighter">Delivery</span>
+      </button>
+
+      <button class="h-full bg-slate-700 hover:bg-slate-600 rounded-3xl flex flex-col items-center justify-center gap-4 shadow-xl border-b-8 border-slate-900 active:translate-y-1 active:border-b-0 transition-all text-slate-300">
+        <span class="text-5xl">📋</span>
+        <span class="text-3xl font-black uppercase tracking-tighter">View Orders</span>
+      </button>
+
+    </div>
+
+    <!-- Right Column: Current Quick View / Stats -->
+    <div class="col-span-4 flex flex-col gap-6">
+
+      <!-- Quick Status Cards -->
+      <div class="bg-slate-800 rounded-2xl p-6 border border-slate-700">
+        <h3 class="text-slate-400 font-bold uppercase text-xs mb-4 tracking-widest">Active Tables</h3>
+        <div class="flex items-end justify-between">
+          <span class="text-5xl font-black italic">12 / 24</span>
+          <span class="text-emerald-400 font-bold text-sm bg-emerald-400/10 px-2 py-1 rounded">50% Full</span>
+        </div>
+      </div>
+
+      <div class="bg-slate-800 rounded-2xl p-6 border border-slate-700 flex-grow">
+        <h3 class="text-slate-400 font-bold uppercase text-xs mb-4 tracking-widest">Recent Notifications</h3>
+        <ul class="space-y-4">
+          <li class="flex items-center gap-3 border-l-4 border-orange-500 pl-3 py-1">
+            <div class="flex-grow">
+              <p class="text-sm font-bold">Table 4 Ready</p>
+              <p class="text-xs text-slate-500">2 minutes ago</p>
+            </div>
+          </li>
+          <li class="flex items-center gap-3 border-l-4 border-blue-500 pl-3 py-1">
+            <div class="flex-grow">
+              <p class="text-sm font-bold">New Delivery Order</p>
+              <p class="text-xs text-slate-500">Just now</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Quick Action Grid -->
+      <div class="grid grid-cols-2 gap-3">
+        <button class="py-4 bg-slate-700 rounded-xl font-bold hover:bg-slate-600 border border-slate-600 transition">Cash Drawer</button>
+        <button class="py-4 bg-slate-700 rounded-xl font-bold hover:bg-slate-600 border border-slate-600 transition">Shift Report</button>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Bottom Utility Bar -->
+  <footer class="h-14 bg-black px-6 flex items-center justify-between text-xs font-medium text-slate-500 shrink-0">
+    <div class="flex gap-4">
+      <span>SYSTEM: STABLE</span>
+      <span>PRINTER: ONLINE</span>
+      <span>KDS: CONNECTED</span>
+    </div>
+    <div class="flex gap-4">
+      <span>RMS v2.4.0</span>
+    </div>
+  </footer>
+
+</div>
+
+<!-- Main POS Container (Full Screen, Light/Clean Theme inspired by image) -->
+<div class="h-screen w-full bg-slate-100 text-slate-900 hidden flex-col overflow-hidden font-sans">
+
+  <!-- Top Interface Bar (Matched to reference) -->
+  <header class="h-16 flex items-center justify-between px-8 py-2 shrink-0 border-b border-slate-200 bg-white shadow-sm">
+    <div class="flex items-center gap-6">
+      <img src="path/to/logo.png" alt="POS Logo" class="h-8 w-auto"> <!-- Place your logo here -->
+
+      <!-- User / Shift Block -->
+      <div class="flex items-center gap-3 bg-slate-50 border border-slate-100 px-4 py-2 rounded-full">
+        <img src="path/to/avatar.jpg" alt="Cashier Zia" class="h-8 w-8 rounded-full border-2 border-slate-200">
+        <div>
+          <p class="text-sm font-semibold text-slate-800">Welcome, Zia</p>
+          <p class="text-xs text-slate-500 uppercase tracking-wide">Main Terminal | Morning Shift</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Time / Sync / Branch Block -->
+    <div class="flex items-center gap-4 text-slate-800 font-medium">
+      <div class="flex items-center gap-2 px-3 py-1 bg-emerald-50 text-emerald-700 rounded-full text-xs font-bold border border-emerald-100">
+        <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+        SYNCED
+      </div>
+      <div class="text-right">
+        <p class="text-xl font-mono font-bold">17:31:08</p>
+        <p class="text-xs font-semibold text-slate-500">MAY 1, 2026</p>
+      </div>
+      <span class="text-slate-300">|</span>
+      <span>Bait ul Arab Mandi</span>
+      <button class="bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main POS Grid Area -->
+  <main class="flex-grow p-10 grid grid-cols-4 gap-8">
+
+    <!-- Central "Big Four" Actions (Matched to reference) -->
+
+    <!-- Walk In (Black Icon) -->
+    <button class="h-full bg-slate-900 text-white rounded-3xl flex flex-col items-center justify-center gap-6 shadow-2xl transition hover:scale-105 group active:scale-100">
+      <span class="text-7xl group-hover:animate-pulse">👤</span>
+      <span class="text-3xl font-black uppercase tracking-tighter">Walk In</span>
+    </button>
+
+    <!-- Take Away (Blue Icon) -->
+    <button class="h-full bg-sky-500 text-white rounded-3xl flex flex-col items-center justify-center gap-6 shadow-2xl transition hover:scale-105 group active:scale-100">
+      <span class="text-7xl group-hover:animate-pulse">🥡</span>
+      <span class="text-3xl font-black uppercase tracking-tighter">Take Away</span>
+    </button>
+
+    <!-- Delivery (Orange Icon) -->
+    <button class="h-full bg-amber-500 text-white rounded-3xl flex flex-col items-center justify-center gap-6 shadow-2xl transition hover:scale-105 group active:scale-100">
+      <span class="text-7xl group-hover:animate-pulse">🚲</span>
+      <span class="text-3xl font-black uppercase tracking-tighter">Delivery</span>
+    </button>
+
+    <!-- Dine In (Red Icon) -->
+    <button class="h-full bg-red-600 text-white rounded-3xl flex flex-col items-center justify-center gap-6 shadow-2xl transition hover:scale-105 group active:scale-100">
+      <span class="text-7xl group-hover:animate-pulse">🍽️</span>
+      <span class="text-3xl font-black uppercase tracking-tighter">Dine In</span>
+    </button>
+
+  </main>
+
+  <!-- Bottom Utility Dock (Enhanced with options from reference) -->
+  <footer class="h-28 bg-white border-t border-slate-200 px-12 py-4 flex items-center justify-center shrink-0 shadow-inner">
+    <div class="flex items-center gap-3">
+
+      <!-- Dock Item 1: Orders -->
+      <button class="flex flex-col items-center gap-2 text-center text-slate-600 hover:text-sky-600 px-3 py-1 group">
+        <div class="p-3 rounded-2xl bg-sky-50 border border-sky-100 group-hover:bg-sky-100 group-hover:scale-110 transition">
+          <svg class="w-8 h-8 text-sky-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/></svg>
+        </div>
+        <span class="text-xs font-semibold tracking-wide">Orders</span>
+      </button>
+
+      <!-- Dock Item 2: Dispatch (Added) -->
+      <button class="flex flex-col items-center gap-2 text-center text-slate-600 hover:text-emerald-600 px-3 py-1 group">
+        <div class="p-3 rounded-2xl bg-emerald-50 border border-emerald-100 group-hover:bg-emerald-100 group-hover:scale-110 transition">
+          <svg class="w-8 h-8 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/></svg>
+        </div>
+        <span class="text-xs font-semibold tracking-wide">Dispatch</span>
+      </button>
+
+      <!-- Dock Item 3: Shifts (Added) -->
+      <button class="flex flex-col items-center gap-2 text-center text-slate-600 hover:text-amber-600 px-3 py-1 group">
+        <div class="p-3 rounded-2xl bg-amber-50 border border-amber-100 group-hover:bg-amber-100 group-hover:scale-110 transition">
+          <svg class="w-8 h-8 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/></svg>
+        </div>
+        <span class="text-xs font-semibold tracking-wide">Shifts</span>
+      </button>
+
+      <!-- Dock Item 4: Cashier (from image) -->
+      <button class="flex flex-col items-center gap-2 text-center text-slate-600 hover:text-rose-600 px-3 py-1 group">
+        <div class="p-3 rounded-2xl bg-rose-50 border border-rose-100 group-hover:bg-rose-100 group-hover:scale-110 transition">
+          <svg class="w-8 h-8 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-2M9 9h10m-3-3l3 3-3 3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/></svg>
+        </div>
+        <span class="text-xs font-semibold tracking-wide">Cashier</span>
+      </button>
+
+      <span class="text-slate-200 h-16 w-px bg-slate-100 ml-3 mr-3">|</span>
+
+      <!-- Dock Item 5: KDS (from image) -->
+      <button class="flex flex-col items-center gap-2 text-center text-slate-600 hover:text-orange-600 px-3 py-1 group">
+        <div class="p-3 rounded-2xl bg-orange-50 border border-orange-100 group-hover:bg-orange-100 group-hover:scale-110 transition">
+          <svg class="w-8 h-8 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332 0.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332 0.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332 0.477-4.5 1.253" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/></svg>
+        </div>
+        <span class="text-xs font-semibold tracking-wide">KDS</span>
+      </button>
+
+      <!-- Dock Item 6: Reports (from image) -->
+      <button class="flex flex-col items-center gap-2 text-center text-slate-600 hover:text-purple-600 px-3 py-1 group">
+        <div class="p-3 rounded-2xl bg-purple-50 border border-purple-100 group-hover:bg-purple-100 group-hover:scale-110 transition">
+          <svg class="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/></svg>
+        </div>
+        <span class="text-xs font-semibold tracking-wide">Reports</span>
+      </button>
+
+       <!-- Dock Item 7: Settings (from image) -->
+      <button class="flex flex-col items-center gap-2 text-center text-slate-600 hover:text-slate-800 px-3 py-1 group">
+        <div class="p-3 rounded-2xl bg-slate-50 border border-slate-100 group-hover:bg-slate-100 group-hover:scale-110 transition">
+          <svg class="w-8 h-8 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/></svg>
+        </div>
+        <span class="text-xs font-semibold tracking-wide">Settings</span>
+      </button>
+
+    </div>
+  </footer>
+
+</div>
+
+<div class="h-screen w-full bg-slate-100 hidden flex-col overflow-hidden font-sans">
+
+  <!-- Header with Quick Stats -->
+  <header class="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-6 shrink-0 shadow-sm z-10">
+    <div class="flex items-center gap-4">
+      <h1 class="text-xl font-black text-slate-800 tracking-tight">ORDER HUB</h1>
+      <div class="flex gap-2 ml-4">
+        <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-bold">32 Total</span>
+        <span class="bg-orange-100 text-orange-700 px-3 py-1 rounded-full text-xs font-bold">8 In-Kitchen</span>
+        <span class="bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full text-xs font-bold">14 Ready</span>
+      </div>
+    </div>
+
+    <div class="flex items-center gap-4">
+      <input type="text" placeholder="Search by Bill # or Phone..." class="w-80 px-4 py-2 bg-slate-100 border-none rounded-xl focus:ring-2 focus:ring-indigo-500">
+      <button class="bg-slate-800 text-white p-2 rounded-xl">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M3 4.5h18m-18 5h18m-18 5h18m-18 5h18" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <div class="flex flex-grow overflow-hidden">
+
+    <!-- Left Sidebar: Order List (Master) -->
+    <aside class="w-1/3 bg-slate-50 border-r border-slate-200 overflow-y-auto p-4 space-y-4">
+
+      <!-- Active Order Card -->
+      <div class="bg-white p-4 rounded-2xl border-2 border-indigo-500 shadow-md ring-4 ring-indigo-500/10 cursor-pointer">
+        <div class="flex justify-between items-start mb-3">
+          <div>
+            <span class="text-xs font-black text-indigo-500 uppercase">#ORD-9902</span>
+            <h3 class="font-bold text-lg">Table 12 - Zia</h3>
+          </div>
+          <span class="bg-orange-500 text-white text-[10px] px-2 py-1 rounded font-black uppercase">Cooking</span>
+        </div>
+        <div class="flex justify-between text-sm text-slate-500">
+          <span>4 Items • 8 mins ago</span>
+          <span class="font-bold text-slate-900">$124.50</span>
+        </div>
+      </div>
+
+      <!-- Ready Order Card -->
+      <div class="bg-white p-4 rounded-2xl border border-slate-200 hover:border-slate-300 transition-all cursor-pointer">
+        <div class="flex justify-between items-start mb-3">
+          <div>
+            <span class="text-xs font-black text-slate-400 uppercase">#ORD-9901</span>
+            <h3 class="font-bold text-lg">Take Away - Sarah</h3>
+          </div>
+          <span class="bg-emerald-500 text-white text-[10px] px-2 py-1 rounded font-black uppercase">Ready</span>
+        </div>
+        <div class="flex justify-between text-sm text-slate-500">
+          <span>2 Items • 15 mins ago</span>
+          <span class="font-bold text-slate-900">$45.00</span>
+        </div>
+      </div>
+
+    </aside>
+
+    <!-- Right Content: Detailed Order View (Detail) -->
+    <main class="flex-grow bg-white flex flex-col">
+
+      <!-- Order Progress Tracker -->
+      <div class="p-6 border-b border-slate-100 bg-slate-50/50">
+        <div class="flex items-center justify-between mb-8">
+          <div class="flex items-center gap-4">
+            <div class="h-12 w-12 bg-indigo-100 text-indigo-600 rounded-2xl flex items-center justify-center font-black text-xl">12</div>
+            <div>
+              <h2 class="text-2xl font-black text-slate-800">Dine-In • Table 12</h2>
+              <p class="text-sm text-slate-500 italic">Waiter: Kashif R. • Started at 17:10</p>
+            </div>
+          </div>
+          <div class="flex gap-2">
+            <button class="px-4 py-2 border border-slate-200 rounded-xl font-bold text-slate-600 hover:bg-white transition">Transfer Table</button>
+            <button class="px-4 py-2 bg-red-50 text-red-600 rounded-xl font-bold hover:bg-red-100 transition">Void Order</button>
+          </div>
+        </div>
+
+        <!-- Progress Steps -->
+        <div class="flex items-center px-4">
+          <div class="flex-1 flex flex-col items-center">
+            <div class="w-8 h-8 bg-indigo-600 text-white rounded-full flex items-center justify-center text-xs">✓</div>
+            <span class="text-[10px] font-bold mt-2 uppercase text-slate-400">Ordered</span>
+          </div>
+          <div class="flex-[2] h-1 bg-indigo-600"></div>
+          <div class="flex-1 flex flex-col items-center">
+            <div class="w-8 h-8 bg-indigo-600 text-white rounded-full flex items-center justify-center text-xs animate-pulse ring-4 ring-indigo-100">🔥</div>
+            <span class="text-[10px] font-bold mt-2 uppercase text-indigo-600">In Kitchen</span>
+          </div>
+          <div class="flex-[2] h-1 bg-slate-200"></div>
+          <div class="flex-1 flex flex-col items-center">
+            <div class="w-8 h-8 bg-slate-200 text-slate-400 rounded-full flex items-center justify-center text-xs">🍽️</div>
+            <span class="text-[10px] font-bold mt-2 uppercase text-slate-400">Ready</span>
+          </div>
+          <div class="flex-[2] h-1 bg-slate-200"></div>
+          <div class="flex-1 flex flex-col items-center">
+            <div class="w-8 h-8 bg-slate-200 text-slate-400 rounded-full flex items-center justify-center text-xs">$</div>
+            <span class="text-[10px] font-bold mt-2 uppercase text-slate-400">Paid</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bill Detail Area -->
+      <div class="flex-grow flex">
+
+        <!-- Items List -->
+        <div class="flex-grow p-6 overflow-y-auto">
+          <h4 class="text-xs font-black text-slate-400 uppercase tracking-widest mb-4">Items Summary</h4>
+          <table class="w-full">
+            <tbody class="divide-y divide-slate-100">
+              <tr class="py-4">
+                <td class="py-4">
+                  <p class="font-bold">Mutton Mandi (Large)</p>
+                  <p class="text-xs text-slate-400">Extra Rice, No Spicy</p>
+                </td>
+                <td class="text-center font-bold">x1</td>
+                <td class="text-right font-black">$85.00</td>
+              </tr>
+              <tr class="py-4">
+                <td class="py-4">
+                  <p class="font-bold">Fresh Lime Juice</p>
+                  <p class="text-xs text-slate-400">With Mint</p>
+                </td>
+                <td class="text-center font-bold">x3</td>
+                <td class="text-right font-black">$15.00</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Bill Totals & Actions -->
+        <div class="w-80 bg-slate-900 text-white p-6 flex flex-col">
+          <div class="space-y-4 mb-8">
+            <div class="flex justify-between text-slate-400">
+              <span>Subtotal</span>
+              <span>$110.00</span>
+            </div>
+            <div class="flex justify-between text-slate-400">
+              <span>Tax (5%)</span>
+              <span>$5.50</span>
+            </div>
+            <div class="flex justify-between text-slate-400 border-b border-slate-700 pb-4">
+              <span>Service Fee</span>
+              <span>$9.00</span>
+            </div>
+            <div class="flex justify-between text-2xl font-black pt-2">
+              <span>Total</span>
+              <span class="text-indigo-400">$124.50</span>
+            </div>
+          </div>
+
+          <div class="mt-auto space-y-3">
+            <button class="w-full py-4 bg-slate-800 rounded-2xl font-bold hover:bg-slate-700 border border-slate-700 transition">Print Bill</button>
+            <button class="w-full py-6 bg-emerald-500 rounded-2xl font-black text-xl shadow-lg shadow-emerald-500/20 hover:bg-emerald-400 transition">PAYMENT</button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+
+<div class="h-screen w-full bg-slate-100 flex overflow-hidden">
+  <!-- Category Sidebar -->
+  <aside class="w-24 bg-white border-r border-slate-200 flex flex-col items-center py-4 gap-4 shrink-0">
+    <div class="w-16 h-16 bg-indigo-600 rounded-2xl flex flex-col items-center justify-center text-white shadow-lg cursor-pointer">
+      <span class="text-2xl">🍱</span>
+      <span class="text-[10px] font-bold uppercase">Main</span>
+    </div>
+    <div class="w-16 h-16 bg-slate-50 border border-slate-100 rounded-2xl flex flex-col items-center justify-center text-slate-400 hover:bg-slate-100 cursor-pointer transition">
+      <span class="text-2xl">🥤</span>
+      <span class="text-[10px] font-bold uppercase">Drinks</span>
+    </div>
+    <div class="w-16 h-16 bg-slate-50 border border-slate-100 rounded-2xl flex flex-col items-center justify-center text-slate-400 hover:bg-slate-100 cursor-pointer transition">
+      <span class="text-2xl">🍰</span>
+      <span class="text-[10px] font-bold uppercase">Sweets</span>
+    </div>
+  </aside>
+
+  <!-- Product Grid -->
+  <main class="flex-grow p-6 overflow-y-auto">
+    <div class="flex justify-between items-center mb-6">
+      <h2 class="text-2xl font-black text-slate-800 uppercase tracking-tight">Main Course</h2>
+      <div class="flex gap-2">
+        <input type="text" placeholder="Search menu..." class="px-4 py-2 bg-white rounded-xl border-none shadow-sm w-64">
+      </div>
+    </div>
+
+    <div class="grid grid-cols-3 lg:grid-cols-4 gap-4">
+      <!-- Item Card -->
+      <div class="bg-white p-4 rounded-3xl shadow-sm border border-transparent hover:border-indigo-500 transition-all cursor-pointer group">
+        <div class="h-32 bg-slate-100 rounded-2xl mb-3 flex items-center justify-center text-4xl group-hover:scale-105 transition">🍖</div>
+        <h3 class="font-bold text-slate-800">Mutton Mandi</h3>
+        <p class="text-indigo-600 font-black">$45.00</p>
+      </div>
+      <!-- Repeat for other items -->
+    </div>
+  </main>
+
+  <!-- Right Sidebar: The Active Cart -->
+  <aside class="w-96 bg-white border-l border-slate-200 flex flex-col shadow-2xl">
+    <div class="p-6 border-b border-slate-100">
+      <div class="flex justify-between items-center">
+        <h3 class="font-black text-lg uppercase">Current Order</h3>
+        <span class="bg-red-100 text-red-600 px-2 py-1 rounded text-[10px] font-bold">DINE-IN</span>
+      </div>
+      <p class="text-xs text-slate-400 mt-1">Table #12 | Waiter: Alex</p>
+    </div>
+
+    <!-- Cart Items -->
+    <div class="flex-grow overflow-y-auto p-4 space-y-3">
+      <div class="flex justify-between items-center bg-slate-50 p-3 rounded-2xl">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 bg-indigo-600 text-white rounded-lg flex items-center justify-center font-bold">1</div>
+          <div>
+            <p class="text-sm font-bold">Mutton Mandi</p>
+            <p class="text-[10px] text-slate-400">Extra Sauce</p>
+          </div>
+        </div>
+        <p class="font-bold">$45.00</p>
+      </div>
+    </div>
+
+    <!-- Checkout Footer -->
+    <div class="p-6 bg-slate-50 space-y-4">
+      <div class="space-y-2 text-sm">
+        <div class="flex justify-between text-slate-500"><span>Subtotal</span><span>$45.00</span></div>
+        <div class="flex justify-between text-slate-500"><span>VAT (5%)</span><span>$2.25</span></div>
+        <div class="flex justify-between text-xl font-black pt-2 border-t border-slate-200">
+          <span>Total</span><span class="text-indigo-600">$47.25</span>
+        </div>
+      </div>
+      <button class="w-full py-5 bg-indigo-600 text-white rounded-2xl font-black text-lg shadow-lg hover:bg-indigo-500 transition">PLACE ORDER</button>
+    </div>
+  </aside>
+</div>
+
+
+<div class="h-screen w-full bg-slate-900 text-slate-100 p-8 flex flex-col">
+  <div class="flex justify-between items-center mb-8">
+    <h1 class="text-3xl font-black italic tracking-tighter uppercase">Kitchen Display System (KDS)</h1>
+    <div class="flex gap-4">
+      <div class="px-4 py-2 bg-slate-800 rounded-xl border border-slate-700">
+        <span class="text-xs text-slate-500 block uppercase font-bold">Avg. Prep Time</span>
+        <span class="text-xl font-mono text-emerald-400">14:02</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Orders Grid -->
+  <div class="grid grid-cols-4 gap-6 flex-grow overflow-x-auto">
+
+    <!-- KDS Ticket -->
+    <div class="bg-white text-slate-900 rounded-3xl overflow-hidden flex flex-col h-fit shadow-xl border-t-8 border-orange-500">
+      <div class="p-4 bg-orange-50 flex justify-between items-center">
+        <div>
+          <span class="text-xs font-black text-orange-600 uppercase">Order #9902</span>
+          <h4 class="text-xl font-black tracking-tight">Table 12</h4>
+        </div>
+        <span class="text-2xl font-mono font-bold text-orange-600">08:45</span>
+      </div>
+      <div class="p-4 space-y-3 flex-grow">
+        <div class="flex justify-between border-b border-slate-100 pb-2">
+          <span class="font-bold">1x Mutton Mandi</span>
+          <span class="text-xs bg-slate-100 px-2 py-1 rounded font-bold uppercase">Main</span>
+        </div>
+        <div class="flex justify-between border-b border-slate-100 pb-2">
+          <span class="font-bold">2x Fresh Lime</span>
+          <span class="text-xs bg-slate-100 px-2 py-1 rounded font-bold uppercase">Drink</span>
+        </div>
+      </div>
+      <button class="m-4 py-4 bg-orange-500 text-white rounded-2xl font-black uppercase hover:bg-orange-600 transition">Mark as Ready</button>
+    </div>
+
+  </div>
+</div><div class="h-screen w-full bg-slate-50 flex items-center justify-center p-12">
+  <div class="max-w-5xl w-full bg-white rounded-[40px] shadow-2xl flex overflow-hidden border border-slate-200">
+
+    <!-- Invoice Preview -->
+    <div class="w-1/2 p-12 border-r border-dashed border-slate-200 relative">
+      <div class="mb-10 text-center">
+        <h2 class="text-3xl font-black uppercase tracking-widest text-slate-800">RECEIPT</h2>
+        <p class="text-slate-400 text-sm">Bait ul Arab Mandi • May 1, 2026</p>
+      </div>
+
+      <div class="space-y-4 mb-8">
+        <div class="flex justify-between text-sm"><span class="text-slate-500">Mutton Mandi x1</span><span class="font-bold">$45.00</span></div>
+        <div class="flex justify-between text-sm"><span class="text-slate-500">Fresh Lime x2</span><span class="font-bold">$10.00</span></div>
+      </div>
+
+      <div class="border-t-2 border-slate-100 pt-6 space-y-2">
+        <div class="flex justify-between text-slate-500 text-sm"><span>Subtotal</span><span>$55.00</span></div>
+        <div class="flex justify-between text-slate-500 text-sm"><span>Discount (10%)</span><span class="text-red-500">-$5.50</span></div>
+        <div class="flex justify-between text-3xl font-black pt-4"><span>Total</span><span class="text-indigo-600">$49.50</span></div>
+      </div>
+    </div>
+
+    <!-- Payment Methods -->
+    <div class="w-1/2 bg-slate-50 p-12 flex flex-col">
+      <h3 class="text-xl font-black mb-8 uppercase text-slate-700">Choose Payment</h3>
+
+      <div class="grid grid-cols-2 gap-4 mb-8">
+        <button class="h-24 bg-white border-2 border-indigo-600 rounded-3xl flex flex-col items-center justify-center gap-2 shadow-sm">
+          <span class="text-2xl">💵</span>
+          <span class="font-bold text-xs uppercase">Cash</span>
+        </button>
+        <button class="h-24 bg-white border border-slate-200 rounded-3xl flex flex-col items-center justify-center gap-2 hover:border-indigo-600 transition">
+          <span class="text-2xl">💳</span>
+          <span class="font-bold text-xs uppercase">Card</span>
+        </button>
+      </div>
+
+      <!-- Quick Amount Entry -->
+      <div class="mb-8">
+        <p class="text-xs font-bold text-slate-400 uppercase mb-3 tracking-widest">Received Amount</p>
+        <input type="text" class="w-full text-4xl font-black p-4 rounded-2xl border-none shadow-inner bg-white text-indigo-600 outline-none" value="$50.00">
+      </div>
+
+      <button class="mt-auto w-full py-6 bg-slate-900 text-white rounded-3xl font-black text-xl hover:bg-black transition shadow-xl">SETTLE & PRINT</button>
+    </div>
+
+  </div>
 </div>
