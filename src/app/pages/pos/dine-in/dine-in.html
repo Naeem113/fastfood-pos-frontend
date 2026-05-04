@@ -1,0 +1,313 @@
+
+
+
+  <!-- BODY -->
+  <main class="h-full flex flex-col overflow-hidden">
+
+    <!-- Sub-header: back + title + floor tabs + legend -->
+    <div class="bg-white border-b border-[#E4E2DC] px-8 py-0 flex flex-col lg:flex-row  items-center justify-between  shrink-0">
+
+      <!-- Back + title -->
+      <div class="flex items-center gap-4 py-4">
+        <button
+          (click)="goBack()"
+          class="flex items-center gap-2 text-sm text-gray-500 hover:text-gray-800 transition-colors group">
+          <div class="w-8 h-8 rounded-lg border border-gray-200 bg-[#F4F3EF] flex items-center justify-center group-hover:bg-gray-100 transition-colors">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M15 18l-6-6 6-6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          Back
+        </button>
+        <div class="w-px h-6 bg-gray-200"></div>
+        <div class="flex items-center gap-2">
+          <span class="text-xl">🍽️</span>
+          <div>
+            <h1 class="text-base font-bold">Dine In</h1>
+            <p class="text-xs text-gray-400">Select a table to begin the order</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Floor tabs -->
+      <div class="flex flex-wrap items-center gap-1 py-4">
+        <div class="hidden md:flex items-center gap-2">
+        <div class="w-2 h-2 rounded-full bg-emerald-500"></div>
+        <span class="text-xs text-gray-500">Available</span>
+        <span class="text-sm font-bold text-emerald-600">{{ getStatusCount('AVAILABLE') }}</span>
+      </div>
+      <div class="hidden md:flex items-center gap-2">
+        <div class="w-2 h-2 rounded-full bg-rose-400"></div>
+        <span class="text-xs text-gray-500">Occupied</span>
+        <span class="text-sm font-bold text-rose-600">{{ getStatusCount('OCCUPIED') }}</span>
+      </div>
+      <div class="hidden md:flex items-center gap-2">
+        <div class="w-2 h-2 rounded-full bg-amber-400"></div>
+        <span class="text-xs text-gray-500">Reserved</span>
+        <span class="text-sm font-bold text-amber-600">{{ getStatusCount('RESERVED') }}</span>
+      </div>
+      <div class="hidden md:flex items-center gap-2">
+        <div class="w-2 h-2 rounded-full bg-blue-400"></div>
+        <span class="text-xs text-gray-500">Cleaning</span>
+        <span class="text-sm font-bold text-blue-600">{{ getStatusCount('CLEANING') }}</span>
+      </div>
+
+      </div>
+
+    </div>
+
+    <!-- Stats strip -->
+    <div class="bg-white border-b border-[#E4E2DC] px-8  flex items-center gap-8 shrink-0">
+            <div class="flex flex-wrap items-center gap-1 py-4">
+
+        <button
+          *ngFor="let floor of floors"
+          (click)="selectFloor(floor)"
+          [ngClass]="selectedFloor?.id === floor.id
+            ? 'bg-black text-white shadow-sm border'
+            : 'bg-[#F4F3EF] text-gray-600 hover:bg-gray-100 border border-gray-200'"
+          class="px-5 py-2 rounded-xl text-sm font-semibold transition-all flex items-center gap-2">
+          <span>{{ floor.icon }}</span>
+          {{ floor.name }}
+          <span
+            [ngClass]="selectedFloor?.id === floor.id
+              ? 'bg-white/20 text-white'
+              : 'bg-gray-200 text-gray-500'"
+            class="text-xs px-1.5 py-0.5 rounded-full font-mono">
+            {{ getFloorAvailableCount(floor) }}/{{ floor.tables.length }}
+          </span>
+        </button>
+      </div>
+      <div class="ml-auto flex items-center gap-3">
+        <!-- Search -->
+        <div class="relative">
+          <svg class="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-400 pointer-events-none"
+            fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 14 14">
+            <circle cx="6" cy="6" r="4.5"/>
+            <line x1="9.5" y1="9.5" x2="13" y2="13" stroke-linecap="round"/>
+          </svg>
+          <input
+            [(ngModel)]="searchQuery"
+            type="text"
+            placeholder="Search table…"
+            class="pl-8 pr-3 py-1.5 text-xs border border-gray-200 rounded-lg bg-[#F4F3EF]
+                   focus:outline-none focus:ring-1 focus:ring-gray-300 w-36"/>
+        </div>
+        <!-- Filter -->
+        <select [(ngModel)]="statusFilter"
+          class="text-xs px-3 py-1.5 border border-gray-200 rounded-lg bg-[#F4F3EF]
+                 text-gray-500 focus:outline-none cursor-pointer">
+          <option value="">All statuses</option>
+          <option value="AVAILABLE">Available</option>
+          <option value="OCCUPIED">Occupied</option>
+          <option value="RESERVED">Reserved</option>
+          <option value="CLEANING">Cleaning</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Table grid -->
+    <div class="h-full overflow-auto p-8">
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+
+        <button
+          *ngFor="let table of filteredTables"
+          (click)="selectTable(table)"
+          [disabled]="table.status !== 'AVAILABLE'"
+          [ngClass]="getTableClasses(table)"
+          class="relative rounded-2xl p-4 flex flex-col items-center gap-3 transition-all
+                 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-black
+                 disabled:cursor-not-allowed group">
+
+          <!-- Status dot -->
+          <div class="absolute top-3 right-3 flex items-center gap-1">
+            <div [ngClass]="getStatusDotClass(table.status)" class="w-2 h-2 rounded-full"></div>
+          </div>
+
+          <!-- Active order indicator -->
+          <div *ngIf="table.status === 'OCCUPIED'"
+            class="absolute top-3 left-3 bg-red-500 text-white text-[10px] font-bold
+                   px-1.5 py-0.5 rounded-full leading-none">
+            LIVE
+          </div>
+
+          <!-- Table icon SVG -->
+          <div class="relative mt-2">
+            <svg [attr.width]="getTableSize(table.seats).w" [attr.height]="getTableSize(table.seats).h"
+              viewBox="0 0 64 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- top chairs -->
+              <rect *ngFor="let c of getChairPositions(table.seats, 'top'); let i=index"
+                [attr.x]="c.x" [attr.y]="c.y" width="10" height="9" rx="2"
+                [attr.fill]="getChairColor(table.status)"/>
+              <!-- table surface -->
+              <rect x="4" y="14" width="56" height="24" rx="7"
+                [attr.fill]="getTableColor(table.status)"/>
+              <!-- bottom chairs -->
+              <rect *ngFor="let c of getChairPositions(table.seats, 'bottom'); let i=index"
+                [attr.x]="c.x" [attr.y]="c.y" width="10" height="9" rx="2"
+                [attr.fill]="getChairColor(table.status)"/>
+            </svg>
+          </div>
+
+          <!-- Table info -->
+          <div class="text-center">
+            <p [ngClass]="getTableTextClass(table.status)" class="text-sm font-bold leading-tight">
+              {{ table.name }}
+            </p>
+            <p [ngClass]="getTableSubTextClass(table.status)" class="text-xs mt-0.5">
+              {{ table.seats }} seats
+            </p>
+          </div>
+
+          <!-- Occupied info -->
+          <div *ngIf="table.status === 'OCCUPIED' && table.waiter"
+            class="w-full text-center border-t border-rose-200 pt-2">
+            <p class="text-[10px] text-rose-500 font-medium truncate">{{ table.waiter }}</p>
+            <p class="text-[10px] text-rose-400">{{ table.duration }}</p>
+          </div>
+
+          <!-- Reserved info -->
+          <div *ngIf="table.status === 'RESERVED' && table.reservationTime"
+            class="w-full text-center border-t border-amber-200 pt-2">
+            <p class="text-[10px] text-amber-600 font-medium">{{ table.reservationTime }}</p>
+            <p class="text-[10px] text-amber-500 truncate">{{ table.guestName }}</p>
+          </div>
+
+          <!-- Available hover CTA -->
+          <div *ngIf="table.status === 'AVAILABLE'"
+            class="w-full opacity-0 group-hover:opacity-100 transition-opacity">
+            <div class="bg-black text-white text-xs font-semibold py-1.5 rounded-xl text-center">
+              Select
+            </div>
+          </div>
+
+        </button>
+
+        <!-- Empty state -->
+        <div *ngIf="filteredTables.length === 0"
+          class="col-span-full flex flex-col items-center justify-center py-20 text-gray-300">
+          <svg class="w-12 h-12 mb-3" fill="none" stroke="currentColor" stroke-width="1" viewBox="0 0 24 24">
+            <path d="M3 10h18M3 14h18M10 10v4M14 10v4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <p class="text-sm font-medium text-gray-400">No tables found</p>
+          <p class="text-xs text-gray-300 mt-1">Try a different floor or filter</p>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+<div
+  class="fixed inset-0 z-50 hidden items-center justify-center p-4"
+  style="background:rgba(0,0,0,0.45)">
+
+  <div
+    class="bg-white rounded-2xl w-full max-w-sm overflow-hidden shadow-2xl"
+    (click)="$event.stopPropagation()">
+
+    <!-- Modal header -->
+    <div class="px-6 pt-6 pb-4 border-b border-gray-100">
+      <h2 class="text-base font-bold text-gray-900">How many guests?</h2>
+      <p class="text-xs text-gray-400 mt-0.5">Set the number of guests for this table</p>
+
+      <!-- Table chip -->
+      <div class="inline-flex items-center gap-2 bg-[#F4F3EF] border border-gray-200
+                  rounded-xl px-3 py-2 mt-3">
+        <span class="text-base">🪑</span>
+        <span class="text-xs font-bold text-gray-800">Table 1</span>
+        <span class="text-xs text-gray-400">· 4 seats max</span>
+      </div>
+    </div>
+
+    <!-- Counter -->
+    <div class="px-6 py-5 flex flex-col items-center gap-4">
+
+      <div class="flex items-center gap-6">
+        <!-- Minus -->
+        <button
+          class="w-12 h-12 rounded-full border-2 border-gray-200 bg-white text-gray-800
+                 text-2xl font-light flex items-center justify-center transition-all
+                 hover:border-gray-800 hover:bg-gray-800 hover:text-white
+                 disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:border-gray-200
+                 disabled:hover:bg-white disabled:hover:text-gray-800 select-none">
+          −
+        </button>
+
+        <!-- Count display -->
+        <div class="text-center min-w-[72px]">
+          <div class="text-6xl font-bold text-gray-900 leading-none tabular-nums">
+            {{ 2 }}
+          </div>
+          <div class="text-xs text-gray-400 mt-1">
+            {{ false ? 'guest' : 'guests' }}
+          </div>
+        </div>
+
+        <!-- Plus -->
+        <button
+          class="w-12 h-12 rounded-full bg-gray-900 text-white text-2xl font-light
+                 flex items-center justify-center transition-all
+                 hover:bg-gray-700
+                 disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:bg-gray-900
+                 select-none">
+          +
+        </button>
+      </div>
+
+      <!-- Quick-select buttons -->
+      <div class="flex flex-wrap gap-2 justify-center">
+        <button
+          *ngFor="let n of [1,2,3,4]"
+          [ngClass]="false
+            ? 'bg-gray-900 text-white border-gray-900'
+            : 'bg-white text-gray-600 border-gray-200 hover:border-gray-500 hover:text-gray-800'"
+          class="w-10 h-9 rounded-xl border-2 text-sm font-bold transition-all">
+          {{ n }}
+        </button>
+      </div>
+    </div>
+
+    <!-- Capacity bar -->
+    <div class="px-6 pb-4">
+      <div class="flex justify-between text-[11px] mb-1.5">
+        <span class="text-gray-400">2 of 4 seats</span>
+        <span [ngClass]="{
+            'text-emerald-600': 10 <= 50,
+            'text-amber-600':   10 > 50 && 10 <= 85,
+            'text-rose-600':    10 > 85
+          }" class="font-semibold">
+          {{ 10 }}% capacity
+        </span>
+      </div>
+      <div class="h-2 bg-gray-100 rounded-full overflow-hidden">
+        <div
+          [ngClass]="{
+            'bg-emerald-500': 10 <= 50,
+            'bg-amber-400':   10 > 50 && 10 <= 85,
+            'bg-rose-500':    10 > 85
+          }"
+          class="h-full rounded-full transition-all duration-200"
+          [style.width.%]="10">
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer actions -->
+    <div class="px-4 pb-5 flex gap-3">
+      <button
+        class="flex-1 py-3 text-sm font-semibold border-2 border-gray-200 rounded-2xl
+               text-gray-500 hover:border-gray-400 hover:text-gray-700 transition-all bg-white">
+        Cancel
+      </button>
+      <button
+        class="flex-[2] py-3 text-sm font-bold rounded-2xl bg-black text-white
+               hover:bg-gray-800 transition-all flex items-center justify-center gap-2">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 18 18">
+          <polyline points="3,9 7,13 15,5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Confirm &amp; open order
+      </button>
+    </div>
+  </div>
+</div>

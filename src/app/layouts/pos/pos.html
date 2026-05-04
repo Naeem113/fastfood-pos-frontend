@@ -1,1 +1,11 @@
-<router-outlet></router-outlet>
+<div class="h-screen flex flex-col overflow-hidden bg-[#F4F3EF] text-[#1A1A18]">
+
+  <!-- HEADER -->
+  <app-pos-header></app-pos-header>
+  <div  class="border  h-full overflow-auto">
+    <router-outlet></router-outlet>
+  </div>
+
+  <!-- FOOTER -->
+  <app-pos-footer ></app-pos-footer>
+</div>

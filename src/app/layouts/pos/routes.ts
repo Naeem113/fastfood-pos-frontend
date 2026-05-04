@@ -6,17 +6,12 @@ import { tableRoutes } from '../../pages/dashboard/table/routes';
 import { itemRoutes } from '../../pages/dashboard/items/routes';
 export const POSRoutes: Routes = [
   {
-    path: '',
+    path: 'pos',
     loadComponent: () =>
       import('./pos').then((m) => m.Pos),
     children: [
       {
         path: '',
-        redirectTo: 'pos',
-        pathMatch: 'full',
-      },
-      {
-        path: 'pos',
         canActivate: [AuthGuard],
         loadComponent: () =>
           import('./../../pages/pos/main/main').then(
@@ -31,6 +26,14 @@ export const POSRoutes: Routes = [
             (m) => m.Start,
           )
       },
+ {
+              path: 'dine-in',
+              canActivate: [AuthGuard],
+              loadComponent: () =>
+                import('./../../pages/pos/dine-in/dine-in').then(
+                  (m) => m.DineIn,
+                )
+            }
     ],
   },
 ];

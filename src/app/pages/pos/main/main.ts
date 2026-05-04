@@ -1,6 +1,10 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { PosHeader } from '../../../shared/components/pos/pos-header/pos-header';
+import { PosFooter } from '../../../shared/components/pos/pos-footer/pos-footer';
+import { Pos } from "../../../layouts/pos/pos";
+import { Router } from '@angular/router';
 
 export interface Product {
   id: number;
@@ -21,14 +25,44 @@ export interface CartItem {
 }
 @Component({
   selector: 'app-main',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, PosHeader, PosFooter, Pos],
   templateUrl: './main.html',
-  styleUrl: './main.scss',
+  styleUrls: ['./main.scss'],
 })
 export class Main {
-  currentTime = '';
-  currentDate = '';
-  private timer: any;
+
+  router = inject(Router);
+  orderTypes = [
+    {
+      title: 'Walk In',
+      subtitle: 'No reservation',
+      path: 'dine-in',
+      icon: '🚶',
+      bgColor: 'bg-blue-500'
+    },
+    {
+      title: 'Take Away',
+      subtitle: '12 orders today',
+      path: 'takeaway',
+      icon: '🥡',
+      bgColor: 'bg-amber-500'
+    },
+    {
+      title: 'Delivery',
+      subtitle: '3 riders active',
+      path: 'delivery',
+      icon: '🚲',
+      bgColor: 'bg-violet-500'
+    },
+    {
+      title: 'Dine In',
+      subtitle: '6 tables active',
+      path: 'dine-in',
+      icon: '🍽️',
+      bgColor: 'bg-emerald-600'
+    }
+  ];
+
 
   searchQuery = '';
   activeCategory = 'ALL';
@@ -60,19 +94,6 @@ export class Main {
 
   discountApplied = false;
   discountPct = 10;
-
-  ngOnInit() {
-    this.tick();
-    this.timer = setInterval(() => this.tick(), 1000);
-  }
-
-  ngOnDestroy() { clearInterval(this.timer); }
-
-  tick() {
-    const now = new Date();
-    this.currentTime = now.toLocaleTimeString('en-PK', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
-    this.currentDate = now.toLocaleDateString('en-PK', { weekday: 'short', day: 'numeric', month: 'short' });
-  }
 
   get filteredProducts(): Product[] {
     return this.products.filter(p => {

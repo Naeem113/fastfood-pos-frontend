@@ -2,7 +2,12 @@ export const routesStrings = {
   index: '',
   login: 'login',
   //POS
-  pos: 'pos',
+  pos: {
+    index: 'pos',
+    start: 'pos/start',
+    main: 'pos/main',
+    dineIn: 'pos/dine-in',
+  },
   launcher: 'launcher',
   dashboard: 'dashboard',
   menu: {

@@ -1,34 +1,32 @@
-<div class="flex flex-col h-screen p-8 gap-0">
 
-  <!-- ── GREETING + CLOCK ── -->
-  <div class="flex items-start justify-between animate-fade-up">
-    <div>
-      <p class="text-[10px] tracking-[0.22em] text-primary-hover uppercase font-semibold mb-1">Good evening</p>
-      <h1 class=" text-[42px] leading-none text-primary tracking-tight">
-        Welcome, <em class="italic text-secondary">Zia</em>
-      </h1>
-      <p class="text-[11px] text-primary-hover tracking-widest mt-2 font-light uppercase">
-        Main Branch &nbsp;·&nbsp; Lahore &nbsp;·&nbsp; Shift #A-2024
-      </p>
-    </div>
-
-    <div class="text-right flex flex-col items-end gap-3">
-      <div>
-        <div id="clock" class="text-[40px] leading-none tracking-tight text-primary">01:12</div>
-        <div id="datestr" class="text-[10px] tracking-[0.14em] text-muted uppercase mt-1.5 font-light">05/02/2026</div>
-      </div>
-      <div class="flex gap-2">
-        <span class="flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-semibold tracking-wide border border-[rgba(200,169,110,0.22)] bg-[rgba(200,169,110,0.07)] text-gold">
-          <span class="w-1.5 h-1.5 rounded-full bg-gold animate-pdot inline-block"></span>Shift Active
+<main class="h-full items-center grid grid-cols-4 gap-5 p-8 overflow-hidden">
+  @for (type of orderTypes; track $index) {
+    <button
+        (click)="router.navigate([`/pos/${type.path}`])"
+        class="group text-white rounded-3xl h-[500px] flex flex-col justify-center items-center gap-4 hover:scale-[1.02] transition-all transition-base shadow-xl"
+        [ngClass]="type.bgColor"
+      >
+        <span class="text-7xl group-hover:animate-pulse">
+          {{ type.icon }}
         </span>
-        <span class="flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-semibold tracking-wide border border-[rgba(62,207,142,0.2)] bg-[rgba(62,207,142,0.07)] text-sage">
-          <span class="w-1.5 h-1.5 rounded-full bg-sage animate-pdot inline-block"></span>Cash Open
-        </span>
-      </div>
-    </div>
-  </div>
 
-</div>
+        <div class="text-center">
+          <h2 class="text-2xl font-bold">
+            {{ type.title }}
+          </h2>
+
+          <p class="text-xs text-white/60 uppercase tracking-widest">
+            {{ type.subtitle }}
+          </p>
+        </div>
+      </button>
+  }
+
+  </main>
+
+
+
+
 
 <!-- ROOT -->
 <div class="h-screen flex-col bg-[#0D0E0C] text-[#DFE1D8] overflow-auto hidden">
@@ -69,8 +67,8 @@
     <!-- Right -->
     <div class="flex items-center gap-3">
       <div class="text-right">
-        <div class="text-sm">{{ currentTime }}</div>
-        <div class="text-[10px] text-gray-500">{{ currentDate }}</div>
+        <div class="text-sm">10:00</div>
+        <div class="text-[10px] text-gray-500">12/12/12</div>
       </div>
 
       <div
@@ -395,7 +393,7 @@
 </div>
 
 <!-- Main POS Container (Full Screen, Light/Clean Theme inspired by image) -->
-<div class="h-screen w-full bg-slate-100 text-slate-900 flex flex-col overflow-hidden font-sans">
+<div class="h-screen w-full bg-slate-100 text-slate-900 hidden flex-col overflow-hidden font-sans">
   <!-- Top Interface Bar (Matched to reference) -->
   <header
     class="h-16 flex items-center justify-between px-8 py-2 shrink-0 border-b border-slate-200 bg-white shadow-sm"
@@ -1097,7 +1095,7 @@
   </div>
 </div>
 
-<div class="h-screen flex flex-col overflow-hidden bg-[#F4F3EF] text-[#1A1A18]">
+<div class="h-screen hidden flex-col overflow-hidden bg-[#F4F3EF] text-[#1A1A18]">
 
   <!-- HEADER -->
   <header
@@ -1154,10 +1152,10 @@
       <!-- Clock -->
       <div class="text-right">
         <h3 class="font-mono text-lg font-semibold">
-          {{ currentTime }}
+          10:10
         </h3>
         <p class="text-xs text-gray-400 uppercase">
-          {{ currentDate }}
+          12/12/12
         </p>
       </div>
 
@@ -1295,7 +1293,7 @@
 
 </div>
 
-<body class="font-sans text-txt bg-base">
+<body class="hidden font-sans text-txt bg-base">
 <div class="flex flex-col h-screen px-10 pt-9 pb-7 gap-0">
 
   <!-- ── GREETING + CLOCK ── -->
