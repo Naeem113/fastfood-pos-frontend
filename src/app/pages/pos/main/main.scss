@@ -1,0 +1,21 @@
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; height: 100%; background: #0c0c0b; overflow: hidden; }
+
+    .tile-hover { position: relative; overflow: hidden; }
+    .tile-hover::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 2px;
+      opacity: 0;
+      transition: opacity 0.22s;
+      border-radius: 0 0 14px 14px;
+    }
+    .tile-hover:hover::after { opacity: 1; }
+    .tw::after  { background: #888880; }
+    .ttw::after { background: #4488cc; }
+    .tde::after { background: #c8a96e; }
+    .tdi::after { background: #e07a7a; }
+
+    ::-webkit-scrollbar { width: 3px; }
+    ::-webkit-scrollbar-thumb { background: #2a2a24; border-radius: 2px; }

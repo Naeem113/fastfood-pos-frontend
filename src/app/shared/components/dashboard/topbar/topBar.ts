@@ -24,4 +24,8 @@ export class TopBar {
     this.authStore.logout();
     this.router.navigate([routesStrings.login]);
   }
+
+  goToPOS(){
+    this.router.navigate([routesStrings.pos])
+  }
 }
