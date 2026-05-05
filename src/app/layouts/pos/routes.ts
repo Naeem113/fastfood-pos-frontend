@@ -26,14 +26,22 @@ export const POSRoutes: Routes = [
             (m) => m.Start,
           )
       },
- {
-              path: 'dine-in',
-              canActivate: [AuthGuard],
-              loadComponent: () =>
-                import('./../../pages/pos/dine-in/dine-in').then(
-                  (m) => m.DineIn,
-                )
-            }
+      {
+        path: 'dine-in',
+        canActivate: [AuthGuard],
+        loadComponent: () =>
+          import('./../../pages/pos/dine-in/dine-in').then(
+            (m) => m.DineIn,
+          )
+      },
+      {
+        path: 'cart',
+        canActivate: [AuthGuard],
+        loadComponent: () =>
+          import('./../../pages/pos/cart/cart').then(
+            (m) => m.Cart,
+          )
+      }
     ],
   },
 ];
